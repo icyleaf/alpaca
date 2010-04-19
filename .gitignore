@@ -1,0 +1,10 @@
+# e textediotr project config file
+.eprj
+
+# eclipse project config file and folders
+.project
+.settings
+.buildpath
+
+# netbeans project config folders
+nbproject
