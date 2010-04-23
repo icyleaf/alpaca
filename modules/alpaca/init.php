@@ -10,7 +10,7 @@ HTML::$windowed_urls = TRUE;
  * Onload theme
  */
 $modules = Kohana::modules();
-$modules['alpaca_themes'] = ALPPATH.'alpaca_themes'.DIRECTORY_SEPARATOR.Kohana::config('alpaca.theme');
+$modules['themes'] = ALPPATH.'themes'.DIRECTORY_SEPARATOR.Kohana::config('alpaca.theme');
 Kohana::modules($modules);
 
 /**
