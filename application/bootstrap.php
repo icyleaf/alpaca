@@ -42,13 +42,14 @@ Kohana::init(array(
 	'base_url'   => IN_PRODUCTION ? 'http://'.$_SERVER['SERVER_NAME'] : 'http://alpaca.local',
 	'index_file' => FALSE,
 	'profiling'  => !IN_PRODUCTION,
-	'caching'    => IN_PRODUCTION
+	'caching'    => IN_PRODUCTION,
+	'cache_dir'  => DOCROOT.'cache',
 	));
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Kohana_Log_File(APPPATH.'logs'));
+Kohana::$log->attach(new Kohana_Log_File(DOCROOT.'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
@@ -56,10 +57,13 @@ Kohana::$log->attach(new Kohana_Log_File(APPPATH.'logs'));
 Kohana::$config->attach(new Kohana_Config_File);
 
 /**
- * Enable modules. Modules are referenced by a relative or absolute path.
+ * Enable Kohana modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	'alpaca'		=> MODPATH.'alpaca',		// Alpaca Forum System
+	// Alpaca Core Module
+	'alpaca'		=> ALPPATH.'alpaca',		// Alpaca Forum System
+	
+	// Kohana Modules
 	'auth'   		=> MODPATH.'auth', 			// Basic authentication
 	'database'   	=> MODPATH.'database',  	// Database access
 	'image'     	=> MODPATH.'image',     	// Image manipulation

@@ -92,7 +92,7 @@ $production = array
 );
 
 // According to different environment using different configuration
-if ( !IN_PRODUCTION )
+if ( ! IN_PRODUCTION)
 {
 	return $development;
 }

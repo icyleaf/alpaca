@@ -1,4 +1,8 @@
 <?php
+/**
+ * The directory in which the Alaca modules are located.
+ */
+$alpaca = 'modules';
 
 /**
  * The directory in which your application specific resources are located.
@@ -13,7 +17,7 @@ $application = 'application';
  *
  * @see  http://docs.kohanaphp.com/install#modules
  */
-$modules = 'modules';
+$modules = 'kohana/modules';
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -21,7 +25,7 @@ $modules = 'modules';
  *
  * @see  http://docs.kohanaphp.com/install#system
  */
-$system = 'system';
+$system = 'kohana/system';
 
 /**
  * The default extension of resource files. If you change this, all resources
@@ -53,6 +57,10 @@ error_reporting(E_ALL | E_STRICT);
 // Set the full path to the docroot
 define('DOCROOT', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
 
+// Make the alpaca relative to the docroot
+if ( ! is_dir($alpaca) AND is_dir(DOCROOT.$alpaca))
+	$alpaca = DOCROOT.$alpaca;
+	
 // Make the application relative to the docroot
 if ( ! is_dir($application) AND is_dir(DOCROOT.$application))
 	$application = DOCROOT.$application;
@@ -66,12 +74,13 @@ if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
 	$system = DOCROOT.$system;
 
 // Define the absolute paths for configured directories
+define('ALPPATH', realpath($alpaca).DIRECTORY_SEPARATOR);
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
 
 // Clean up the configuration vars
-unset($application, $modules, $system);
+unset($alpaca, $application, $modules, $system);
 
 if (file_exists('install'.EXT))
 {

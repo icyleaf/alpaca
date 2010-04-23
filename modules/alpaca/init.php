@@ -1,10 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Define alpaca path
- */
-define('ALPACAPATH', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
-
-/**
  * Open link with new window only external links (modified Kohana HTML class)
  * 
  * @location: alpaca/classes/html.php
@@ -15,7 +10,7 @@ HTML::$windowed_urls = TRUE;
  * Onload theme
  */
 $modules = Kohana::modules();
-$modules['alpaca_themes'] = MODPATH.'alpaca_themes'.DIRECTORY_SEPARATOR.Kohana::config('alpaca.theme');
+$modules['alpaca_themes'] = ALPPATH.'alpaca_themes'.DIRECTORY_SEPARATOR.Kohana::config('alpaca.theme');
 Kohana::modules($modules);
 
 /**
