@@ -43,7 +43,7 @@ class Alpaca_User {
 		
 		if (is_array($config))
 		{
-			if (isset($config['size']))
+			if (isset($config['size']) AND $config['size'] != 30)
 			{
 				$gravatar_config['default'] = URL::site('media/images/user-default-'.$config['size'].'x'.$config['size'].'.jpg');
 			}
