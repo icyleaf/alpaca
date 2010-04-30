@@ -84,7 +84,7 @@ class Alpaca_Group {
 	public static function image(Model_Group $group, $attr = FALSE, $link = FALSE)
 	{
 		$image_url = URL::site('media/alpaca/group/'.$group->id.'.jpg');
-		$image_path = ALPACAPATH . 'media/alpaca/group/'.$group->id.'.jpg';
+		$image_path = ALPPATH . 'media/alpaca/group/'.$group->id.'.jpg';
 		$image = (file_exists($image_path)) ? $image_url : Alpaca_Group::GROUP_DEFAULT_IMAGE;
 		unset($image_url, $image_path);
 

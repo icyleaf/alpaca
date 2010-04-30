@@ -87,7 +87,7 @@ $holiday = array
 );
 if ((strtotime($holiday['start_date']) < time()) AND (strtotime($holiday['end_date']) > time()))
 {
-	if (file_exists(ALPACAPATH.$holiday['logo']))
+	if (file_exists(ALPPATH.$holiday['logo']))
 	{
 		$config['logo'] = $holiday['logo'];
 	}
