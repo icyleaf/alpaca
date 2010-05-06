@@ -42,7 +42,7 @@ var alpaca = {
 					$(this).css({opacity:1});
 				},
 				// Quite slow animation:
-				animateDuration : 300,
+				animateDuration : 300
 			});
 		}
 	},
@@ -109,7 +109,6 @@ var alpaca = {
 				return false;
 			});
 		}
-	},
-
+	}
 };
 
