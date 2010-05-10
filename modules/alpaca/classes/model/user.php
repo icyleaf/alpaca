@@ -103,7 +103,7 @@ class Model_User extends Model_Auth_User {
 				if (is_string($save))
 				{
 					// Redirect to the success page
-					Request::instance()->redirect($save);
+					Request::current()->redirect($save);
 				}
 			}
 		}
