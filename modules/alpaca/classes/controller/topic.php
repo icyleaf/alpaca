@@ -344,7 +344,7 @@ class Controller_Topic extends Controller_Alpaca {
 		$topic = ORM::factory('topic', $topic_id);
 		if ($topic->loaded())
 		{
-			$title = __('Who collected ":title" topic');
+			$title = __('Who collected ":title" topic', array(':title' => $topic->title));
 			$this->template->content = View::factory('user/list')
 				->bind('title', $title)
 				->bind('collections', $collections);
