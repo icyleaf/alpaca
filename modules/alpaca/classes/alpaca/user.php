@@ -56,18 +56,23 @@ class Alpaca_User {
 		{
 			$image = HTML::image($image, $attr);
 		}
-		elseif ($attr)
+		else if ($attr)
 		{
 			$image = HTML::image($image);
 		}
-		
+
+		$user_uri = array(
+			'id' => Alpaca_User::the_uri($group)
+		);
 		if (is_array($link))
 		{
-			$image = HTML::anchor(Route::get('user')->uri(array('id'=>Alpaca_User::the_uri($user))), $image, $attr);
+			$image = HTML::anchor(Route::get('user')
+				->uri($user_uri), $image, $attr);
 		}
 		elseif ($link)
 		{
-			$image = HTML::anchor(Route::get('user')->uri(array('id'=>Alpaca_User::the_uri($user))), $image);
+			$image = HTML::anchor(Route::get('user')
+				->uri($user_uri), $image);
 		}
 		
 		return $image;

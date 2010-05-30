@@ -22,7 +22,9 @@ class Controller_User extends Controller_Alpaca {
 		}
 		else
 		{
-			$user = ORM::factory('user')->where('username', '=', $user_id)->find();
+			$user = ORM::factory('user')
+				->where('username', '=', $user_id)
+				->find();
 		}
 
 		if ($user->loaded())

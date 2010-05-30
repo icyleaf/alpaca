@@ -29,7 +29,9 @@ class Controller_Group extends Controller_Alpaca {
 		}
 		else
 		{
-			$group = ORM::factory('group')->where('uri', '=', $group_id)->find();
+			$group = ORM::factory('group')
+				->where('uri', '=', $group_id)
+				->find();
 		}
 		
 		if ( ! $group->loaded())
@@ -251,7 +253,6 @@ class Controller_Group extends Controller_Alpaca {
 			$auth_user = $this->auth->get_user();
 			if ($auth_user->has('roles', ORM::factory('role', array('name' => 'admin'))))
 			{
-			
 				if ($group->level == 1)
 				{
 					$topics = $group->topics->find_all();

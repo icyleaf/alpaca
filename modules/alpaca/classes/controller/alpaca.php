@@ -105,7 +105,9 @@ class Controller_Alpaca extends Controller_Template {
 						{
 							$child_menu->add(Route::get('group')->uri(array(
 									'id' => Alpaca_Group::the_uri($child)
-								)), $child->name);
+								)),
+								$child->name
+							);
 						}
 						
 						$menu->add('', '<span class="dir">'.$group->name.'</span>', $child_menu);
@@ -125,7 +127,7 @@ class Controller_Alpaca extends Controller_Template {
 		$config = array
 		(
 			'id'	=> 'nav',
-			'class'	=> 'dropdown dropdown-horizontal',
+			'class'=> 'dropdown dropdown-horizontal',
 		);
 	
 		return $menu->render($config);

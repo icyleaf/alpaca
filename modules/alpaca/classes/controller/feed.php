@@ -20,17 +20,18 @@ class Controller_Feed extends Controller {
 	public function action_index()
 	{
 		$feed = array();
-		$topics = ORM::factory('topic')->get_topics('', $this->_config->feed['per_page'], 0, $this->_config->feed['cache']);
+		$topics = ORM::factory('topic')
+			->get_topics('', $this->_config->feed['per_page'], 0, $this->_config->feed['cache']);
 		if ($topics->count() > 0)
 		{
 			foreach ($topics as $topic)
 			{
 				$feed[] = array(
-					'title'       => htmlspecialchars($topic->title),
-					'link'        => URL::site(Route::get('topic')->uri(array('id' => $topic->id))),
-					'description' => Alpaca::format_html($topic->content, TRUE),
-					'author'      => $topic->author->nickname,
-					'pubDate'     => $topic->created,
+					'title'		=> htmlspecialchars($topic->title),
+					'link'			=> URL::site(Route::get('topic')->uri(array('id' => $topic->id))),
+					'description'	=> Alpaca::format_html($topic->content, TRUE),
+					'author'		=> $topic->author->nickname,
+					'pubDate'		=> $topic->created,
 				);
 			}
 		}
@@ -52,7 +53,9 @@ class Controller_Feed extends Controller {
 		}
 		else
 		{
-			$user = ORM::factory('user')->where('username', '=', $user_id)->find();
+			$user = ORM::factory('user')
+				->where('username', '=', $user_id)
+				->find();
 		}
 		
 		if ($user->loaded())
@@ -69,11 +72,11 @@ class Controller_Feed extends Controller {
 				foreach ($topics as $topic)
 				{
 					$feed[] = array(
-						'title'       => htmlspecialchars($topic->title),
-						'link'        => URL::site(Route::get('topic')->uri(array('id' => $topic->id))),
-						'description' => Alpaca::format_html($topic->content, TRUE),
-						'author'      => $topic->author->nickname,
-						'pubDate'     => $topic->created,
+						'title'		=> htmlspecialchars($topic->title),
+						'link'			=> URL::site(Route::get('topic')->uri(array('id' => $topic->id))),
+						'description'	=> Alpaca::format_html($topic->content, TRUE),
+						'author'		=> $topic->author->nickname,
+						'pubDate'		=> $topic->created,
 					);
 				}
 			}

@@ -7,13 +7,13 @@ class Model_Post extends ORM {
 		'topic'	=> array(),
 		'author'	=> array(
 			'model' 		=> 'user',
-			'foreign_key'   => 'user_id',
+			'foreign_key'	=> 'user_id',
 		),
 	);
 	protected $_has_many = array(
 		'replies'	=> array(
 			'model' 		=> 'post',
-			'foreign_key'   => 'reply_id',
+			'foreign_key'	=> 'reply_id',
 		),
 	);
 	

@@ -5,7 +5,7 @@ class Model_Verity extends ORM {
 	// Rules
 	protected $_hash_code_rules = array
 	(
-		'hash_code'			=> array
+		'hash_code'	=> array
 		(
 			'not_empty'		=> NULL,
 		),
@@ -21,7 +21,7 @@ class Model_Verity extends ORM {
 	public function actived($type, $email)
 	{
 		$result = $this->where('email', '=', $email)
-			->and_where('type', '=', $type)	
+			->and_where('type', '=', $type)
 			->and_where('actived', '=', 1)
 			->find();
 		
@@ -46,9 +46,9 @@ class Model_Verity extends ORM {
 		$salt_four 	= rand(1000, 9999) / time();
 			
 		$hash = substr(sha1($salt_one), rand(0, 10), $offset). 
-				substr(md5($salt_two), rand(0, 10), $offset). 
-				substr(sha1($salt_three), rand(0, 10), $offset). 
-				substr(md5($salt_four), rand(0, 10), $offset);
+			substr(md5($salt_two), rand(0, 10), $offset).
+			substr(sha1($salt_three), rand(0, 10), $offset). 
+			substr(md5($salt_four), rand(0, 10), $offset);
 			
 		$hash_length = strlen($hash);
 		$hash_array = array();
