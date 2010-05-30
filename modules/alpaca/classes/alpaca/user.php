@@ -62,7 +62,7 @@ class Alpaca_User {
 		}
 
 		$user_uri = array(
-			'id' => Alpaca_User::the_uri($group)
+			'id' => Alpaca_User::the_uri($user)
 		);
 		if (is_array($link))
 		{
