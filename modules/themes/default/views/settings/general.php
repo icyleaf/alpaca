@@ -9,7 +9,7 @@
 
 <ul class="settings-menu txt_right">
 <?php
-$current_uri = Request::instance()->uri;
+$current_uri = Request::current()->uri;
 foreach ($links as $link => $title) {
 	if ($link == $current_uri)
 	{

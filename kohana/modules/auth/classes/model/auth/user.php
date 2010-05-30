@@ -71,7 +71,7 @@ class Model_Auth_User extends ORM {
 				if (is_string($redirect))
 				{
 					// Redirect after a successful login
-					Request::instance()->redirect($redirect);
+					Request::current()->redirect($redirect);
 				}
 
 				// Login is successful
@@ -112,7 +112,7 @@ class Model_Auth_User extends ORM {
 				if (is_string($save))
 				{
 					// Redirect to the success page
-					Request::instance()->redirect($save);
+					Request::current()->redirect($save);
 				}
 			}
 		}

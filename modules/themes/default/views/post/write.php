@@ -19,7 +19,7 @@ $author = $auth->get_user();
 <?php else: ?>
 <form method="post" action="<?php echo URL::site(Route::get('login')->uri()); ?>">
 <div class="tips"><?php echo __('Post new reply after log in'); ?></div>
-<input type="hidden" name="redir" value="<?php echo URL::site(Request::instance()->uri); ?>" />
+<input type="hidden" name="redir" value="<?php echo URL::site(Request::current()->uri); ?>" />
 <table>
 	<tr>
 		<td class="txt_right"><?php echo __('Email'); ?></td>
