@@ -23,6 +23,18 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  */
 define('IN_PRODUCTION', $_SERVER['SERVER_ADDR'] !== '127.0.0.1');
 
+/**
+ * Define application base url
+ */
+if ($_SERVER['SERVER_PORT'] === 80)
+{
+	define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME']);
+}
+else
+{
+	define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT']);
+}
+
 //-- Configuration and initialization -----------------------------------------
 
 /**
@@ -39,7 +51,7 @@ define('IN_PRODUCTION', $_SERVER['SERVER_ADDR'] !== '127.0.0.1');
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
-	'base_url'   => IN_PRODUCTION ? 'http://'.$_SERVER['SERVER_NAME'] : 'http://alpaca.local',
+	'base_url'   => BASE_URL,
 	'index_file' => FALSE,
 	'profiling'  => !IN_PRODUCTION,
 	'caching'    => IN_PRODUCTION,

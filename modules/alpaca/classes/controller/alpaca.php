@@ -71,7 +71,7 @@ class Controller_Alpaca extends Controller_Template {
 			->bind('header', $this->header);
 		$footer_body = View::factory('footer');
 	}
-	
+
 	/**
 	 * General top menu
 	 *

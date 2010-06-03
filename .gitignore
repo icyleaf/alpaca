@@ -8,3 +8,6 @@
 
 # netbeans project config folders
 nbproject
+
+# PHPStorm project config folders
+.idea

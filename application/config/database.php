@@ -24,8 +24,8 @@ $development = array
 			 * string   database
 			 */
 			'hostname'   => 'localhost',
-			'username'   => 'root',
-			'password'   => '',
+			'username'   => 'test',
+			'password'   => 'test',
 			'persistent' => FALSE,
 			'database'   => 'alpaca',
 		),
