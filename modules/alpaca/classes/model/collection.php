@@ -5,25 +5,24 @@ class Model_Collection extends ORM {
 	// Relationships
 	protected $_belongs_to = array(
 		'topic'	=> array(),
-		'user'	=> array(),
+		'user'		=> array(),
 	);
 	
 	// Validate
 	protected $_filters = array(
 		TRUE => array('trim' => NULL)
 	);
-	protected $_rules = array
-	(
+	protected $_rules = array(
 		'user_id'				=> array
 		(
 			'not_empty'			=> NULL,
-			'min_length'		=> array(7),
+			'min_length'			=> array(7),
 			'validate::numeric'	=> NULL,
 		),
 		'topic_id'				=> array
 		(
 			'not_empty'			=> NULL,
-			'min_length'		=> array(7),
+			'min_length'			=> array(7),
 			'validate::numeric'	=> NULL,
 		),
 	);

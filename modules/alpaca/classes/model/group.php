@@ -7,13 +7,13 @@ class Model_Group extends ORM {
 		'user'		=> array(),
 		'parent'	=> array(
 			'model' 		=> 'group',
-			'foreign_key'   => 'parent_id',
+			'foreign_key'	=> 'parent_id',
 		),
 	);
 	protected $_has_many = array(
 		'children'	=> array(
 			'model' 		=> 'group',
-			'foreign_key'   => 'parent_id',
+			'foreign_key'	=> 'parent_id',
 		),
 		'topics' 	=>	array(
 			'model' 		=> 'topic'

@@ -103,7 +103,7 @@ class Menu {
 			
 			$classes = ! empty($class) ? Menu::_attributes(array('class' => implode(' ', $class))) : NULL;
 
-			$link = empty($item['url']) ? $item['title'] : html::anchor($item['url'], $item['title']);
+			$link = empty($item['url']) ? $item['title'] : HTML::anchor($item['url'], $item['title']);
 			$output .= '<li'.$classes.'>' . $link;
 			$output .= $has_children ? $this->render(NULL, $current, $item['children']) : NULL;
 			$output .= '</li>';

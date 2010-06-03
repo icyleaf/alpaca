@@ -19,7 +19,6 @@ class Controller_Post extends Controller_Alpaca {
 		
 		// add auto resize to textarea
 		$this->header->javascript->append_file('media/js/jquery/autoresize.js', '1.04');
-		
 		$this->header->title->set($this->config->title);
 	}
 	
@@ -96,10 +95,11 @@ class Controller_Post extends Controller_Alpaca {
 				$group = $post->topic->group;
 				//TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-					html::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
-						Alpaca_Group::image($group, TRUE)).'</div>';
-				$sidebar .= html::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))), 
-				'返回'.$group->name.'小组');
+					HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+						Alpaca_Group::image($group, TRUE)).
+					'</div>'.
+					HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+					'返回'.$group->name.'小组');
 			
 				$this->template->sidebar = $sidebar;
 			}

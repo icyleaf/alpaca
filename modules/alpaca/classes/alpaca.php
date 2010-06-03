@@ -20,8 +20,7 @@ class Alpaca {
 		$text = htmlspecialchars($text);
 
 		// image and link
-		$regular = array
-		(
+		$regular = array(
 			'#\[img\]([\w]+?://[\w\#$%&~/.\-;:=,' . "'" . '?@\[\]+]*?)\[/img\]#is',
 			// [img=xxxx://www.kohana.cn]image url[/img]
 			'#\[img=([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*?)\]([\w]+?://[\w\#$%&~/.\-;:=,' . "'" . '?@\[\]+]*?)\[/img\]#is',
@@ -96,21 +95,21 @@ class Alpaca {
 		// smiles:
 		$emoticon_path = 'media/images/icons/emoticon/';
 		$attribute = array('class' => 'emoticon');
-		$text = str_ireplace(':)', html::image($emoticon_path . 'smile.png', $attribute), $text);
-		$text = str_ireplace(':-)', html::image($emoticon_path . 'smile.png', $attribute), $text);
-		$text = str_ireplace(':o', html::image($emoticon_path . 'surprised.png', $attribute), $text);
-		$text = str_ireplace(':-o', html::image($emoticon_path . 'surprised.png', $attribute), $text);
-		$text = str_ireplace(':(', html::image($emoticon_path . 'unhappy.png', $attribute), $text);
-		$text = str_ireplace(':-(', html::image($emoticon_path . 'unhappy.png', $attribute), $text);
-		$text = str_replace(':D', html::image($emoticon_path . 'grin.png', $attribute), $text);
-		$text = str_replace(':-D', html::image($emoticon_path . 'grin.png', $attribute), $text);
-		$text = str_ireplace(':p', html::image($emoticon_path . 'tongue.png', $attribute), $text);
-		$text = str_ireplace('^_^', html::image($emoticon_path . 'waii.png', $attribute), $text);
-		$text = str_ireplace('^-^', html::image($emoticon_path . 'waii.png', $attribute), $text);
-		$text = str_ireplace('^o^', html::image($emoticon_path . 'happy.png', $attribute), $text);
-		$text = str_ireplace('^^', html::image($emoticon_path . 'happy.png', $attribute), $text);
-		$text = str_ireplace('XD', html::image($emoticon_path . 'evilgrin.png', $attribute), $text);
-		$text = str_ireplace(';)', html::image($emoticon_path . 'wink.png', $attribute), $text);
+		$text = str_ireplace(':)', HTML::image($emoticon_path . 'smile.png', $attribute), $text);
+		$text = str_ireplace(':-)', HTML::image($emoticon_path . 'smile.png', $attribute), $text);
+		$text = str_ireplace(':o', HTML::image($emoticon_path . 'surprised.png', $attribute), $text);
+		$text = str_ireplace(':-o', HTML::image($emoticon_path . 'surprised.png', $attribute), $text);
+		$text = str_ireplace(':(', HTML::image($emoticon_path . 'unhappy.png', $attribute), $text);
+		$text = str_ireplace(':-(', HTML::image($emoticon_path . 'unhappy.png', $attribute), $text);
+		$text = str_replace(':D', HTML::image($emoticon_path . 'grin.png', $attribute), $text);
+		$text = str_replace(':-D', HTML::image($emoticon_path . 'grin.png', $attribute), $text);
+		$text = str_ireplace(':p', HTML::image($emoticon_path . 'tongue.png', $attribute), $text);
+		$text = str_ireplace('^_^', HTML::image($emoticon_path . 'waii.png', $attribute), $text);
+		$text = str_ireplace('^-^', HTML::image($emoticon_path . 'waii.png', $attribute), $text);
+		$text = str_ireplace('^o^', HTML::image($emoticon_path . 'happy.png', $attribute), $text);
+		$text = str_ireplace('^^', HTML::image($emoticon_path . 'happy.png', $attribute), $text);
+		$text = str_ireplace('XD', HTML::image($emoticon_path . 'evilgrin.png', $attribute), $text);
+		$text = str_ireplace(';)', HTML::image($emoticon_path . 'wink.png', $attribute), $text);
 		unset($emoticon_path, $attribute);
 		
 		// Inserts HTML line breaks before all newlines in a string
@@ -259,36 +258,36 @@ class Alpaca {
 			$subject = $prefix . ' ' . trim($subject);
 		}
 
-		$imailer = iMailer::instance()->subject($subject);
+		$mailer = iMailer::instance()->subject($subject);
 		// STMP server
 		if ( ! empty($config->smtp_server['host']) AND ! empty($config->smtp_server['port']))
 		{
-			$imailer->smtp = $config->smtp_server;
+			$mailer->smtp = $config->smtp_server;
 		}
 		// send to address
 		if (is_array($to))
 		{
 			$email = $to['email'];
-			$imailer->to_address($to['email'], $to['name']);
+			$mailer->to_address($to['email'], $to['name']);
 		}
 		else
 		{
 			$email = $to;
-			$imailer->to_address($to);
+			$mailer->to_address($to);
 		}
 		// send from address
 		if (is_array($from))
 		{
-			$imailer->from_address($from['email'], $from['name']);
+			$mailer->from_address($from['email'], $from['name']);
 		}
 		elseif ( ! empty($from))
 		{
-			$imailer->from_address($from);
+			$mailer->from_address($from);
 		}
 		else
 		{
 			$domain = substr(str_replace('http://', '', URL::site()), 0, -1);
-			$imailer->from_address('noreply@'.$domain, $config->title);
+			$mailer->from_address('noreply@'.$domain, $config->title);
 		}
 		// mail message
 		$content = View::factory('template/mail')
@@ -296,9 +295,9 @@ class Alpaca {
 			->set('config', $config)
 			->set('content', $content);
 			
-		$imailer->content($content->render());
+		$mailer->content($content->render());
 		
-		return $imailer->send();
+		return $mailer->send();
 	}
 	
 	/**
@@ -336,11 +335,10 @@ class Alpaca {
 	{
 		$config = Kohana::config('alpaca');
 		$years = (empty($start_year)) ? date('Y') : $start_year.'-'.date('Y');
-		$name = html::anchor(url::base(), $config['title']);
-		$author = html::anchor($config['project']['url'], $config['project']['author']);
+		$name = HTML::anchor(url::base(), $config['title']);
+		$author = HTML::anchor($config['project']['url'], $config['project']['author']);
 		
 		$output = '&copy; '.$years.' '.$name;
-		
 		if ($by)
 		{
 			$output .= ' by '.$author.'.';
@@ -348,7 +346,7 @@ class Alpaca {
 		elseif (is_array($by))
 		{
 			$attr = array_key_exists('attr', $by) ? $by['attr'] : NULL;
-			$output .= ' by '.html::anchor($by['link'], $by['name'], $attr).'.';
+			$output .= ' by '.HTML::anchor($by['link'], $by['name'], $attr).'.';
 		}
 		
 		return $output;

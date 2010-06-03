@@ -22,8 +22,7 @@ class Alpaca_Group {
 	public static function the_id($render = TRUE)
 	{
 		$group_id = empty(Alpaca_Group::$_group_id) ? 0 : Alpaca_Group::$_group_id;
-		
-		if ($render) 
+		if ($render)
 		{
 			echo $group_id;
 		}
@@ -49,7 +48,7 @@ class Alpaca_Group {
 		}
 		
 		$group_name = $before . Alpaca_Group::$_group_name . $after;
-		if ( $render )
+		if ($render)
 		{
 			echo $group_name;
 		}
@@ -90,20 +89,25 @@ class Alpaca_Group {
 
 		if (is_array($attr))
 		{
-			$image = html::image($image, $attr);
+			$image = HTML::image($image, $attr);
 		}
-		elseif ($attr)
+		else if ($attr)
 		{
-			$image = html::image($image);
+			$image = HTML::image($image);
 		}
-		
+
+		$group_uri = array(
+			'id' => Alpaca_Group::the_uri($group)
+		);
 		if (is_array($link))
 		{
-			$image = html::anchor(Route::get('group')->uri(array('id'=>Alpaca_Group::the_uri($group))), $image, $attr);
+			$image = HTML::anchor(Route::get('group')
+				->uri($group_uri), $image, $attr);
 		}
-		elseif ($link)
+		else if ($link)
 		{
-			$image = html::anchor(Route::get('group')->uri(array('id'=>Alpaca_Group::the_uri($group))), $image);
+			$image = HTML::anchor(Route::get('group')
+				->uri($group_uri), $image);
 		}
 		
 		return $image;
@@ -120,14 +124,14 @@ class Alpaca_Group {
 		$default = array
 		(
 			'title'			=> __('小组'),
-			'child_of'		=> FALSE,
-			'sort' 			=> array(
+			'child_of'			=> FALSE,
+			'sort' 				=> array(
 				'column'		=>'count', 
-				'direction'		=>'DESC'
-			),
-			'link_before'	=> '',
-			'link_after' 	=> '',
-			'render' 		=> FALSE
+				'direction'	=>'DESC'
+				),
+			'link_before'		=> '',
+			'link_after' 		=> '',
+			'render' 			=> FALSE
 		);
 		
 		if (is_array($config))
@@ -159,17 +163,21 @@ class Alpaca_Group {
 				{
 					if ($group->level == 0)
 					{
-						$output .= '<li class="group_item group-item-'.$group->id.'">' . html::anchor($link_uri, $link_title);
-						$children = $group->children->order_by($config['sort']['column'], $config['sort']['direction'])->find_all();
+						$output .= '<li class="group_item group-item-'.$group->id.'">' . HTML::anchor($link_uri, $link_title);
+						$children = $group->children
+							->order_by($config['sort']['column'], $config['sort']['direction'])
+							->find_all();
 						if ($children->count() > 0)
 						{
 							$output .= '<ul id="group_children">';
 							foreach ($children as $child)
 							{
-								$link_uri = Route::get('group')->uri(array('id'=>Alpaca_Group::the_uri($child)));
+								$link_uri = Route::get('group')->uri(array(
+									'id' => Alpaca_Group::the_uri($child)
+								));
 								$link_title = $config['link_before'] . $child->name . $config['link_after'];
 								$output .= '<li class="group_item group-item-'.$child->id.'">' . 
-									html::anchor($link_uri, $link_title) . '</ul>';
+									HTML::anchor($link_uri, $link_title) . '</ul>';
 							}
 							$output .= '</ul>';
 						}
@@ -181,7 +189,7 @@ class Alpaca_Group {
 					if ($group->level == 1)
 					{
 						$output .= '<li class="group_item group-item-'.$group->id.'">' . 
-							html::anchor($link_uri, $link_title) . '</li>';
+							HTML::anchor($link_uri, $link_title) . '</li>';
 					}
 				}
 			}
@@ -213,13 +221,13 @@ class Alpaca_Group {
 		(
 			'title'			=> __('最新讨论话题'),
 			'count'			=> 10,
-			'sort' 			=> array(
+			'sort' 				=> array(
 				'column'		=>'updated', 
-				'direction'		=>'DESC'
-			),
-			'link_before'	=> '',
-			'link_after' 	=> '',
-			'render' 		=> FALSE
+				'direction'	=>'DESC'
+				),
+			'link_before'		=> '',
+			'link_after' 		=> '',
+			'render' 			=> FALSE
 		);
 		
 		if (is_array($config))
@@ -249,7 +257,7 @@ class Alpaca_Group {
 				$link_title = $config['link_before'] . $topic->title . $config['link_after'];
 				
 				$output .= '<li class="topic_item topic-item-'.$topic->id.'">' . 
-							html::anchor($link_uri, $link_title) . '</li>';
+							HTML::anchor($link_uri, $link_title) . '</li>';
 			}
 			$output .= '</ul></div></div>';
 		}

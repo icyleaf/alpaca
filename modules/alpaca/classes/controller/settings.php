@@ -9,7 +9,7 @@ class Controller_Settings extends Controller_Alpaca {
 	
 	private $user		= NULL;
 	private $links		= NULL;
-	private $status		= FALSE;
+	private $status	= FALSE;
 	
 	/**
 	 * Settings Init
@@ -45,10 +45,10 @@ class Controller_Settings extends Controller_Alpaca {
 
 		$this->links = array
 		(
-			'settings'					=> __('About yourself'),
+			'settings'						=> __('About yourself'),
 			'settings/changepassword'	=> __('Change Password'),
-			'settings/notifications'	=> __('Notifications'),
-			//'settings/destroy'		=> __('Destroy Account'),
+			'settings/notifications'		=> __('Notifications'),
+			//'settings/destroy'			=> __('Destroy Account'),
 		);
 	}
 	
@@ -69,7 +69,7 @@ class Controller_Settings extends Controller_Alpaca {
 			$post = Validate::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('nickname', array(
-					'not_empty'			=> NULL,
+					'not_empty'		=> NULL,
 					'min_length'		=> array(3),
 					'max_length'		=> array(32),
 					))
@@ -108,7 +108,7 @@ class Controller_Settings extends Controller_Alpaca {
 			{
 				$user_id = $_POST['id'];
 				unset($_POST['id']);
-				$user = ORM::factory('user', $user_id)
+				ORM::factory('user', $user_id)
 					->values($_POST)
 					->save();
 					
@@ -145,7 +145,7 @@ class Controller_Settings extends Controller_Alpaca {
 		{
 			$rules = array
 			(
-				'not_empty'		=> NULL,
+				'not_empty'	=> NULL,
 				'min_length'	=> array(5),
 				'max_length'	=> array(20),
 			);
@@ -159,7 +159,7 @@ class Controller_Settings extends Controller_Alpaca {
 			{
 				$current_data = array
 				(
-					'email'		=> $this->user->email,
+					'email'	=> $this->user->email,
 					'password'	=> $_POST['current_password'],
 				);
 				$_POST['email'] = $this->user->email;
@@ -230,7 +230,6 @@ class Controller_Settings extends Controller_Alpaca {
 	public function action_destroy()
 	{
 		$this->template->content->body = View::factory('settings/destroy');
-
 	}
 	
 }

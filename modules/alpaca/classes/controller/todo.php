@@ -7,8 +7,8 @@
  */
 class Controller_Todo extends Controller_Template {
 	
-	public $template = 'todo';
-	public $list = NULL;
+	public $template	= 'todo';
+	public $list		= NULL;
 	
 	protected $config = NULL;
 	
@@ -29,7 +29,7 @@ class Controller_Todo extends Controller_Template {
 		// Title
 		$info = array
 		(
-			'title'			=> $this->config->project['name'],
+			'title'		=> $this->config->project['name'],
 			'version'		=> $this->config->project['version'],
 			'desc'			=> 'ToDo List',
 		);

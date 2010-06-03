@@ -144,9 +144,9 @@ class Controller_Topic extends Controller_Alpaca {
 				}
 				// TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-					html::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
 						Alpaca_Group::image($group, TRUE)).'</div>';
-				$sidebar .= html::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))), 
+				$sidebar .= HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
 					'返回'.$group->name.'小组');
 				
 				$this->template->sidebar = $sidebar;
@@ -213,9 +213,9 @@ class Controller_Topic extends Controller_Alpaca {
 				$group = $topic->group;
 				// TODO: change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-				html::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+				HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
 					Alpaca_Group::image($group, TRUE)).'</div>';
-				$sidebar .= html::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))), 
+				$sidebar .= HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
 				'返回'.$group->name.'小组');
 			
 				$this->template->sidebar = $sidebar;
@@ -344,11 +344,10 @@ class Controller_Topic extends Controller_Alpaca {
 		$topic = ORM::factory('topic', $topic_id);
 		if ($topic->loaded())
 		{
-			$title = __('Who collected ":title" topic');
+			$title = __('Who collected ":title" topic', array(':title' => $topic->title));
 			$this->template->content = View::factory('user/list')
 				->bind('title', $title)
 				->bind('collections', $collections);
-				
 				
 			$this->template->sidebar = View::factory('sidebar/topic_detail')
 				->bind('topic', $topic);

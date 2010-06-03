@@ -11,7 +11,7 @@ class Controller_Search extends Controller_Alpaca {
 	(
 		'q'				=> array
 		(
-			'not_empty'		=> NULL,
+			'not_empty'	=> NULL,
 		)
 	);
 	
