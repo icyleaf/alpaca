@@ -83,6 +83,7 @@ Kohana::modules(array(
 	'orm'     		=> MODPATH.'orm',    		// KO3 Object Relationship Mapping
 	'pagination' 	=> MODPATH.'pagination',	// Paging of results
 	'imailer' 		=> MODPATH.'imailer',		// PHPMailer
+	'dbmanager'		=> MODPATH.'dbmanager',		// Database manager
 	));
 
 /**

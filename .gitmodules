@@ -10,3 +10,6 @@
 [submodule "kohana/modules/pagination"]
 	path = kohana/modules/pagination
 	url = http://github.com/kohana/pagination.git
+[submodule "kohana/modules/dbmanager"]
+	path = kohana/modules/dbmanager
+	url = http://github.com/icyleaf/dbmanager.git

@@ -11,3 +11,6 @@ nbproject
 
 # PHPStorm project config folders
 .idea
+
+# modules
+kohana/modules/dbm
