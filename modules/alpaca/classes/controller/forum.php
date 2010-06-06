@@ -65,6 +65,9 @@ class Controller_Forum extends Controller_Alpaca {
 	 */
 	public function action_media()
 	{
+		// Generate and check the ETag for this file
+		$this->request->check_cache(sha1($this->request->uri));
+
 		// Get the file path from the request
 		$file = $this->request->param('file');
 
@@ -84,20 +87,11 @@ class Controller_Forum extends Controller_Alpaca {
 			// Return a 404 status
 			$this->request->status = 404;
 		}
-
-		$etag = md5($file);
-		$last_modified_time = date('r', filemtime($file));
 		
 		// Set the content type for this extension
 		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
 		$this->request->headers['Content-Length'] = filesize($file);
-		$this->request->headers['Last-Modified'] = $last_modified_time;
-		$this->request->headers['Etag'] = $etag;
-
-//		if (isset($_SERVER['HTTP_IF_NONE_MATCH']) AND trim($_SERVER['HTTP_IF_NONE_MATCH']) == $hash)
-//		{
-//			$this->request->status = 304;
-//		}
+		$this->request->headers['Last-Modified'] = date('r', filemtime($file));
 	}
 }
 
