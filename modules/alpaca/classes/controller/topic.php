@@ -123,7 +123,7 @@ class Controller_Topic extends Controller_Alpaca {
 							$this->request->redirect(Route::get('topic')->uri(array('id' => $topic->id)));
 						}
 					}
-					
+
 					// Create the new topic
 					$topic = ORM::factory('topic')->values($_POST);
 					if ($topic->check())
@@ -184,6 +184,7 @@ class Controller_Topic extends Controller_Alpaca {
 			$topic->values($_POST);
 			if ($topic->check())
 			{
+				// Upate
 				$topic->save();
 
 				$this->request->redirect(Route::get('topic')->uri(array('id' => $topic_id)));

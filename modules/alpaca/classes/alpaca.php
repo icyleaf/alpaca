@@ -200,6 +200,26 @@ class Alpaca {
 		$text = str_replace('<br />', '', $text);
 		$text = str_replace('<p>', "\n", $text);
 		$text = str_replace('</p>', '', $text);
+
+		// smiles:
+		$emoticon_path = 'media/images/icons/emoticon/';
+		$attribute = array('class' => 'emoticon');
+		$text = str_ireplace(HTML::image($emoticon_path . 'smile.png', $attribute), ':)', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'smile.png', $attribute), ':-)', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'surprised.png', $attribute), ':o', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'surprised.png', $attribute), ':-o', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'unhappy.png', $attribute), ':(', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'unhappy.png', $attribute), ':-(', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'grin.png', $attribute), ':D', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'grin.png', $attribute), ':-D', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'tongue.png', $attribute), ':p', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'waii.png', $attribute), '^_^', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'waii.png', $attribute), '^-^', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'happy.png', $attribute), '^o^', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'happy.png', $attribute), '^^', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'evilgrin.png', $attribute), 'XD', $text);
+		$text = str_ireplace(HTML::image($emoticon_path . 'wink.png', $attribute), ';)', $text);
+		unset($emoticon_path, $attribute);
 	
 		return $text;
 	}
