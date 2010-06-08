@@ -46,25 +46,26 @@ class Controller_Auth extends Controller_Alpaca {
 		{
 			$random = Arr::get($_POST, 'random');
 			$nospam = Arr::get($_POST, 'nospam');
-			if ($random == $nospam)
+
+			// Human
+			$user = ORM::factory('user')->values($_POST);
+			$user->validate()->callback('email', array(new Model_User, 'email_available'));
+
+			if ($user->check())
 			{
-				// Human
-				$user = ORM::factory('user')->values($_POST);
-				$user->validate()->callback('email', array(new Model_User, 'email_available'));
-				
-				if ($user->check())
+				if ($random == $nospam)
 				{
 					//Save this user to schema
 					$user->save();
-									
+
 					// append the first user as administrator role
 					if ($user->id == 1000001)
 					{
 						$user->add('roles', ORM::factory('role', array('name' => 'admin')));
 					}
 					$user->add('roles', ORM::factory('role', array('name' => 'member')));
-					
-					// check record if it exists resend active email or create a new one and send. 
+
+					// check record if it exists resend active email or create a new one and send.
 					$verity = ORM::factory('verity', array('email' => $user->email));
 					if ($verity->loaded())
 					{
@@ -74,23 +75,23 @@ class Controller_Auth extends Controller_Alpaca {
 					{
 						$hash_code = $verity->general_code($user->email);
 					}
-					
+
 					$email_subject = __('Account Verity');
 					$verity_url = URL::site(Route::get('verity')->uri(array('code' => $hash_code)));
 					$email_content = '感谢您在 Kohana 中文注册的账户，于此同时，麻烦您一点时间，我们需要验证注册账户的真实性，'.
 						'需要您点击下面的链接完成验证过程：<br /><br />'.
 						HTML::anchor($verity_url, $verity_url).'<br /><br />'.
 						'温馨提示：如果您忘记了密码，使用网站提供的重设密码功能也会把重设密码的链接发给本邮箱哦 :)';
-						
+
 					if (Alpaca::email($user->email, $email_subject, $email_content))
-					{			
+					{
 						// Display success information
 						$this->template->content = View::factory('template/general')
 							->bind('title', $title)
 							->bind('content', $content);
-							
+
 						$verity_url = Route::get('verity')->uri() .'?email='.$user->email;
-							
+
 						$title = __('Welcome to join :website!', array(':website' => $this->_website));
 						$content = __('Successful! We will send a mail to verity account in a moment.', array(
 								':email' => $user->email
@@ -107,7 +108,7 @@ class Controller_Auth extends Controller_Alpaca {
 						$this->template->content = View::factory('template/general')
 							->bind('title', $title)
 							->bind('content', $content);
-							
+
 						$content = __('Send failed! You may :try_again. '.
 							'If it also failed, contact the website administrator.', array(
 								':try_again' => '<a href="javascript:history.go(-1)">'.__('try again').'</a>')
@@ -117,38 +118,39 @@ class Controller_Auth extends Controller_Alpaca {
 				}
 				else
 				{
-					$errors = $user->validate()->errors('validate');
+					// Maybe a robot (spam)
+					$this->template->content = View::factory('template/general')
+						->bind('title', $title)
+						->bind('content', $content);
+
+					$content = __('Are you a robot (spam) ?');
+
+					// Write log
+					$log_file = DOCROOT.'spam.log';
+					if ( ! file_exists($log_file))
+					{
+						// Create the log file
+						file_put_contents($log_file, Kohana::FILE_SECURITY.' ?>'.PHP_EOL);
+
+						// Allow anyone to write to log files
+						chmod($log_file, 0666);
+					}
+
+					$email = Arr::get($_POST, 'email');
+					$ip = Arr::get($_SERVER, 'REMOTE_ADDR');
+					$message = PHP_EOL.'============='.PHP_EOL.
+						'Date: '.date('Y-m-d H:i', time()).PHP_EOL.
+						'Email: '.$email.PHP_EOL.
+						'IP: '.$ip.PHP_EOL;
+
+					file_put_contents($log_file, $message, FILE_APPEND);
 				}
 			}
 			else
 			{
-				// Maybe a robot (spam)
-				$this->template->content = View::factory('template/general')
-					->bind('title', $title)
-					->bind('content', $content);
-							
-				$content = __('Are you a robot (spam) ?');
-				
-				// Write log
-				$log_file = DOCROOT.'spam.log';
-				if ( ! file_exists($log_file))
-				{
-					// Create the log file
-					file_put_contents($log_file, Kohana::FILE_SECURITY.' ?>'.PHP_EOL);
-		
-					// Allow anyone to write to log files
-					chmod($log_file, 0666);
-				}
-				
-				$email = Arr::get($_POST, 'email');
-				$ip = Arr::get($_SERVER, 'REMOTE_ADDR');
-				$message = PHP_EOL.'============='.PHP_EOL.
-					'Date: '.date('Y-m-d H:i', time()).PHP_EOL.
-					'Email: '.$email.PHP_EOL.
-					'IP: '.$ip.PHP_EOL;
-					
-				file_put_contents($log_file, $message, FILE_APPEND);
+				$errors = $user->validate()->errors('validate');
 			}
+
 		}
 		
 		$this->header->title->set($title);

@@ -201,6 +201,7 @@ return array
 	 * Errors
 	 */
 	'No Found the page'		=> '找不到相关页面',
+	'Are you a robot (spam) ?' => '为防止 SPAM 的攻击，请点击“快速注册”按钮进行注册。',
 	
 	/**
 	 * Validate messages
