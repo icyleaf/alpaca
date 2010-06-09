@@ -140,6 +140,10 @@ class Model_Post extends ORM {
 	{
 		foreach ($values as $key => $value)
 		{
+			if ($key == 'content')
+			{
+				continue;
+			}
 			$values[$key] = Security::xss_clean($value);
 		}
 		
