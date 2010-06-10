@@ -7,13 +7,13 @@
 	<h3>关于 Kohana 中文</h3>
 	<div class="content">
 		<p>
-			Kohana 中文站是对纯 PHP5 框架 Kohana 的中文推广而建立的交流平台。它是一款基于
+			Kohana 中文是对纯 PHP5 框架 Kohana 的中文推广而建立的交流平台。它是一款基于
 			MVC 模式开发，完全社区驱动，具有高安全性，轻量级代码，迅捷开发，轻松上手的特性！ 
 		</p>
 		<p>
-			<strong>获得的好处：</strong>
+			<strong>快速导航:</strong>
 			<ul>
-				<li><a href="http://khnfans.cn/download">中文框架下载</a></li>
+				<li><a href="http://v2.kohana.cn/download">中文框架下载</a></li>
 				<li><?php echo HTML::anchor(Route::get('topic')->uri(array('id' => 1000032)), '中文文档'); ?></li>
 				<li><?php echo HTML::anchor(URL::base(FALSE), '社区支持'); ?></li>
 				<li><?php echo HTML::anchor(Route::get('topic')->uri(array('id' => 1000030)), '群组讨论'); ?></li>
