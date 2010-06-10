@@ -58,6 +58,8 @@ class Controller_Alpaca extends Controller_Template {
 		$this->header->link->append('favicon.ico', '', 'icon', 'image/x-icon');
 		// Menu
 		$menu = $this->general_menu();
+		// Check remember me 
+		$this->auth->auto_login();
 		
 		// View
 		View::bind_global('config', $this->config);

@@ -26,7 +26,7 @@ define('IN_PRODUCTION', $_SERVER['SERVER_ADDR'] !== '127.0.0.1');
 /**
  * Define application base url
  */
-if ($_SERVER['SERVER_PORT'] === 80)
+if ($_SERVER['SERVER_PORT'] == 80)
 {
 	define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME']);
 }
