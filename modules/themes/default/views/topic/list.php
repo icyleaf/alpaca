@@ -16,7 +16,7 @@ if ($count > 0): ?>
 			<div class="collection_inset">
 				<?php 
 				if ( ! isset($hide_group)):
-					echo html::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+					echo HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
 						$group->name, 
 						array('class' => 'groups')
 						);
@@ -25,7 +25,7 @@ if ($count > 0): ?>
 					<?php
 					$tips_1 = __(':number people collected this!', array(':number' => $topic->collections));
 					$tips_2 = __('Click :image to add your collection! ', array(
-						':image' => html::image('media/images/mini_star.png', array('alt'=>'*'))
+						':image' => HTML::image('media/images/mini_star.png', array('alt'=>'*'))
 						));
 					$colletion_url = URL::site('collection/topic/'.$topic->id);
 					$style = 'empty_star';
@@ -40,7 +40,7 @@ if ($count > 0): ?>
 						if ($collection->loaded())
 						{
 							$tips_1 = __('you already collected this!');
-							$tips_2 = html::anchor(Route::get('topic/collectors')->uri(array(
+							$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
 								'topic_id' => $topic->id)), __('view who collected this!'));
 		
 							$colletion_url = 'javascript:void(0);';
@@ -49,7 +49,7 @@ if ($count > 0): ?>
 					}
 					else
 					{
-						$tips_2 = html::anchor(Route::get('topic/collectors')->uri(array(
+						$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
 							'topic_id' => $topic->id)), __('view who collected this!'));
 					} ?>
 					
@@ -58,7 +58,7 @@ if ($count > 0): ?>
 						<?php echo $tips_2; ?>
 					</div>		
 					<a class="collection_link" href="<?php echo $colletion_url; ?>" id="<?php echo $topic->id; ?>">
-					<?php echo html::image('media/images/sprite_screen.png', array('class' => $style, 'alt'=>'*')); ?>
+					<?php echo HTML::image('media/images/sprite_screen.png', array('class' => $style, 'alt'=>'*')); ?>
 					<strong><?php echo $topic->collections; ?></strong>
 					</a>
 				</div>
@@ -66,10 +66,10 @@ if ($count > 0): ?>
 		</div>
 	
 		<div class="topic_details">
-			<?php echo html::anchor(Route::get('topic')->uri(array('id' => $topic->id)), 
+			<?php echo HTML::anchor(Route::get('topic')->uri(array('id' => $topic->id)),
 				$topic->title, array('class' => 'subject')); ?>
 			<div class="meta">
-			<?php echo html::anchor(Route::get('user')->uri(array('id' => Alpaca_User::the_uri($author))), 
+			<?php echo HTML::anchor(Route::get('user')->uri(array('id' => Alpaca_User::the_uri($author))),
 				$author->nickname, array('class'=>'author')); ?>
 				<span class="divider">•</span>
 				<?php if ($topic->count > 1): ?>
@@ -92,7 +92,7 @@ if ($count > 0): ?>
 </ul>
 <?php elseif (isset($group)): ?>
 	<?php echo __('Nothing here, :post.', array(
-		':post' => html::anchor(Route::get('topic/add')->uri(array('id' => $group->id)), __('post a new topic'))
+		':post' => HTML::anchor(Route::get('topic/add')->uri(array('id' => $group->id)), __('post a new topic'))
 		)); ?>
 <?php else: ?>
 <ul class="list"><?php echo __('Nothing here'); ?></ul>

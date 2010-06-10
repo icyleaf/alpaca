@@ -5,7 +5,7 @@ $error_email = isset($errors['email']) ? $errors['email'] : '';
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
-		<small><?php echo html::anchor(Route::get('login')->uri(), '('.__('Log in').')'); ?></small>
+		<small><?php echo HTML::anchor(Route::get('login')->uri(), '('.__('Log in').')'); ?></small>
 	</h2>
 	<form method="post">
 	<div id="authform-body">

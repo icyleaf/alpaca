@@ -1,7 +1,7 @@
 <div class="widget">
 	<div class="block group">
 	<?php 
-		echo html::anchor(Route::get('topic')->uri(array('id' => $topic->id)), $topic->title);
+		echo HTML::anchor(Route::get('topic')->uri(array('id' => $topic->id)), $topic->title);
 	?>
 	</div>
 </div>

@@ -33,11 +33,11 @@
 				}
 				else if (preg_match('/^<(\w+)>$/i', $link, $match))
 				{
-					$auth_menu[] = '<'.$match[1].html::attributes($attr).'>'.$item['title'].'</'.$match[1].'>'; 
+					$auth_menu[] = '<'.$match[1].HTML::attributes($attr).'>'.$item['title'].'</'.$match[1].'>';
 				}
 				else
 				{
-					$auth_menu[] = html::anchor($link, $item['title'], $attr); 
+					$auth_menu[] = HTML::anchor($link, $item['title'], $attr);
 				}
 			}
 			echo '<div class="auth">'.join('|', $auth_menu).'</div>';
@@ -51,9 +51,9 @@
 	
 		<div id="website">
 		<?php 
-			echo html::anchor(
+			echo HTML::anchor(
 				url::base(), 
-				html::image($config->logo), array('alt' => $config->title), array('id' => 'logo')
+				HTML::image($config->logo), array('alt' => $config->title), array('id' => 'logo')
 				);
 		?>
 		</div><!-- /website -->
@@ -104,7 +104,7 @@
 			<?php if ($config->execution_time): ?>
 				Rendered in {execution_time}. 
 			<?php endif ?>
-			Powered by <?php echo html::anchor($config->project['url'], $config->project['name']); ?>. 
+			Powered by <?php echo HTML::anchor($config->project['url'], $config->project['name']); ?>.
 		</div>
 		<div class="clear"></div>
 	</div>

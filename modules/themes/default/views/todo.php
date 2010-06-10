@@ -9,7 +9,7 @@
 		<div id="mainHolderGradient">
 			<div id="mainContentHolder">			
 				<div id="contentsHolder">
-					<h1><?php echo html::anchor(url::base(), $info['title']) . ' - ' . $info['desc']; ?></h1>
+					<h1><?php echo HTML::anchor(url::base(), $info['title']) . ' - ' . $info['desc']; ?></h1>
 					<p>当前版本号: <?php echo $info['version']; ?></p>
 					<p><i>最后更新时间: <?php echo date('Y-m-d', $list->last_updated()); ?></i></p>
 					<div class="post">
@@ -27,7 +27,7 @@
 								}
 							 	if ( !empty($todo->url) )
 								{
-									echo html::anchor($todo->url, $todo->title);
+									echo HTML::anchor($todo->url, $todo->title);
 								}
 								else
 								{
@@ -71,7 +71,7 @@
 								}
 							 	if ( !empty($todo->url) )
 								{
-									echo html::anchor($todo->url, $todo->title);
+									echo HTML::anchor($todo->url, $todo->title);
 								}
 								else
 								{

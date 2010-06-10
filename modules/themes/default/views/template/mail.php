@@ -30,7 +30,7 @@ echo __('Thanks for support to :website.', array(':website' => $website_link));
 /**<br />
  * <?php echo $config->title; ?><br />
  * <br />
- * @url <?php echo html::anchor(URL::site(), URL::site()); ?><br />
+ * @url <?php echo HTML::anchor(URL::site(), URL::site()); ?><br />
  * @version always beta<br />
  * <br />
  * <?php echo $config->desc; ?><br />

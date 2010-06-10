@@ -17,7 +17,7 @@ if ($groups->count())
 					'topic_id'	=> $topic->id,
 					'group_id'	=> $child->id,
 					));
-				echo '<li>'.html::anchor($route, $child->name).'</li>';
+				echo '<li>'.HTML::anchor($route, $child->name).'</li>';
 			}
 			echo '</ul></li>';
 		}

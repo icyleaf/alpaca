@@ -19,7 +19,7 @@ $error_skype = isset($errors['skype']) ? $errors['skype'] : '';
 ?>
 <h3><?php echo __('Change Avatar'); ?></h3>
 <div class="avatar">
-	<?php echo html::image(Alpaca_User::avatar($user), array(
+	<?php echo HTML::image(Alpaca_User::avatar($user), array(
 			'width' => 48,
 			'height' => 48,
 			'alt' => __('avatar')
@@ -28,7 +28,7 @@ $error_skype = isset($errors['skype']) ? $errors['skype'] : '';
 		<strong>
 			<?php echo __('Change your avatar at :grvartar', array(
 				':website'	=> $config->title,
-				':grvartar'	=> html::anchor('http://gravatar.com', 'Gravatar.com'),
+				':grvartar'	=> HTML::anchor('http://gravatar.com', 'Gravatar.com'),
 				)); ?>
 		</strong>
 		<?php echo __('We’re using :email', array(':email' => $user->email)); ?>

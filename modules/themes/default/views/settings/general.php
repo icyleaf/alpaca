@@ -17,7 +17,7 @@ foreach ($links as $link => $title) {
 	}
 	else
 	{
-		echo '<li>'.html::anchor($link, $title).'</li>';
+		echo '<li>'.HTML::anchor($link, $title).'</li>';
 	}
 }
 ?>

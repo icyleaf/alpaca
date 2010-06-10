@@ -27,7 +27,7 @@ $content_error = isset($errors['content'])?$errors['content']:'';
 				<input class="button_submit" type="submit" value="<?php echo __('Edit Reply'); ?>" />
 			</span>
 			<span class="left">
-				<?php echo html::anchor(Route::get('topic')->uri(array('id' => $post->topic->id)), __('Undo'), array('class'=>'button')); ?>
+				<?php echo HTML::anchor(Route::get('topic')->uri(array('id' => $post->topic->id)), __('Undo'), array('class'=>'button')); ?>
 			</span>
 		</td>
 	</tr>

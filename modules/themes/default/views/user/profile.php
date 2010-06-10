@@ -10,8 +10,8 @@
 <div id="profile">
 	<div class="profile-header">
 		<div id="actions" class="right">
-			<?php //echo html::anchor('#mail/send/'.$user->id, __('Message'), array('class' => 'button'))?>
-			<?php //echo html::anchor('#user/follow/'.$user->id, __('Follow'), array('class' => 'button'))?>
+			<?php //echo HTML::anchor('#mail/send/'.$user->id, __('Message'), array('class' => 'button'))?>
+			<?php //echo HTML::anchor('#user/follow/'.$user->id, __('Follow'), array('class' => 'button'))?>
 		</div>
 		<div class="left">
 			<?php echo Alpaca_User::avatar($user, NULL, array('class' => 'avatar'));?>
@@ -54,7 +54,7 @@
 								'type'	=> 'topics',
 								));
 							$count = '<div class="count">'.$topics->count().'</div>';
-							echo ($topics->count() > 0) ? html::anchor($link, $count) : $count;
+							echo ($topics->count() > 0) ? HTML::anchor($link, $count) : $count;
 						?>
 					</div>
 				</div>
@@ -67,7 +67,7 @@
 								'type'	=> 'posts',
 								));
 							$count = '<div class="count">'.$replies->count().'</div>';
-							echo ($replies->count() > 0) ? html::anchor($link, $count) : $count;
+							echo ($replies->count() > 0) ? HTML::anchor($link, $count) : $count;
 						?>
 					</div>
 				</div>
@@ -80,7 +80,7 @@
 								'type'	=> 'collections',
 								));
 							$count = '<div class="count">'.$collections_count.'</div>';
-							echo ($collections_count > 0) ? html::anchor($link, $count) : $count;
+							echo ($collections_count > 0) ? HTML::anchor($link, $count) : $count;
 						?>
 					</div>
 				</div>
@@ -93,7 +93,7 @@
 								'type'	=> 'groups',
 								));
 							$count = '<div class="count">'.$groups->count().'</div>';
-							echo ($groups->count() > 0) ? html::anchor($link, $count) : $count;
+							echo ($groups->count() > 0) ? HTML::anchor($link, $count) : $count;
 						?>
 					</div>
 				</div>
@@ -153,7 +153,7 @@
 			$user_link = $user->nickname;
 		}
 		
-		echo html::anchor(Route::get('user/feed')->uri(array('id' => Alpaca_User::the_uri($user))), 
+		echo HTML::anchor(Route::get('user/feed')->uri(array('id' => Alpaca_User::the_uri($user))),
 			__('Subscribe the latest updates @:user...', array(':user' => $user_link)));
 	?>
 	</h4>

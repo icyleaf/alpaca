@@ -19,12 +19,12 @@
 		?>
 		<span class="action">
 			<?php 
-			echo html::anchor('post/delete/'.$post->id, __('Delete'), array(
+			echo HTML::anchor('post/delete/'.$post->id, __('Delete'), array(
 				'class'	=> 'delete', 
 				'title'	=> __('Delete Reply'),
 				'rel'	=> __('Do you really want to delete this reply?'),
 				));
-			echo html::anchor('post/edit/'.$post->id, __('Edit'), array(
+			echo HTML::anchor('post/edit/'.$post->id, __('Edit'), array(
 				'class'	=> 'edit', 
 				'title'	=> __('Edit Reply'),
 				)); 
@@ -33,7 +33,7 @@
 		<?php endif; ?>
 		<?php
 			/*
-			echo html::anchor('post/reply/'.$post->topic->id.'/'.$post->id, __('Reply'), array(
+			echo HTML::anchor('post/reply/'.$post->topic->id.'/'.$post->id, __('Reply'), array(
 				'class'	=> 'edit', 
 				'title'	=> __('Reply'),
 				));
@@ -54,7 +54,7 @@
 				
 				// Author name with anchor
 				$style = ($auth_user AND $auth_user->id == $author->id) ? 'owner' : 'poster';
-				echo html::anchor(Route::get('user')->uri(array(
+				echo HTML::anchor(Route::get('user')->uri(array(
 					'id' => Alpaca_User::the_uri($author))), 
 					$author->nickname, array('class' => $style)); 
 			?>
@@ -76,7 +76,7 @@
 		foreach($replies as $reply)
 		{
 			echo '<li>';
-			echo html::anchor('#', $reply->author->nickname) . ': ';
+			echo HTML::anchor('#', $reply->author->nickname) . ': ';
 			echo $reply->content . ' (' . Alpaca::time_ago($reply->created) . ')';
 			echo '</li>';
 		}

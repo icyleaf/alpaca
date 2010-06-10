@@ -10,7 +10,7 @@ foreach ($collections as $collection):
 	$nickname = (strlen($user->nickname) > 24) ? substr($user->nickname, 0, 24).'...' : $user->nickname;
 	
 	echo '<li class="user_item"><div>'.$avatar.'</div>'.
-		html::anchor($user_url, $nickname, array('title' => $user->nickname)).'</li>';
+		HTML::anchor($user_url, $nickname, array('title' => $user->nickname)).'</li>';
 endforeach;
 endif;?>
 </ul>

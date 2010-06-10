@@ -3,7 +3,7 @@
 ?>
 <div class="widget">
 	<div class="block new_topic">
-	<?php echo html::anchor(Route::get('topic/add')->uri(array('id' => $group->id)), __('发布新话题'));?>
+	<?php echo HTML::anchor(Route::get('topic/add')->uri(array('id' => $group->id)), __('发布新话题'));?>
 	</div>
 </div>
 

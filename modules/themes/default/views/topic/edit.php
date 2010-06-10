@@ -36,7 +36,7 @@ $content_error = isset($errors['content'])?$errors['content']:'';
 				<input class="button_submit" type="submit" value="<?php echo __('Update'); ?>" />
 			</span>
 			<span class="left">
-				<?php echo html::anchor(Route::get('topic')->uri(
+				<?php echo HTML::anchor(Route::get('topic')->uri(
 					array('id' => $topic->id)), 
 					__('Undo'), 
 					array('class' => 'button')

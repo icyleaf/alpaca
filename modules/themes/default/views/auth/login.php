@@ -9,7 +9,7 @@ $redir = empty($_SERVER['HTTP_REFERER']) ? url::base() : $_SERVER['HTTP_REFERER'
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
-		<small><?php echo html::anchor(Route::get('register')->uri(), '('.__('Sign up').')'); ?></small>
+		<small><?php echo HTML::anchor(Route::get('register')->uri(), '('.__('Sign up').')'); ?></small>
 	</h2>
 	<form method="post">
 	<input type="hidden" name="redir" value="<?php echo $redir; ?>" />
@@ -21,7 +21,7 @@ $redir = empty($_SERVER['HTTP_REFERER']) ? url::base() : $_SERVER['HTTP_REFERER'
 		</p>
 		<p>
 			<label><?php echo __('Password'); ?>:</label>
-			<?php echo html::anchor('lostpassword', '('.__('Lost Password').')'); ?><br />
+			<?php echo HTML::anchor('lostpassword', '('.__('Lost Password').')'); ?><br />
 			<input id="password" name="password" type="password" tabindex="20" />
 			<br /><span class="error"><?php echo $error_pwd; ?></span>
 		</p>

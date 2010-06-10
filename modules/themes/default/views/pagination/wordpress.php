@@ -13,12 +13,12 @@
 
 	if ($first_page !== FALSE)
 	{
-		echo html::anchor($page->url($first_page), __('&laquo; 首页'), array('class'=>'first'));
+		echo HTML::anchor($page->url($first_page), __('&laquo; 首页'), array('class'=>'first'));
 	}
 
 	if ($previous_page !== FALSE)
 	{
-		echo html::anchor($page->url($previous_page), __('前页'), array('class'=>'previous'));
+		echo HTML::anchor($page->url($previous_page), __('前页'), array('class'=>'previous'));
 	}
 	
 	for ($i = 1; $i <= $total_pages; $i++)
@@ -29,18 +29,18 @@
 		}
 		else
 		{
-			echo html::anchor($page->url($i), $i, array('class'=>'page'));
+			echo HTML::anchor($page->url($i), $i, array('class'=>'page'));
 		}
 	}
 
 	if ($next_page !== FALSE)
 	{
-		echo html::anchor($page->url($next_page), __('后页'), array('class'=>'next'));
+		echo HTML::anchor($page->url($next_page), __('后页'), array('class'=>'next'));
 	}	
 
 	if ($last_page !== FALSE)
 	{
-		echo html::anchor($page->url($last_page), __('末页 &raquo;'), array('class'=>'last'));
+		echo HTML::anchor($page->url($last_page), __('末页 &raquo;'), array('class'=>'last'));
 	}
 ?>
 </p><!-- /pagination -->

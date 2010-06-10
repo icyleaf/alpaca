@@ -53,8 +53,8 @@ $config = array
 	),
 	
 	// temp broadcast 
-	'broadcast'		=> html::anchor('topic/1000177', '新论坛').
-		'上线测试，由于用户加密机制更换，请大家通过'.html::anchor('lostpassword', '找回密码').
+	'broadcast'		=> HTML::anchor('topic/1000177', '新论坛').
+		'上线测试，由于用户加密机制更换，请大家通过'.HTML::anchor('lostpassword', '找回密码').
 		'重设密码！(请留意垃圾箱的邮件)',
 
 	// Google Analytics

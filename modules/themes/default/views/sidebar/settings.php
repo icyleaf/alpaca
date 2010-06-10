@@ -12,14 +12,14 @@
 		<label><?php echo __('Notifications'); ?></label>
 		<p>
 		<?php echo __('Want to be notified of issues as they come in? Check the :notifications section.', array(
-			':notifications' => html::anchor('settings/notification', __('Notifications'))
+			':notifications' => HTML::anchor('settings/notification', __('Notifications'))
 			)); ?>
 		</p>
 		
 		<label><?php echo __('View your public profile'); ?></label>
 		<p>
 		<?php echo __(':click_here to view your public profile.', array(
-			':click_here' => html::anchor(Route::get('user')->uri(array('id' => Alpaca_User::the_uri($user))), __('Click here'))
+			':click_here' => HTML::anchor(Route::get('user')->uri(array('id' => Alpaca_User::the_uri($user))), __('Click here'))
 			)); ?>
 		</p>
 	</div>

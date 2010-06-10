@@ -7,20 +7,20 @@ $author = $topic->author;
 	<h4><?php echo __('Admin functions'); ?></h4>
 	<ul class="actions">
 		<li>
-			<?php echo html::anchor('topic/edit/'.$topic->id, __('Edit'), array(
+			<?php echo HTML::anchor('topic/edit/'.$topic->id, __('Edit'), array(
 				'class'	=> 'edit', 
 				'title'	=> __('Edit Topic'),
 				)); ?>
 		</li>
 		<li>
-			<?php echo html::anchor('topic/delete/'.$topic->id, __('Delete'), array(
+			<?php echo HTML::anchor('topic/delete/'.$topic->id, __('Delete'), array(
 				'class'	=> 'delete', 
 				'title'	=> __('Delete this topic include all the replies'),
 				'rel'	=> __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
 				));?>
 		</li>
 		<li>
-			<?php echo html::anchor('topic/move/'.$topic->id, __('Move'), array('title'	=> __('Move to other group'),));?>
+			<?php echo HTML::anchor('topic/move/'.$topic->id, __('Move'), array('title'	=> __('Move to other group'),));?>
 		</li>
 	</ul>
 </div>
@@ -28,7 +28,7 @@ $author = $topic->author;
 
 <div class="topic">
 	<h2>
-		<?php echo html::image('media/images/star_empty.png'); ?>
+		<?php echo HTML::image('media/images/star_empty.png'); ?>
 		<?php echo $topic->title; ?>
 	</h2>
 	
@@ -46,9 +46,9 @@ $author = $topic->author;
 				$avatar = 'media/images/user-default.jpg';
 			}
 			
-			echo '<span class="avatar">'.html::image($avatar).'</span>';
+			echo '<span class="avatar">'.HTML::image($avatar).'</span>';
 			echo '<span class="author">'.
-				html::anchor(Route::get('user')->uri(array('id'=>Alpaca_User::the_uri($author))), 
+				HTML::anchor(Route::get('user')->uri(array('id'=>Alpaca_User::the_uri($author))),
 				$author->nickname).'</span>';
 			echo '<span class="date">'.date($config->date_format, $topic->created).'</span>';
 		?>
@@ -64,12 +64,12 @@ $author = $topic->author;
 		<?php 
 		if ($auth_user AND ($auth_user->id == $author->id) AND ! $auth_user->has('roles', ORM::factory('role', array('name'=>'admin'))))
 		{
-			echo html::anchor('topic/delete/'.$topic->id, __('Delete'), array(
+			echo HTML::anchor('topic/delete/'.$topic->id, __('Delete'), array(
 				'class'	=> 'button delete', 
 				'title'	=> __('Delete this topic include all the replies'),
 				'rel'	=> __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
 				));
-			echo html::anchor('topic/edit/'.$topic->id, __('Edit'), array(
+			echo HTML::anchor('topic/edit/'.$topic->id, __('Edit'), array(
 				'class'	=> 'button edit', 
 				'title'	=> __('Edit Topic'),
 				));	
