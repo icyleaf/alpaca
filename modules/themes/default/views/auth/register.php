@@ -30,7 +30,7 @@ $error_nickname = isset($errors['nickname']) ? $errors['nickname'] : '';
 			<br /><span class="error"><?php echo $error_nickname; ?></span>
 		</p>
 		<p class="submit">
-			<input name="random" type="hidden" value="<?php echo time(); ?>" />
+			<input id="random" name="random" type="hidden" value="<?php echo time(); ?>" />
 			<input id="nospam" name="nospam" type="hidden" value="0" />
 			<input class="button" id="submit" type="submit" tabindex="100" value="<?php echo __('Quick Register'); ?>" />
 		</p>
@@ -38,4 +38,3 @@ $error_nickname = isset($errors['nickname']) ? $errors['nickname'] : '';
 	</div>
 	</form>
 </div>
-<script type="text/javascript" src="<?php echo URL::site('media/js/nospam.js'); ?>"></script>

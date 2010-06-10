@@ -24,7 +24,7 @@ var alpaca = {
 	/**
 	 * Auto resize for textarea
 	 *
-	 * @param string
+	 * @param element
 	 * @return void
 	 */
 	autoresize: function(element)
@@ -50,7 +50,7 @@ var alpaca = {
 	/**
 	 * Display collection tips
 	 *
-	 * @param string 
+	 * @param element 
 	 * @return void
 	 */
 	collection_tips: function(element)
@@ -70,7 +70,7 @@ var alpaca = {
 	/**
 	 * Add a topic collection
 	 *
-	 * @param string 
+	 * @param element 
 	 * @return mixed
 	 */
 	add_collection: function(element)
@@ -109,6 +109,31 @@ var alpaca = {
 				return false;
 			});
 		}
+	},
+
+	/**
+	 * Anti SPAM
+	 * @param source
+	 * @param target
+	 * @param submit
+	 * @return void
+	 */
+	anti_spam: function(source, target, button)
+	{
+		$(document).ready(function(){
+			var s_input = $('#'+source);
+			var t_input = $('#'+target);
+			var submit = $('#'+button);
+
+			submit.bind('click', function(){
+				t_input.val(s_input.val());
+			});
+
+			submit.bind('blur', function(){
+				t_input.val('');
+			});
+		});
 	}
+
 };
 

@@ -154,6 +154,7 @@ class Controller_Auth extends Controller_Alpaca {
 		}
 		
 		$this->header->title->set($title);
+		$this->header->javascript->append_script('alpaca.anti_spam("random", "nospam", "submit");');
 	}
 	
 	/**

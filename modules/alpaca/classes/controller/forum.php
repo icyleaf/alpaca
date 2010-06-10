@@ -65,8 +65,11 @@ class Controller_Forum extends Controller_Alpaca {
 	 */
 	public function action_media()
 	{
-		// Generate and check the ETag for this file
-		$this->request->check_cache(sha1($this->request->uri));
+		if (IN_PRODUCTION)
+		{
+			// Generate and check the ETag for this file
+			$this->request->check_cache(sha1($this->request->uri));
+		}
 
 		// Get the file path from the request
 		$file = $this->request->param('file');
