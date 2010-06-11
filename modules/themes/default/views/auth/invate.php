@@ -1,6 +1,6 @@
 <?php
-$email = isset($_POST['email']) ? $_POST['email'] : '';
-$error_email = isset($errors['email']) ? $errors['email'] : '';
+$email = Arr::get($_POST, 'email');
+$error_email = Arr::get($errors, 'email');
 ?>
 <div id="authform">
 	<h2>

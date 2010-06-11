@@ -42,7 +42,7 @@ class HTML extends Kohana_HTML {
 				if (HTML::$windowed_urls === TRUE AND empty($attributes['target']))
 				{
 					// Append external Attribute to external link
-					if (preg_match('/^(http:\/\/)?([^\/]+)\//i', $uri, $match) AND $match[0] != url::base(FALSE))
+					if (preg_match('/^(http:\/\/)?([^\/]+)\//i', $uri, $match) AND $match[0] != URL::base(FALSE))
 					{
 						// Make the link open in a new window
 						$attributes['target'] = '_blank';

@@ -1,10 +1,10 @@
 <?php
-$email = isset($_POST['email']) ? $_POST['email'] : '';
+$email = Arr::get($_POST, 'email');
 
-$error_email = isset($errors['email']) ? $errors['email'] : '';
-$error_pwd = isset($errors['password']) ? $errors['password'] : '';
+$error_email = Arr::get($errors, 'email');
+$error_pwd = Arr::get($errors, 'password');
 
-$redir = empty($_SERVER['HTTP_REFERER']) ? url::base() : $_SERVER['HTTP_REFERER'];
+$redir = empty($_SERVER['HTTP_REFERER']) ? URL::base() : $_SERVER['HTTP_REFERER'];
 ?>
 <div id="authform">
 	<h2>

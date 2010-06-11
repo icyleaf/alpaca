@@ -355,7 +355,7 @@ class Alpaca {
 	{
 		$config = Kohana::config('alpaca');
 		$years = (empty($start_year)) ? date('Y') : $start_year.'-'.date('Y');
-		$name = HTML::anchor(url::base(), $config['title']);
+		$name = HTML::anchor(URL::base(), $config['title']);
 		$author = HTML::anchor($config['project']['url'], $config['project']['author']);
 		
 		$output = '&copy; '.$years.' '.$name;

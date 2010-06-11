@@ -36,7 +36,7 @@ $author = $auth->get_user();
 
 <div class="options line" style="margin-top: 15px">
 	<div class="txt_right">
-		<?php echo HTML::anchor(url::base(), __('Home Back')); ?>
+		<?php echo HTML::anchor(URL::base(), __('Home Back')); ?>
 		 | 
 		<?php echo HTML::anchor(Route::get('group')->uri(array('id' => $topic->group->id)), $topic->group->name); ?>
 		 | 

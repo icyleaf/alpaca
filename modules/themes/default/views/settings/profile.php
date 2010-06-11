@@ -1,21 +1,21 @@
 <?php
-$username = isset($_POST['username']) ? $_POST['username'] : $user->username;
-$nickname = isset($_POST['nickname']) ? $_POST['nickname'] : $user->nickname;
-$location = isset($_POST['location']) ? $_POST['location'] : $user->location;
-$website = isset($_POST['website']) ? $_POST['website'] : $user->website;
-$qq = isset($_POST['qq']) ? $_POST['qq'] : $user->qq;
-$msn = isset($_POST['msn']) ? $_POST['msn'] : $user->msn;
-$gtalk = isset($_POST['gtalk']) ? $_POST['gtalk'] : $user->gtalk;
-$skype = isset($_POST['skype']) ? $_POST['skype'] : $user->skype;
+$username = Arr::get($_POST, 'username', $user->username);
+$nickname = Arr::get($_POST, 'nickname', $user->nickname);
+$location = Arr::get($_POST, 'location', $user->location);
+$website = Arr::get($_POST, 'website', $user->website);
+$qq = Arr::get($_POST, 'qq', $user->qq);
+$msn = Arr::get($_POST, 'msn', $user->msn);
+$gtalk = Arr::get($_POST, 'gtalk', $user->gtalk);
+$skype = Arr::get($_POST, 'skype', $user->skype);
 
-$error_username = isset($errors['username']) ? $errors['username'] : '';
-$error_nickname = isset($errors['nickname']) ? $errors['nickname'] : '';
-$error_location = isset($errors['location']) ? $errors['location'] : '';
-$error_website = isset($errors['website']) ? $errors['website'] : '';
-$error_qq = isset($errors['qq']) ? $errors['qq'] : '';
-$error_msn = isset($errors['msn']) ? $errors['msn'] : '';
-$error_gtalk = isset($errors['gtalk']) ? $errors['gtalk'] : '';
-$error_skype = isset($errors['skype']) ? $errors['skype'] : '';
+$error_username = Arr::get($errors, 'username');
+$error_nickname = Arr::get($errors, 'nickname');
+$error_location = Arr::get($errors, 'location');
+$error_website = Arr::get($errors, 'website');
+$error_qq = Arr::get($errors, 'qq');
+$error_msn = Arr::get($errors, 'msn');
+$error_gtalk = Arr::get($errors, 'gtalk');
+$error_skype = Arr::get($errors, 'skype');
 ?>
 <h3><?php echo __('Change Avatar'); ?></h3>
 <div class="avatar">
@@ -46,11 +46,9 @@ $error_skype = isset($errors['skype']) ? $errors['skype'] : '';
 <dl>
 	<dt><label class="tips">username</label></dt>
 	<dd>
-		<?php if (empty($username)): ?>
-			<input class="field" type="text" name="username" value="<?php echo $username; ?>" />
-		<?php else: ?>
-			<input class="field readonly" type="text" value="<?php echo $username; ?>" readonly/>
-		<?php endif; ?>
+		<?php $uname_attr = empty($username) ? '' : ' readonly'; ?>
+		<input class="field<?php echo $uname_attr; ?>" type="text"
+		      name="username" value="<?php echo $username; ?>" <?php echo $uname_attr; ?> />
 		<br /><span class="error"><?php echo $error_username; ?></span>
 	</dd>
 </dl>

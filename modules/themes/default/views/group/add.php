@@ -1,11 +1,11 @@
 <?php
-	$name = isset($_POST['name'])?$_POST['name']:'';
-	$uri = isset($_POST['uri'])?$_POST['uri']:'';
-	$desc = isset($_POST['desc'])?$_POST['desc']:'';
+	$name = Arr::get($_POST, 'name');
+	$uri = Arr::get($_POST,'uri');
+	$desc = Arr::get($_POST,'desc');
 	
-	$name_error = isset($errors['name'])?$errors['name']:'';
-	$name_uri = isset($errors['uri'])?$errors['uri']:'';
-	$desc_error = isset($errors['desc'])?$errors['desc']:'';
+	$name_error = Arr::get($errors, 'name');
+	$name_uri = Arr::get($errors, 'uri');
+	$desc_error = Arr::get($errors, 'desc');
 ?>
 <h3 class="hot"><?php echo $title; ?></h3>
 <form method="post" class="form_table">

@@ -1,11 +1,11 @@
 <?php
 $author = $auth->get_user();
 
-$title = isset($_POST['title'])?$_POST['title']:'';
-$content = isset($_POST['content'])?$_POST['content']:'';
+$title = Arr::get($_POST, 'title');
+$content = Arr::get($_POST, 'content');
 
-$title_error = isset($errors['title'])?$errors['title']:'';
-$content_error = isset($errors['content'])?$errors['content']:'';
+$title_error = Arr::get($errors, 'title');
+$content_error = Arr::get($errors, 'content');
 ?>
 <h3 class="hot"><?php echo $group->name.__(' New Topic'); ?></h3>
 <form method="post" class="form_table">

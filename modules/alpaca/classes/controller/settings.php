@@ -69,7 +69,7 @@ class Controller_Settings extends Controller_Alpaca {
 			$post = Validate::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('nickname', array(
-					'not_empty'		=> NULL,
+					'not_empty'			=> NULL,
 					'min_length'		=> array(3),
 					'max_length'		=> array(32),
 					))
@@ -107,11 +107,15 @@ class Controller_Settings extends Controller_Alpaca {
 			if ($post->check())
 			{
 				$user_id = $_POST['id'];
-				unset($_POST['id']);
-				ORM::factory('user', $user_id)
-					->values($_POST)
-					->save();
-					
+				$user = ORM::factory('user', $user_id);
+				// registered user cannt change email and username
+				unset($_POST['id'], $_POST['email']);
+				if ( ! empty($user['username']))
+				{
+					$_POST['username'];
+				}
+
+				$user->values($_POST)->save();
 				$this->status = array
 				(
 					'type'		=> 'success',

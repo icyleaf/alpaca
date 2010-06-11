@@ -195,11 +195,11 @@ class Head_Javascript_File extends Head_Partial {
 			else if ( $field[1]=='date' )
 			{
 				$date = file_exists($field[0])?(filemtime($field[0])?'?ver='.(date('Ymd', filemtime($field[0]))):''):'';
-				$html .= '<script type="text/javascript" src="'.url::base().$field[0].$date.'"></script>';
+				$html .= '<script type="text/javascript" src="'.URL::base().$field[0].$date.'"></script>';
 			}
 			else
 			{
-				$html .= '<script type="text/javascript" src="'.url::base().$field[0].'?ver='.$field[1].'"></script>';
+				$html .= '<script type="text/javascript" src="'.URL::base().$field[0].'?ver='.$field[1].'"></script>';
 			}
 			$html .= "\r\n";
 		}
@@ -367,7 +367,7 @@ class Head_Link extends Head_Partial {
 			}
 			else
 			{
-				$attributes['href'] = url::base(FALSE).$link[0];
+				$attributes['href'] = URL::base(FALSE).$link[0];
 			}
 			
 			if ( !empty($link[3]) )

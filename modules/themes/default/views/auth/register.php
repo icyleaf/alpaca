@@ -1,11 +1,11 @@
 <?php
-$email = isset($_POST['email']) ? $_POST['email'] : '';
-$nickname = isset($_POST['nickname']) ? $_POST['nickname'] : '';
+$email = Arr::get($_POST, 'email');
+$nickname = Arr::get($_POST, 'nickname');
 
-$error_email = isset($errors['email']) ? $errors['email'] : '';
-$error_pwd = isset($errors['password']) ? $errors['password'] : '';
-$error_pwd_conf = isset($errors['password_confirm'] ) ? $errors['password_confirm'] : '';
-$error_nickname = isset($errors['nickname']) ? $errors['nickname'] : '';
+$error_email = Arr::get($errors, 'email');
+$error_pwd = Arr::get($errors, 'password');
+$error_pwd_conf = Arr::get($errors, 'password_confirm');
+$error_nickname = Arr::get($errors, 'nickname');
 ?>
 <div id="authform">
 	<h2>

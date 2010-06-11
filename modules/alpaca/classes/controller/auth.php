@@ -196,7 +196,7 @@ class Controller_Auth extends Controller_Alpaca {
 					{
 						if (strpos($redirect, $key) !== FALSE)
 						{
-							$redirect = url::base(FALSE);
+							$redirect = URL::base(FALSE);
 							break;
 						}
 					}

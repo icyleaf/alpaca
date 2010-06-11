@@ -52,7 +52,7 @@
 		<div id="website">
 		<?php 
 			echo HTML::anchor(
-				url::base(), 
+				URL::base(),
 				HTML::image($config->logo), array('alt' => $config->title), array('id' => 'logo')
 				);
 		?>

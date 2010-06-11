@@ -38,7 +38,7 @@ $author = $topic->author;
 			if ($author->loaded() AND ! empty($author->email))
 			{
 				$avatar = Gravatar::instance($author->email, array(
-					'default' => url::base().'media/images/user-default.jpg'
+					'default' => URL::base().'media/images/user-default.jpg'
 				));
 			}
 			else

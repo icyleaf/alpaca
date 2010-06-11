@@ -1,10 +1,10 @@
 <?php
-$hash_code = isset($_POST['hash_code']) ? $_POST['hash_code'] : '';
-$error_hash_code = isset($errors['hash_code']) ? $errors['hash_code'] : '';
+$hash_code = Arr::get($_POST, 'hash_code');
+$error_hash_code = Arr::get($errors, 'hash_code');
 
 if ( ! empty($action) AND $action == 'resend'):
-	$email = isset($email) ? $email : (isset($_POST['email']) ? $_POST['email'] : '');
-	$error_email = isset($errors['email']) ? $errors['email'] : '';
+	$email = isset($email) ? $email : Arr::get($_POST, 'email');
+	$error_email = Arr::get($errors, 'email');
 ?>
 <div id="authform">	
 	<h2><?php echo __('Send me again'); ?></h2>
