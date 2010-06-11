@@ -23,12 +23,12 @@ $author = $auth->get_user();
 <table>
 	<tr>
 		<td class="txt_right"><?php echo __('Email'); ?></td>
-		<td><input type="text" name="email" value="" /></td>
-		<td rowspan="2"><input class="button_auth" type="submit" value="<?php echo __('Log in'); ?>" /></td>
+		<td><input type="text" name="email" value="" tabindex="100" /></td>
+		<td rowspan="2"><input class="button_auth" type="submit" tabindex="103"  value="<?php echo __('Log in'); ?>" /></td>
 	</tr>
 	<tr>
 		<td class="txt_right"><?php echo __('Password'); ?></td>
-		<td><input type="password" name="password" value="" /></td>
+		<td><input type="password" name="password" value=""  tabindex="101" /></td>
 	</tr>
 </table>
 </form>
