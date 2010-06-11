@@ -115,22 +115,16 @@ var alpaca = {
 	 * Anti SPAM
 	 * @param source
 	 * @param target
-	 * @param submit
 	 * @return void
 	 */
-	anti_spam: function(source, target, button)
+	anti_spam: function(source, target)
 	{
 		$(document).ready(function(){
 			var s_input = $('#'+source);
 			var t_input = $('#'+target);
-			var submit = $('#'+button);
 
-			submit.bind('click', function(){
+			$('form').bind('event', function(){
 				t_input.val(s_input.val());
-			});
-
-			submit.bind('blur', function(){
-				t_input.val('');
 			});
 		});
 	}

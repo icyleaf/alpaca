@@ -154,7 +154,7 @@ class Controller_Auth extends Controller_Alpaca {
 		}
 		
 		$this->header->title->set($title);
-		$this->header->javascript->append_script('alpaca.anti_spam("random", "nospam", "submit");');
+		$this->header->javascript->append_script('alpaca.anti_spam("random", "nospam");');
 	}
 	
 	/**
@@ -190,7 +190,7 @@ class Controller_Auth extends Controller_Alpaca {
 					$disable_redirect = array
 					(
 						'auth', 'register', 'login', 'logout', 'invate', 
-						'lostpassword', 'changepassword'
+						'lostpassword', 'changepassword', 'verity'
 					);
 					foreach ($disable_redirect as $key)
 					{
