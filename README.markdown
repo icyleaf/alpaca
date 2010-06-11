@@ -1,4 +1,4 @@
-# Alpaca
+# alpaca
 
 A swift, lightweight forum system (development)
 
@@ -8,7 +8,7 @@ A swift, lightweight forum system (development)
 
 * PHP 5.2+
 * Mysql 5.0+
-* [Kohana v3.0](http://github.com/kohana/kohana)
+* [Kohana v3.0.5](http://github.com/kohana/kohana)
 * Kohana Modules: [Database](http://github.com/kohana/database), [ORM](http://github.com/kohana/orm), [Auth](http://github.com/icyleaf/alpaca/tree/master/modules/auth/), [Pagination](http://github.com/kohana/pagination), [Gravatar](http://github.com/icyleaf/alpaca/tree/master/modules/gravatar/) and [iMailer](http://github.com/icyleaf/alpaca/tree/master/modules/imailer/). (**they all include Alpaca**)
 
 ## Installation
@@ -45,7 +45,7 @@ Edit `application/config/database.php` with the correct information.
 
 Step 4: Import SQL
 
-Run the SQL found in `module/alpaca/sql/install.sql`.
+Run the SQL found in `dump/install.sql`.
 
 Step 5: Configuration of Alpaca
 
@@ -53,7 +53,7 @@ Open `application/bootstrap.php` and make the following changes:
 
 * Set the default [timezone](http://php.net/timezones) for your application
 
-Make sure the `application/cache` and `application/logs` directories are world writable with `chmod application/{cache,logs} 0777`
+Make sure the `cache` and `logs` directories are world writable with `chmod {cache,logs} 0777`
 
 > Depending on your platform, the installation's subdirs may have lost their permissions thanks to zip extraction. Chmod them all to 755 by running `find . -type d -exec chmod 0755 {} \;` from the root of your Alpaca installation.
 
