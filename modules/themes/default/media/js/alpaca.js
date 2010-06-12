@@ -58,12 +58,18 @@ var alpaca = {
 		var e = $(element);
 		if (e.length)
 		{
-			e.mouseover(function(){
-				$(this).find('.collection_tips').removeClass('hidden');
-			})
-			.mouseout(function(){
-				$(this).find('.collection_tips').addClass('hidden');
-			});
+			var mover_start;
+			e.hover(
+				function () {
+					clearTimeout(mover_start);
+					$(this).find('.collection_tips').fadeIn();
+				},
+				function () {
+					mover_start = setTimeout(function(){
+						$(element).find('.collection_tips').fadeOut('slow');
+					}, 200);
+				}
+			);
 		}
 	},
 
@@ -100,7 +106,9 @@ var alpaca = {
 								alert('已经收藏');
 								break;
 							case 'NO_AUTH':
-								alert('未验证');
+								var current_url = window.location;
+								var url = BASH_URL+'/login?redir='+current_url;    
+								$(location).attr('href',url);
 								break;
 						}
 					}

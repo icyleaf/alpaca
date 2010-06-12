@@ -50,7 +50,7 @@ class Controller_Alpaca extends Controller_Template {
 		$this->header->css->append_file('media/css/screen.css', '0.9', 'all');
 		$this->header->css->append_file('media/css/layout.css', 'date');
 		// Javascript
-		$this->header->javascript->append_file('media/js/jquery.js', '1.3.2');
+		$this->header->javascript->append_file('media/js/jquery-1.4.2.min.js');
 		$this->header->javascript->append_file('media/js/alpaca.js', '0.1');
 		$this->header->javascript->append_file('media/js/common.js');
 		$this->header->javascript->append_script('var BASH_URL = "'.URL::base(FALSE).'";');
