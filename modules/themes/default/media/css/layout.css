@@ -66,6 +66,7 @@ h4 {
 #header .block .search input[type=submit] {
 	font-weight: bolder;
 	color: #666666;
+	line-height: 17px;
 }
 
 #website {
