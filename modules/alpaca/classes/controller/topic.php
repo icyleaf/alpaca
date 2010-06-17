@@ -26,12 +26,12 @@ class Controller_Topic extends Controller_Alpaca {
 		$topic = ORM::factory('topic', $topic_id);
 		if ($topic->loaded())
 		{
-                        $title = $topic->title;
+			$title = $topic->title;
 			$topic->hits += 1;
 			$topic->save();
 			
 			$pagination = Pagination::factory(array(
-				'view'                  => 'pagination/digg',
+				'view'				=> 'pagination/digg',
 				'total_items' 		=> $topic->count,
 				'items_per_page'	=> $this->config->post['per_page'],
 				));
@@ -43,6 +43,7 @@ class Controller_Topic extends Controller_Alpaca {
 				
 			$topic_posts = View::factory('post/list')
 				->set('post_count', $topic->posts->find_all()->count())
+				->bind('topic', $topic)
 				->bind('posts', $posts)
 				->bind('pagination', $pagination);
 				
@@ -68,8 +69,8 @@ class Controller_Topic extends Controller_Alpaca {
 			$title = __('Ooops');
 			$content = __('Not found this topic!');
 		}
-
-                $this->header->title->prepend($title);
+		
+		$this->header->title->prepend($title);
 	}
 	
 	/**

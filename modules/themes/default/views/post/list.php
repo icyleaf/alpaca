@@ -1,47 +1,37 @@
 <?php 
 	$post_num = $pagination->offset + 1;
 	$auth_user = $auth->get_user();
+	$topic_user = $topic->author;
 ?>
 <?php if ($post_count > 0): ?>
-	<h3 class="blue">
-	<?php if ($post_count > 1): ?>
-	<?php echo __('(:number) replies', array(':number' => $post_count)) ?>
-	<?php else: ?>
-	<?php echo __('(:number) reply', array(':number' => $post_count)) ?>
-	<?php endif ?>
-</h3>
 <?php foreach ($posts as $post): ?>
 <div id="post-<?php echo $post->id ?>" class="post">
-	<div class="function right">
-		<?php $author = $post->author;
-		if ($auth_user AND ($auth_user->id == $author->id OR 
-			$auth_user->has('roles', ORM::factory('role', array('name' => 'admin'))))):
-		?>
-		<span class="action">
-			<?php 
-			echo HTML::anchor('post/delete/'.$post->id, __('Delete'), array(
-				'class'	=> 'delete', 
-				'title'	=> __('Delete Reply'),
-				'rel'	=> __('Do you really want to delete this reply?'),
-				));
-			echo HTML::anchor('post/edit/'.$post->id, __('Edit'), array(
-				'class'	=> 'edit', 
-				'title'	=> __('Edit Reply'),
-				)); 
-			?>
-		</span>
-		<?php endif; ?>
-		<?php
-			/*
-			echo HTML::anchor('post/reply/'.$post->topic->id.'/'.$post->id, __('Reply'), array(
-				'class'	=> 'edit', 
-				'title'	=> __('Reply'),
-				));
-			*/	
-		?>
-		<?php echo '<a href="#post-'.$post->id.'" name="post-'.$post->id.'">#'.$post_num.'</a>'; ?>
-	</div>
-	<ul id="details-<?php echo $post->id ?>" class="details">
+	<?php
+		$author = $post->author;
+		// Author name with anchor
+		$style = ($topic_user->id == $author->id) ? ' owner' : ' poster';
+	?>
+
+	<div class="meta<?php echo $style; ?>">
+	<?php if ($auth_user AND ($auth_user->id == $author->id OR
+		$auth_user->has('roles', ORM::factory('role', array('name' => 'admin'))))):
+	?>
+	<ul class="actions right">
+		<li><?php echo HTML::anchor('post/delete/'.$post->id, __('Delete'), array(
+			'class'	=> 'delete',
+			'title'	=> __('Delete Reply'),
+			'rel'	=> __('Do you really want to delete this reply?'),
+			)); ?>
+		</li>
+		<li><?php echo HTML::anchor('post/edit/'.$post->id, __('Edit'), array(
+			'class'	=> 'edit',
+			'title'	=> __('Edit Reply'),
+			)); ?>
+		</li>
+	</ul>
+	<?php endif; ?>
+		
+	<ul id="details-<?php echo $post->id ?>" class="details left">
 		<li class="author">
 			<?php
 				$avatar_config = array
@@ -52,15 +42,18 @@
 				// Display author avatar
 				echo Alpaca_User::avatar($author, $avatar_config, array('id' => 'avatar-'.$post->id, 'class' => 'avatar', TRUE));
 				
-				// Author name with anchor
-				$style = ($auth_user AND $auth_user->id == $author->id) ? 'owner' : 'poster';
-				echo HTML::anchor(Route::get('user')->uri(array(
-					'id' => Alpaca_User::the_uri($author))), 
-					$author->nickname, array('class' => $style)); 
+				echo HTML::anchor(
+					Route::get('user')->uri(array('id' => Alpaca_User::the_uri($author))),
+					$author->nickname); 
 			?>
 		</li>
-		<li class="date"><?php echo date($config->date_format, $post->created); ?></li>
+		<li class="date">
+			<?php echo '<a href="#post-'.$post->id.'" name="post-'.$post->id.'">'.
+					date($config->date_format, $post->created).'</a>'; ?>
+		</li>
 	</ul>
+	<div class="clear"></div>
+	</div>
 	<div class="clear"></div>
 	<div class="post-content">
 		<?php echo Alpaca::format_html($post->content); ?>

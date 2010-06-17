@@ -494,54 +494,79 @@ h4 {
 
 /********** POST ****************/
 .post {
-	border-bottom: 1px solid #CCCCCC;
-	margin-bottom: 5px;
+/*	border-bottom: 1px solid #CCCCCC;*/
+	margin-bottom: 20px;
 }
 
 .post-content {
-	margin: 10px 0;
-	margin-left: 3px;
+	margin: 10px 5px;
 }
 
-.post ul.details {
+.post .meta {
+	height: 38px;
+}
+
+.post div.owner {
+	background: #DFF1FF;
+	color: #3354AA;
+}
+
+.post div.owner ul.details .avatar {
+	border: 1px solid #DFF1FF;
+}
+
+.post div.owner ul.details .avatar-hover {
+	border: 1px solid #4C9ACF;
+}
+
+.post div.poster {
+	background: #EEEEEE;
+	color: #212121;
+}
+
+.post div.poster ul.details .avatar {
+	border: 1px solid #EEEEEE;
+}
+
+.post div.poster ul.details .avatar-hover {
+	border: 1px solid #999999;
+}
+
+.post .meta ul.actions {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	line-height: 38px;
+}
+
+.post .meta ul.details {
+	list-style-type: none;
 	padding-left: 0;
 	margin-bottom: 5px;
-	line-height: 32px;
+	line-height: 34px;
 }
 
-.post ul.details li {
+.post .meta ul.actions li,
+.post .meta ul.details li {
 	float: left;
-	list-style-type: none;
 	margin-right: 10px;
 }
 
 .post ul.details .avatar {
 	vertical-align: middle;
 	padding: 3px;
-	border: 1px solid #FFFFFF;
 	-moz-border-radius: 3px;
 	-khtml-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
-}
-
-.post ul.details .avatar-hover {
-	border: 1px solid #999999;
+	margin-right: 5px;
 }
 
 .post ul.details .author a {
+	color: #000000;
 	font-size: 1em;
 	font-weight: bold;
-}
-
-.post ul.details .author a.owner {
-	color: #3354AA;
-	padding-left: 10px;
-}
-
-.post ul.details .author a.poster {
-	color: #212121;
-	padding-left: 10px;
+	vertical-align: middle;
 }
 
 .post ul.details .date {
