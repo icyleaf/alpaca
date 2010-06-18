@@ -589,12 +589,64 @@ h4 {
 	padding: 3px;
 }
 
-#write_post textarea.content{
-	font-family: arial,san serif;
+/********** COMMENT ****************/
+#content .comments {
+	background: #F4F4F4;
+}
+
+#content .comments h3 {
+	margin: 0;
+	font-weight: bold;
+}
+
+#content .comments .comments-body {
+	background: #FFFFFF;
+	margin: 0 8px;
+	border-top: 1px solid #E8E8E8;
+	border-bottom: 1px solid #C4C4C4;
+	border-left: 1px solid #DFDFDF;
+	border-right: 1px solid #CFCFCF;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	padding-top: 10px;
+}
+
+#content .comments .comments-body label {
+	font-size: 14px;
+	padding-left: 15px;
+}
+
+#content .comments .comments-body input {
+	padding: 8px;
+	width: 510px;
+	color: #666666;
+}
+
+#content .comments .comments-actions {
+	padding: 8px;
+}
+
+#content .comments .comments-actions input[type=submit] {
+	height: 25px;
+	width: 90px;
+	font-size: 110%;
+	font-weight: bold;
+	padding-top: 2px;
+}
+
+#content .comments textarea {
+	margin: 0 10px;
+	font-family: arial, 'san serif';
 	font-size: 1.2em;
 	overflow: auto;
-	width: 628px;
+	width: 590px;
 	height: 110px;
+}
+
+#content .comments .comments-body .comments-tools {
+	margin: 3px 10px;
 }
 
 .options {

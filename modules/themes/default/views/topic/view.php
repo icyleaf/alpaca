@@ -86,7 +86,4 @@ $author = $topic->author;
 </div>
 
 <?php echo $topic_posts; ?>
-<div class="options">
-<?php echo __('Wanna say something?'); ?>
-</div>
 <?php echo $write_post; ?>
