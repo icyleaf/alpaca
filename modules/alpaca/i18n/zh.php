@@ -6,7 +6,7 @@ return array
 	 * Website common
 	 */
 	'Home'					=> '首页',
-	'Switch Language'	=> '切换语言',
+	'Switch Language'		=> '切换语言',
 	'Settings'				=> '设置',
 	'Sign up'				=> '注册',
 	'User Login'			=> '用户登录',
@@ -66,6 +66,7 @@ return array
 	'Do you really want to delete this reply?' => '确认要删除此讨论吗？',
 	'Post new reply after log in' => '在回复之前你需要先进行登录',
 	'Enable Sogou Cloud IME'=> '启用搜狗云输入法',
+	':number people collected this!' => ':number 位用户收藏了此话题',
 	'Click :image to add your collection! ' => '点击 :image 加为收藏',
 	'you already collected this!' => '您已经收藏了此话题',
 	'view who collected this!' => '谁收藏了此话题',

@@ -80,6 +80,12 @@ $author = $topic->author;
 </div><!-- topic -->
 
 <div class="options line txt_right">
+	<?php if ($post_count > 1): ?>
+	<?php echo __('(:number) replies', array(':number' => $post_count)) ?>
+	<?php else: ?>
+	<?php echo __('(:number) reply', array(':number' => $post_count)) ?>
+	<?php endif ?>
+	 |
 	<a href="javascript:window.scrollTo(0,0);"><?php echo __('Top Back'); ?></a>
 	 | 
 	<a href="#reply"><?php echo __('Reply Topic'); ?></a>

@@ -5,6 +5,7 @@
 ?>
 <?php if ($post_count > 0): ?>
 <?php foreach ($posts as $post): ?>
+<a name="replies"></a>
 <div id="post-<?php echo $post->id ?>" class="post">
 	<?php
 		$author = $post->author;
