@@ -120,22 +120,6 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `todos`
---
-
-CREATE TABLE IF NOT EXISTS `todos` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) NOT NULL,
-  `type` varchar(50) NOT NULL DEFAULT '',
-  `url` varchar(100) NOT NULL DEFAULT '',
-  `progress` int(1) unsigned NOT NULL DEFAULT '0',
-  `created` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000001 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `topics`
 --
 
