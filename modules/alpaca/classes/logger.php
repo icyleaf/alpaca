@@ -3,7 +3,7 @@
  * Log Viwer for Kohana 3
  *
  * @package 	libraries
- * @author 		icyleaf <icyleaf.cn@gmail.com>
+ * @author 	icyleaf <icyleaf.cn@gmail.com>
  * @link		http://icyleaf.com
  * @version 	0.1
  *

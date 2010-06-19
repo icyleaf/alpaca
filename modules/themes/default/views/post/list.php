@@ -11,8 +11,10 @@
 		$author = $post->author;
 		// Author name with anchor
 		$style = ($topic_user->id == $author->id) ? ' owner' : ' poster';
-	?>
 
+		$publish_date_tip = date($config->date_format, $post->created);
+		$publish_date = Alpaca::time_ago($post->created);
+	?>
 	<div class="meta<?php echo $style; ?>">
 	<?php if ($auth_user AND ($auth_user->id == $author->id OR
 		$auth_user->has('roles', ORM::factory('role', array('name' => 'admin'))))):
@@ -49,8 +51,8 @@
 			?>
 		</li>
 		<li class="date">
-			<?php echo '<a href="#post-'.$post->id.'" name="post-'.$post->id.'">'.
-					date($config->date_format, $post->created).'</a>'; ?>
+			<?php echo '<a href="#post-'.$post->id.'" name="post-'.$post->id.'" title="'.$publish_date_tip.'">'.
+					$publish_date.'</a>'; ?>
 		</li>
 	</ul>
 	<div class="clear"></div>

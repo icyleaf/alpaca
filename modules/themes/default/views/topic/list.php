@@ -14,10 +14,10 @@ if ($count > 0): ?>
 		<?php echo Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE);?>
 		<div class="collection">
 			<div class="collection_inset">
-				<?php 
+				<?php
 				if ( ! isset($hide_group)):
 					echo HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
-						$group->name, 
+						$group->name,
 						array('class' => 'groups')
 						);
 				endif; ?>
@@ -29,20 +29,20 @@ if ($count > 0): ?>
 						));
 					$colletion_url = URL::site('collection/topic/'.$topic->id);
 					$style = 'empty_star';
-					
+
 					if ($user = $auth->get_user())
 					{
 						$collection = ORM::factory('collection')
 							->where('user_id', '=', $user->id)
 							->and_where('topic_id', '=', $topic->id)
 							->find();
-							
+
 						if ($collection->loaded())
 						{
 							$tips_1 = __('you already collected this!');
 							$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
 								'topic_id' => $topic->id)), __('view who collected this!'));
-		
+
 							$colletion_url = 'javascript:void(0);';
 							$style = 'star';
 						}
@@ -52,11 +52,11 @@ if ($count > 0): ?>
 						$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
 							'topic_id' => $topic->id)), __('view who collected this!'));
 					} ?>
-					
+
 					<div class="collection_tips hidden">
 						<strong><?php echo $tips_1; ?></strong>
 						<?php echo $tips_2; ?>
-					</div>		
+					</div>
 					<a class="collection_link" href="<?php echo $colletion_url; ?>" id="<?php echo $topic->id; ?>">
 					<?php echo HTML::image('media/images/sprite_screen.png', array('class' => $style, 'alt'=>'*')); ?>
 					<strong><?php echo $topic->collections; ?></strong>
@@ -64,7 +64,7 @@ if ($count > 0): ?>
 				</div>
 			</div>
 		</div>
-	
+
 		<div class="topic_details">
 			<?php echo HTML::anchor(Route::get('topic')->uri(array('id' => $topic->id)),
 				$topic->title, array('class' => 'subject')); ?>
@@ -84,7 +84,7 @@ if ($count > 0): ?>
 				<?php echo __(':number hit', array(':number' => $topic->hits)) ?>
 				<?php endif ?>
 				<span class="divider">•</span>
-				<span class="open"><?php echo Alpaca::time_ago($topic->updated); ?></span>
+				<?php echo Alpaca::time_ago($topic->updated); ?>
 			</div>
 		</div>
 	</li>

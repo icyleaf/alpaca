@@ -2,9 +2,9 @@
 $auth_user = $auth->get_user();
 $author = $topic->author;
 ?>
-<?php if ($auth_user AND $auth_user->has('roles', ORM::factory('role', array('name'=>'admin')))): ?>
+<?php if ($auth_user AND ($auth_user->id == $author->id)): ?>
 <div class="admin-panel">
-	<h4><?php echo __('Admin functions'); ?></h4>
+	<h4><?php echo __('Topic actions'); ?></h4>
 	<ul class="actions">
 		<li>
 			<?php echo HTML::anchor('topic/edit/'.$topic->id, __('Edit'), array(
@@ -19,9 +19,11 @@ $author = $topic->author;
 				'rel'	=> __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
 				));?>
 		</li>
+		<?php if ($auth_user AND $auth_user->has('roles', ORM::factory('role', array('name'=>'admin')))): ?>
 		<li>
 			<?php echo HTML::anchor('topic/move/'.$topic->id, __('Move'), array('title'	=> __('Move to other group'),));?>
 		</li>
+		<?php endif; ?>
 	</ul>
 </div>
 <?php endif; ?>
@@ -59,33 +61,10 @@ $author = $topic->author;
 		<div class="topic-content">
 			<?php echo Alpaca::format_html($topic->content); ?>
 		</div>
-		
-		<div class="action txt_right">
-		<?php 
-		if ($auth_user AND ($auth_user->id == $author->id) AND ! $auth_user->has('roles', ORM::factory('role', array('name'=>'admin'))))
-		{
-			echo HTML::anchor('topic/delete/'.$topic->id, __('Delete'), array(
-				'class'	=> 'button delete', 
-				'title'	=> __('Delete this topic include all the replies'),
-				'rel'	=> __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
-				));
-			echo HTML::anchor('topic/edit/'.$topic->id, __('Edit'), array(
-				'class'	=> 'button edit', 
-				'title'	=> __('Edit Topic'),
-				));	
-		}	
-		?>
-		</div>
 	</div>
 </div><!-- topic -->
 
 <div class="options line txt_right">
-	<?php if ($post_count > 1): ?>
-	<?php echo __('(:number) replies', array(':number' => $post_count)) ?>
-	<?php else: ?>
-	<?php echo __('(:number) reply', array(':number' => $post_count)) ?>
-	<?php endif ?>
-	 |
 	<a href="javascript:window.scrollTo(0,0);"><?php echo __('Top Back'); ?></a>
 	 | 
 	<a href="#reply"><?php echo __('Reply Topic'); ?></a>
