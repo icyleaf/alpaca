@@ -18,7 +18,7 @@ var alpaca = {
 		
 		// collections
 		alpaca.collection_tips('.collection_action');
-		alpaca.add_collection('.collection_link');
+		//alpaca.add_collection('.collection_link');
 
 		// enabled TAB keypress in textarea
 		$('.content').EnableTabs();
@@ -61,7 +61,16 @@ var alpaca = {
 		var e = $(element);
 		if (e.length)
 		{
-			//
+			var mover_start;
+			e.hover(
+				function () {
+					clearTimeout(mover_start);
+					$(this).find('.collection_tips').show();
+				},
+				function () {
+					$(this).find('.collection_tips').hide();
+				}
+			);
 		}
 	},
 
@@ -92,7 +101,7 @@ var alpaca = {
 								e.find('img').removeClass('empty_star').addClass('star');
 								e.find('strong').html(count);
 								//alert('创建成功');
-								window.location.reload();
+								//window.location.reload();
 								break;
 							case 'EXIST':
 								alert('已经收藏');

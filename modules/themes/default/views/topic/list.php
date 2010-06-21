@@ -24,43 +24,40 @@ if ($count > 0): ?>
 				<div class="collection_action">
 					<?php
 					$tips_1 = __(':number people collected this!', array(':number' => $topic->collections));
-					$tips_2 = __('Click :image to add your collection! ', array(
-						':image' => HTML::image('media/images/mini_star.png', array('alt'=>'*'))
-						));
-					$colletion_url = URL::site('collection/topic/'.$topic->id);
+					$tips_2 = __('view who collected this!');
+					$colletion_url = Route::get('topic/collectors')->uri(array('topic_id' => $topic->id));
 					$style = 'empty_star';
 
 					if ($user = $auth->get_user())
 					{
-						$collection = ORM::factory('collection')
-							->where('user_id', '=', $user->id)
-							->and_where('topic_id', '=', $topic->id)
-							->find();
-
-						if ($collection->loaded())
+						if (ORM::factory('collection')->is_collected($topic->id, $user->id))
 						{
-							$tips_1 = __('you already collected this!');
-							$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
-								'topic_id' => $topic->id)), __('view who collected this!'));
-
-							$colletion_url = 'javascript:void(0);';
 							$style = 'star';
 						}
+						else
+						{
+							$colletion_url = URL::site('collection/topic/'.$topic->id);
+							$tips_2 = __('Click :image to add your collection! ', array(
+								':image' => HTML::image('media/images/mini_star.png', array('alt'=>'*'))
+								));
+						}
 					}
-					else
-					{
-						$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
-							'topic_id' => $topic->id)), __('view who collected this!'));
-					} ?>
+					?>
 
 					<div class="collection_tips hidden">
 						<strong><?php echo $tips_1; ?></strong>
 						<?php echo $tips_2; ?>
 					</div>
-					<a class="collection_link" href="<?php echo $colletion_url; ?>" id="<?php echo $topic->id; ?>">
-					<?php echo HTML::image('media/images/sprite_screen.png', array('class' => $style, 'alt'=>'*')); ?>
-					<strong><?php echo $topic->collections; ?></strong>
-					</a>
+					<?php echo HTML::anchor(
+						$colletion_url,
+						HTML::image('media/images/sprite_screen.png', array(
+							'class' => $style,
+							'alt'=>'*'
+							)), array(
+							'class' => 'collection_link',
+							)
+						); ?>
+
 				</div>
 			</div>
 		</div>
