@@ -27,7 +27,7 @@ if ($count > 0): ?>
 					$tips_2 = __('view who collected this!');
 					$colletion_url = Route::get('topic/collectors')->uri(array('topic_id' => $topic->id));
 					$style = 'empty_star';
-
+					$collection = 'false';
 					if ($user = $auth->get_user())
 					{
 						if (ORM::factory('collection')->is_collected($topic->id, $user->id))
@@ -36,6 +36,7 @@ if ($count > 0): ?>
 						}
 						else
 						{
+							$collection = 'true';
 							$colletion_url = URL::site('collection/topic/'.$topic->id);
 							$tips_2 = __('Click :image to add your collection! ', array(
 								':image' => HTML::image('media/images/mini_star.png', array('alt'=>'*'))
@@ -43,21 +44,22 @@ if ($count > 0): ?>
 						}
 					}
 					?>
-
 					<div class="collection_tips hidden">
 						<strong><?php echo $tips_1; ?></strong>
 						<?php echo $tips_2; ?>
 					</div>
-					<?php echo HTML::anchor(
+					<?php
+					echo HTML::anchor(
 						$colletion_url,
 						HTML::image('media/images/sprite_screen.png', array(
 							'class' => $style,
 							'alt'=>'*'
 							)), array(
+							'id'    => $topic->id,
 							'class' => 'collection_link',
+							'rel'   => $collection
 							)
 						); ?>
-
 				</div>
 			</div>
 		</div>

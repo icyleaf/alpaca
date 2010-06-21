@@ -18,7 +18,7 @@ var alpaca = {
 		
 		// collections
 		alpaca.collection_tips('.collection_action');
-		//alpaca.add_collection('.collection_link');
+		alpaca.add_collection('.collection_link');
 
 		// enabled TAB keypress in textarea
 		$('.content').EnableTabs();
@@ -88,6 +88,12 @@ var alpaca = {
 			e.click(function(){
 				var e = $(this);
 				var id = $(this).attr('id');
+				var collection = $(this).attr('rel');
+				if (collection == 'false')
+				{
+					return true;
+				}
+
 				$.ajax({
 					type: 'POST',
 					url: BASH_URL+'collection/topic/'+id,
@@ -95,13 +101,13 @@ var alpaca = {
 						switch(msg)
 						{
 							case 'CREATED':
-								var count = e.find('strong').html();
-								count++;
+//								var count = e.find('strong').html();
+//								count++;
 								
 								e.find('img').removeClass('empty_star').addClass('star');
-								e.find('strong').html(count);
+//								e.find('strong').html(count);
 								//alert('创建成功');
-								//window.location.reload();
+								window.location.reload();
 								break;
 							case 'EXIST':
 								alert('已经收藏');
@@ -114,7 +120,7 @@ var alpaca = {
 						}
 					}
 				}); 
-				
+
 				return false;
 			});
 		}
