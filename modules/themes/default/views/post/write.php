@@ -37,6 +37,13 @@
 			<td><label><?php echo __('Password'); ?></label></td>
 			<td><input type="password" name="password" value=""  tabindex="101" /></td>
 		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="checkbox" tabindex="102" value="true" name="remember"/>
+				<span class="tips"><?php echo __('Remember me'); ?></span>
+				(<?php echo HTML::anchor('lostpassword', __('Lost Password')); ?>)
+			</td>
+		</tr>
 	</table>
 	</div>
 	<div class="comments-actions txt_right">

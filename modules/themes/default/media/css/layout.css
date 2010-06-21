@@ -324,7 +324,6 @@ h4 {
 .post-content img.tpi {
 	float: none;
 	margin: 5px 5px 0 0;
-	
 	max-width: 600px;
 	max-height: 600px;
 }
@@ -533,10 +532,15 @@ h4 {
 	padding-left: 15px;
 }
 
-#content .comments .comments-body input {
+#content .comments .comments-body input[type=text],
+#content .comments .comments-body input[type=password] {
 	padding: 8px;
 	width: 510px;
 	color: #666666;
+}
+
+#content .comments .comments-body input[type=checkbox] {
+	margin-left: 68px;
 }
 
 #content .comments .comments-actions {
