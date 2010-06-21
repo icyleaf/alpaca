@@ -19,6 +19,9 @@ var alpaca = {
 		// collections
 		alpaca.collection_tips('.collection_action');
 		alpaca.add_collection('.collection_link');
+
+		// enabled TAB keypress in textarea
+		$('.content').EnableTabs();
 	},
 	
 	/**
@@ -58,18 +61,7 @@ var alpaca = {
 		var e = $(element);
 		if (e.length)
 		{
-			var mover_start;
-			e.hover(
-				function () {
-					clearTimeout(mover_start);
-					$(this).find('.collection_tips').fadeIn();
-				},
-				function () {
-					mover_start = setTimeout(function(){
-						$(element).find('.collection_tips').fadeOut('slow');
-					}, 200);
-				}
-			);
+			//
 		}
 	},
 
