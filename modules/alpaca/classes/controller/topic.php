@@ -37,6 +37,7 @@ class Controller_Topic extends Controller_Alpaca {
 				));
 			
 			$this->template->content = View::factory('topic/view')
+				->set('post_count', $topic->posts->find_all()->count())
 				->bind('topic', $topic)
 				->bind('topic_posts', $topic_posts)
 				->bind('write_post', $write_post);

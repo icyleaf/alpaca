@@ -49,7 +49,7 @@ class HTML extends Kohana_HTML {
 					}
 				}
 			}
-			elseif ($uri[0] !== '#')
+			elseif ($uri[0] !== '#' AND (substr($uri, 0, strlen('javascript')) != 'javascript'))
 			{
 				// Make the URI absolute for non-id anchors
 				$uri = URL::site($uri, $protocol);

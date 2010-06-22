@@ -78,58 +78,6 @@ h4 {
 	font-size: 1.6em;
 }
 
-/****  MENU  ****/
-/*
-#menu {
-	background: #F0F7F9;
-	border-top: 1px solid #BBD9FF;
-	padding: 3px 8px;
-	overflow: hidden;
-}
-
-#menu-body ul {
-	margin: 2px;
-	float: left;
-}
-
-#menu-body ul li {
-	list-style-type: none;
-	float: left;
-	margin-right: 3px;
-	color: #646459;
-}
-
-#menu-body ul li#rss img {
-	vertical-align: top;
-	padding-right: 2px;
-}
-
-#menu-body ul li a {
-	color: #646459;
-	padding: 1px 3px;
-}
-
-#menu-body ul li a.current {
-	background: #526FAD;
-	color: #FFFFFF;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-}
-
-#menu-body #search {
-	float: right;
-}
-
-#menu-body #search input {
-	height: 14px;
-	margin-top: 2px;
-	border: 1px solid #ADA99F;
-	padding: 1px 2px;
-	color: #B3B3A6;
-}
-*/
 #container {
 	margin: 0 auto;
 }
@@ -158,7 +106,9 @@ h4 {
 	color: #333333;
 }
 
-#content h3.recent, #content h3.hot, #content h3.groups {
+#content h3.recent,
+#content h3.hot,
+#content h3.groups {
 	padding-left: 45px;
 	margin-bottom: 10px;
 }
@@ -181,38 +131,11 @@ h4 {
 	border-bottom: 1px solid #D4EDF3;
 }
 
-
 #content h3.blue {
 	background: #F0F7F9;
 	padding: 8px 12px;
 	margin-bottom: 5px;
 }
-/*
-#content table {
-	padding-right: 40px;
-}
-
-#content table th {
-	background: #F0F7F9;
-}
-
-#content table td {
-	padding: 5px 0;
-}
-
-#content table .icons {
-	width: 15px;
-}
-
-#content table tr.odd {
-	background: #F7F9FD;
-}
-
-#content table img.star {
-	vertical-align: middle;
-	margin: 5px 8px;
-}
-*/
 
 /****  HOME TOPICS  ****/
 #content ul.list {
@@ -387,14 +310,6 @@ h4 {
 	color: #AAAAAA;
 }
 
-.owner .action{
-	height: 30px;
-}
-
-.owner .action a{
-	margin: 0 3px;
-}
-
 .topic p {
 	margin-bottom: 5px;
 }
@@ -409,7 +324,6 @@ h4 {
 .post-content img.tpi {
 	float: none;
 	margin: 5px 5px 0 0;
-	
 	max-width: 600px;
 	max-height: 600px;
 }
@@ -539,6 +453,10 @@ h4 {
 	line-height: 38px;
 }
 
+.post .meta ul.actions a {
+	color: #7C7C7C;
+}
+
 .post .meta ul.details {
 	list-style-type: none;
 	padding-left: 0;
@@ -563,23 +481,19 @@ h4 {
 }
 
 .post ul.details .author a {
-	color: #000000;
+	/*color: #000000;*/
 	font-size: 1em;
 	font-weight: bold;
 	vertical-align: middle;
 }
 
-.post ul.details .date {
+.post ul.details .date{
 	padding-top: 2px;
 	font-size: 0.9em;
-	color: #AAAAAA;
 }
 
-.post .function,
-.post .function a {
-	margin-top: 10px;
-	color: #7C7C7C;
-	padding: 0 3px;
+.post ul.details .date a {
+	color: #555555;
 }
 
 .post-comment {
@@ -589,12 +503,69 @@ h4 {
 	padding: 3px;
 }
 
-#write_post textarea.content{
-	font-family: arial,san serif;
+/********** COMMENT ****************/
+#content .comments {
+	background: #F4F4F4;
+}
+
+#content .comments h3 {
+	margin: 0;
+	font-weight: bold;
+}
+
+#content .comments .comments-body {
+	background: #FFFFFF;
+	margin: 0 8px;
+	border-top: 1px solid #E8E8E8;
+	border-bottom: 1px solid #C4C4C4;
+	border-left: 1px solid #DFDFDF;
+	border-right: 1px solid #CFCFCF;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	padding-top: 10px;
+}
+
+#content .comments .comments-body label {
+	font-size: 14px;
+	padding-left: 15px;
+}
+
+#content .comments .comments-body input[type=text],
+#content .comments .comments-body input[type=password] {
+	padding: 8px;
+	width: 510px;
+	color: #666666;
+}
+
+#content .comments .comments-body input[type=checkbox] {
+	margin-left: 68px;
+}
+
+#content .comments .comments-actions {
+	padding: 8px;
+}
+
+#content .comments .comments-actions input[type=submit] {
+	height: 25px;
+	width: 90px;
+	font-size: 110%;
+	font-weight: bold;
+	padding-top: 2px;
+}
+
+#content .comments textarea {
+	margin: 0 10px;
+	font-family: arial, 'san serif';
 	font-size: 1.2em;
 	overflow: auto;
-	width: 628px;
+	width: 590px;
 	height: 110px;
+}
+
+#content .comments .comments-body .comments-tools {
+	margin: 3px 10px;
 }
 
 .options {
@@ -1289,4 +1260,34 @@ ul.list_users li.user_item a:hover {
 	padding-left: 35px;
 	line-height: 25px;
 	margin-bottom: 10px;
+}
+
+#errors {
+	margin: 0 8px;
+}
+
+#errors h2 {
+	font-size: 1.8em;
+	margin: 0.75em 0;
+}
+
+#errors h2 span {
+	color: #777777;
+}
+
+#errors h3 {
+	font-size: 1.5em;
+	line-height: 1;
+	margin-bottom: 1em;
+}
+
+#errors h5 {
+	font-size: 1em;
+	font-weight: bold;
+	margin-bottom: 1.5em;
+}
+
+#errors ul {
+	color: #666666;
+	margin-left: 3px;
 }

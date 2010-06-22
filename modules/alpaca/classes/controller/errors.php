@@ -20,9 +20,13 @@ class Controller_Errors extends Controller_Alpaca {
 	 */
 	public function action_404()
 	{
-		$this->request->status = 404;
-		$this->header->title->prepend(__('No Found the page'));
-		$this->template->content = View::factory('errors/404');
+		$code = 404;
+		$title = __('No Found the page');
+		$this->request->status = $code;
+		$this->header->title->prepend($title);
+		$this->template->content = View::factory('errors/404')
+			->set('title', $title)
+			->bind('code', $code);
 	}
 	
 }

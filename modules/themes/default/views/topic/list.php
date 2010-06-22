@@ -14,57 +14,56 @@ if ($count > 0): ?>
 		<?php echo Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE);?>
 		<div class="collection">
 			<div class="collection_inset">
-				<?php 
+				<?php
 				if ( ! isset($hide_group)):
 					echo HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
-						$group->name, 
+						$group->name,
 						array('class' => 'groups')
 						);
 				endif; ?>
 				<div class="collection_action">
 					<?php
 					$tips_1 = __(':number people collected this!', array(':number' => $topic->collections));
-					$tips_2 = __('Click :image to add your collection! ', array(
-						':image' => HTML::image('media/images/mini_star.png', array('alt'=>'*'))
-						));
-					$colletion_url = URL::site('collection/topic/'.$topic->id);
+					$tips_2 = __('view who collected this!');
+					$colletion_url = Route::get('topic/collectors')->uri(array('topic_id' => $topic->id));
 					$style = 'empty_star';
-					
+					$collection = 'false';
 					if ($user = $auth->get_user())
 					{
-						$collection = ORM::factory('collection')
-							->where('user_id', '=', $user->id)
-							->and_where('topic_id', '=', $topic->id)
-							->find();
-							
-						if ($collection->loaded())
+						if (ORM::factory('collection')->is_collected($topic->id, $user->id))
 						{
-							$tips_1 = __('you already collected this!');
-							$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
-								'topic_id' => $topic->id)), __('view who collected this!'));
-		
-							$colletion_url = 'javascript:void(0);';
 							$style = 'star';
 						}
+						else
+						{
+							$collection = 'true';
+							$colletion_url = URL::site('collection/topic/'.$topic->id);
+							$tips_2 = __('Click :image to add your collection! ', array(
+								':image' => HTML::image('media/images/mini_star.png', array('alt'=>'*'))
+								));
+						}
 					}
-					else
-					{
-						$tips_2 = HTML::anchor(Route::get('topic/collectors')->uri(array(
-							'topic_id' => $topic->id)), __('view who collected this!'));
-					} ?>
-					
+					?>
 					<div class="collection_tips hidden">
 						<strong><?php echo $tips_1; ?></strong>
 						<?php echo $tips_2; ?>
-					</div>		
-					<a class="collection_link" href="<?php echo $colletion_url; ?>" id="<?php echo $topic->id; ?>">
-					<?php echo HTML::image('media/images/sprite_screen.png', array('class' => $style, 'alt'=>'*')); ?>
-					<strong><?php echo $topic->collections; ?></strong>
-					</a>
+					</div>
+					<?php
+					echo HTML::anchor(
+						$colletion_url,
+						HTML::image('media/images/sprite_screen.png', array(
+							'class' => $style,
+							'alt'=>'*'
+							)), array(
+							'id'    => $topic->id,
+							'class' => 'collection_link',
+							'rel'   => $collection
+							)
+						); ?>
 				</div>
 			</div>
 		</div>
-	
+
 		<div class="topic_details">
 			<?php echo HTML::anchor(Route::get('topic')->uri(array('id' => $topic->id)),
 				$topic->title, array('class' => 'subject')); ?>
@@ -84,7 +83,7 @@ if ($count > 0): ?>
 				<?php echo __(':number hit', array(':number' => $topic->hits)) ?>
 				<?php endif ?>
 				<span class="divider">•</span>
-				<span class="open"><?php echo Alpaca::time_ago($topic->updated); ?></span>
+				<?php echo Alpaca::time_ago($topic->updated); ?>
 			</div>
 		</div>
 	</li>

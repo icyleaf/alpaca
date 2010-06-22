@@ -105,17 +105,6 @@ try
 {
 	// Attempt to execute the response
 	$request->execute();
-	
-	if ($request->send_headers()->response)
-	{
-		// Get the total memory and execution time
-		$total = array(
-			'{memory_usage}'   => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
-			'{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).__(' seconds'));
-	
-		// Insert the totals into the response
-		$request->response = str_replace(array_keys($total), $total, $request->response);
-	}
 }
 catch(Exception $e)
 {
@@ -123,16 +112,26 @@ catch(Exception $e)
 	{
 		throw $e;
 	}
-	
+
 	// Log the error
 	Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
-	
-	// Create a 404 response
-	$request->status = 404;
-	$request->response = View::factory('errors/404');
+
+	// Request 404 page
+	$request = Request::factory('errors/404')->execute();
+}
+
+if ($request->send_headers()->response)
+{
+	// Get the total memory and execution time
+	$total = array(
+		'{memory_usage}'   => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
+		'{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).__(' seconds')
+	);
+
+	// Insert the totals into the response
+	$request->response = str_replace(array_keys($total), $total, $request->response);
 }
 
 // Display the request response.
 echo $request->response;
-	
-	
+

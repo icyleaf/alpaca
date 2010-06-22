@@ -26,6 +26,22 @@ class Model_Collection extends ORM {
 			'validate::numeric'	=> NULL,
 		),
 	);
+
+	/**
+	 * Check the topic if collected by user
+	 *
+	 * @param string $topic_id
+	 * @param string $user_id
+	 * @return boolean
+	 */
+	public function is_collected($topic_id, $user_id)
+	{
+		$result = $this->where('user_id', '=', $user_id)
+			->and_where('topic_id', '=', $topic_id)
+			->find();
+
+		return $result->loaded();
+	}
 	
 	public function values($values)
 	{
