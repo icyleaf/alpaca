@@ -1,7 +1,4 @@
 <?php
-$email = Arr::get($_POST, 'email');
-$nickname = Arr::get($_POST, 'nickname');
-
 $error_pwd = Arr::get($errors, 'password');
 $error_pwd_conf = Arr::get($errors, 'password_confirm');
 ?>
@@ -11,11 +8,11 @@ $error_pwd_conf = Arr::get($errors, 'password_confirm');
 	<div id="authform-body">
 		<p>
 			<label><?php echo __('email'); ?>:</label><br />
-			<input readonly id="email" class="readonly" name="email" type="text" value="<?php echo $email; ?>" readonly/>
+			<input readonly id="email" class="readonly" name="email" type="text" value="<?php echo $user->email; ?>" readonly/>
 		</p>
 		<p>
 			<label><?php echo __('nickname'); ?>:</label><br />
-			<input readonly id="nickname" class="readonly" name="nickname" type="text" value="<?php echo $nickname; ?>" readonly/>
+			<input readonly id="nickname" class="readonly" name="nickname" type="text" value="<?php echo $user->nickname; ?>" readonly/>
 		</p>
 		<p>
 			<label><?php echo __('password'); ?>:</label><br />
