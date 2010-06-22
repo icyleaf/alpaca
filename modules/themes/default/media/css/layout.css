@@ -1261,3 +1261,33 @@ ul.list_users li.user_item a:hover {
 	line-height: 25px;
 	margin-bottom: 10px;
 }
+
+#errors {
+	margin: 0 8px;
+}
+
+#errors h2 {
+	font-size: 1.8em;
+	margin: 0.75em 0;
+}
+
+#errors h2 span {
+	color: #777777;
+}
+
+#errors h3 {
+	font-size: 1.5em;
+	line-height: 1;
+	margin-bottom: 1em;
+}
+
+#errors h5 {
+	font-size: 1em;
+	font-weight: bold;
+	margin-bottom: 1.5em;
+}
+
+#errors ul {
+	color: #666666;
+	margin-left: 3px;
+}

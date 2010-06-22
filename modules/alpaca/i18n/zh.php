@@ -201,6 +201,12 @@ return array
 	 */
 	'No Found the page'			=> '找不到相关页面',
 	'Are you a robot (spam) ?'	=> '为防止 SPAM 的攻击，请点击“快速注册”按钮进行注册。',
+	'The page you have requested has flown the coop.' => '您请求的页面不存在。',
+	'Perhaps you are here because:' => '或许以下原因使得您到来这里:',
+	'The page has moved' => '页面被外星人劫持!',
+	'The page no longer exists' => '页面被人间蒸发了...',
+	'You were looking for your puppy and got lost' => '在寻找心爱的小狗的时候走丢了',
+	'You like 404 page' => '您喜爱 404 页面',
 	
 	/**
 	 * Validate messages
