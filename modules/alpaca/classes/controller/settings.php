@@ -110,9 +110,9 @@ class Controller_Settings extends Controller_Alpaca {
 				$user = ORM::factory('user', $user_id);
 				// registered user cannt change email and username
 				unset($_POST['id'], $_POST['email']);
-				if ( ! empty($user['username']))
+				if ( ! empty($_POST['username']))
 				{
-					$_POST['username'];
+					unset($_POST['username']);
 				}
 
 				$user->values($_POST)->save();
