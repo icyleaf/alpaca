@@ -2,6 +2,8 @@
 
 class Controller_API_Core extends Controller_REST {
 
+	protected $_alt = 'json';
+
 	public function action_index()
 	{
 		$this->request->response = 'Alpaca API Development';
@@ -14,7 +16,7 @@ class Controller_API_Core extends Controller_REST {
 	 * @param boolean $format
 	 * @return void
 	 */
-	protected function _render($content, $status = 200, $format = FALSE)
+	protected function _render($content, $status = 200, $format = TRUE)
 	{
 		$headers = array();
 		if ($format)

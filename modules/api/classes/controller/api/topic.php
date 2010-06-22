@@ -6,7 +6,6 @@
  */
 class Controller_API_Topic extends Controller_API_Core {
 
-	private $_alt = 'json';
 	private $_max = 20;
 
 	public function before()
@@ -42,9 +41,8 @@ class Controller_API_Topic extends Controller_API_Core {
 
 			if ($topics)
 			{
-				$i = 0;
 				$entry = array();
-				foreach ($topics as $topic)
+				foreach ($topics as $key => $topic)
 				{
 					$group = $topic->group;
 					$group = array(
@@ -65,7 +63,7 @@ class Controller_API_Topic extends Controller_API_Core {
 						'website'	=> $author->website,
 						);
 					
-					$entry[$i] = array(
+					$entry[$key] = array(
 						'id'		=> $topic->id,
 						'author'	=> $author,
 						'title'		=> $topic->title,
@@ -74,8 +72,6 @@ class Controller_API_Topic extends Controller_API_Core {
 						'hits'		=> $topic->hits,
 						'created'	=> date('r', $topic->created),
 						);
-
-					$i++;
 				}
 
 				$output = array(
