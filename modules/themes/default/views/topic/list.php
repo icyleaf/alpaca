@@ -1,10 +1,22 @@
 <?php if (isset($head)): ?>
-<h3 class="<?php echo $head['class']; ?>"><?php echo $head['title']; ?></h3>
+<h3 id="topic-title" class="<?php echo $head['class']; ?>">
+	<ul class="right">
+	<?php foreach ($topic_sort as $uri => $title): ?>
+	<li>
+		<?php if ($uri != Request::current()->uri): ?>
+		<?php echo HTML::anchor($uri, $title); ?>
+		<?php endif; ?>
+	</li>
+	<?php endforeach; ?>
+	</ul>
+	<div class="left"><?php echo $head['title']; ?></div>
+	<div class="clear"></div>
+</h3>
 <?php endif ?>
 
 <?php $count = is_array($topics) ? count($topics) : $topics->count();
 if ($count > 0): ?>
-<ul class="list">
+<ul id="topic-list" class="list">
 <?php foreach ($topics as $topic):
 	// Topics by user posted comments is just a Object or not Model.
 	$author = isset($topic->author) ? $topic->author : ORM::factory('user', $topic->user_id);
@@ -81,6 +93,12 @@ if ($count > 0): ?>
 				<?php echo __(':number hits', array(':number' => $topic->hits)) ?>
 				<?php else: ?>
 				<?php echo __(':number hit', array(':number' => $topic->hits)) ?>
+				<?php endif ?>
+				<span class="divider">•</span>
+				<?php if ($topic->collections > 1): ?>
+				<?php echo __(':number collections', array(':number' => $topic->collections)) ?>
+				<?php else: ?>
+				<?php echo __(':number collection', array(':number' => $topic->collections)) ?>
 				<?php endif ?>
 				<span class="divider">•</span>
 				<?php echo Alpaca::time_ago($topic->updated); ?>

@@ -23,40 +23,57 @@ class Controller_Forum extends Controller_Alpaca {
 	/**
 	 * Forum Entry
 	 */
-	public function action_index()
+	public function action_index($type = NULL)
 	{
 		$this->header->link->append(URL::site('feed'), __('RSS 2.0'));
 		
 		$topics = ORM::factory('topic');
 		// Content
+		switch ($type)
+		{
+			case 'hits':
+				$title = __('Top hit topics');
+				break;
+			case 'collections':
+				$title = __('Top collection topics');
+				break;
+			default:
+			case 'touched':
+				$title = __('Latest topics');
+				$type = 'touched';
+				break;
+		}
+
+		$topics = $topics->get_topics($type, $this->config->topic['per_page']);
+		$head = array(
+			'title' => $title,
+			'class' => $type,
+		);
+
+		// hide 'touched' anchor on index page
+		$topic_sort = array();
+		if ( ! in_array($this->request->uri , array('', '/', 'touched')))
+		{
+			$topic_sort['touched'] = __('Latest');
+		}
+		$topic_sort['hits'] = __('Top hits');
+		$topic_sort['collections'] = __('Top collections');
+
+		// broadcast
 		$broadcast = NULL;
 		if ( ! empty($this->config->broadcast))
 		{
 			$broadcast = '<div id="broadcast">'.$this->config->broadcast.'</div>';
 		}
 
-		// Recent topics
-		$recent_topics = View::factory('topic/list')
-			->set('head', array('title'=>__('Latest topics'), 'class'=>'recent'))
-			->set('topics', $topics->get_topics('touched', $this->config->topic['per_page']));
-		// Highest hits topics
-		$hits_topics = View::factory('topic/list')
-			->set('head', array('title'=>__('Top hit topics'), 'class'=>'groups'))
-			->set('topics', $topics->get_topics('hits', $this->config->topic['per_page']));
-		// Hottest collections topics
-		$hot_topics = View::factory('topic/list')
-			->set('head', array('title'=>__('Top fav topics'), 'class'=>'hot'))
-			->set('topics', $topics->get_topics('collections', $this->config->topic['per_page']));
-			
-		$this->template->content = $broadcast.
-			$recent_topics.
-			$hits_topics.
-			$hot_topics;
-			
+		$this->template->content = View::factory('topic/list')
+			->set('head', $head)
+			->set('topic_sort', $topic_sort)
+			->set('topics', $topics);
+
 		// Sidebar
-		$this->template->sidebar = 
+		$this->template->sidebar = $broadcast.
 			View::factory('sidebar/about').
-			View::factory('sidebar/login').
 			View::factory('sidebar/members');
 	}
 	

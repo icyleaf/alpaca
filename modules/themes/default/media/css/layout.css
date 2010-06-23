@@ -106,35 +106,47 @@ h4 {
 	color: #333333;
 }
 
-#content h3.recent,
-#content h3.hot,
-#content h3.groups {
+#content h3 ul {
+	list-style: none;
+	margin: 0;
+}
+
+#content h3 ul li {
+	display: inline;
+	padding-left: 5px;
+}
+
+#content h3.touched,
+#content h3.hits,
+#content h3.collections {
 	padding-left: 45px;
 	margin-bottom: 10px;
 }
 
-#content h3.recent {
+#content h3.touched {
 	background: #DFEFCE url(/media/images/icons/24x24/equalizer.png) no-repeat 15px center;
 	border-top: 1px solid #BCE98D;
 	border-bottom: 1px solid #CFEDAF;
 }
 
-#content h3.hot {
+#content h3.touched a {
+	color: #6E9F1B;
+}
+
+#content h3.hits {
 	background: #FDF1CE url(/media/images/icons/24x24/promotion.png) no-repeat 15px center;
 	border-top: 1px solid #F4E1A8;
 	border-bottom: 1px solid #F6E9C4;
 }
 
-#content h3.groups {
-	background: #E2F4F8 url(/media/images/icons/24x24/globe.png) no-repeat 15px center;
-	border-top: 1px solid #BEE7F0;
-	border-bottom: 1px solid #D4EDF3;
+#content h3.hits a {
+	color: #B86606;
 }
 
-#content h3.blue {
-	background: #F0F7F9;
-	padding: 8px 12px;
-	margin-bottom: 5px;
+#content h3.collections {
+	background: #FFE3D4 url(/media/images/icons/24x24/globe.png) no-repeat 15px center;
+	border-top: 1px solid #F4B695;
+	border-bottom: 1px solid #FAC7AC;
 }
 
 /****  HOME TOPICS  ****/
@@ -1253,12 +1265,11 @@ ul.list_users li.user_item a:hover {
 }
 
 #broadcast {
-	background: #FDF1CE url(/media/images/icons/24x24/board.png) no-repeat 6px center;
+	background: #FDF1CE;
 	color: #555555;
-	border: 3px solid #F4E1A8;
-	padding: 5px 10px;
-	padding-left: 35px;
-	line-height: 25px;
+	border: 1px solid #F4E1A8;
+	padding: 8px;
+	line-height: 20px;
 	margin-bottom: 10px;
 }
 

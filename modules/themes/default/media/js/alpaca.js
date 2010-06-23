@@ -142,6 +142,22 @@ var alpaca = {
 				t_input.val(s_input.val());
 			});
 		});
+	},
+
+	list_topic: function(type)
+	{
+		type = (type == null || type == '') ? 'latest' : type;
+		$.ajax({
+			url: BASH_URL + 'api/topic/' + type,
+			dataType: 'json',
+			success: function(json) {
+				$('#topic-title').html(json.title);
+				$('#topic-list').empty();
+				$.each(json.entry, function(i, item){
+					$('#topic-list').append('<li>'+i+'</li>');
+				});
+			}
+		});
 	}
 
 };
