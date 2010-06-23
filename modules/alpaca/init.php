@@ -67,11 +67,11 @@ Route::set('changepassword', 'changepassword/<code>', array(
 		'action'    => 'changepassword',
 	));
 
-Route::set('touched', 'latest')
+Route::set('latest', 'latest')
 	->defaults(array(
 		'controller'=> 'forum',
 		'action'    => 'index',
-		'id'        => 'touched',
+		'id'        => 'latest',
 	));
 
 Route::set('hits', 'hits')
@@ -102,7 +102,8 @@ Route::set('group', 'group/<id>', array(
 		'action'    => 'view',
 	));
 
-Route::set('topic', 'topic/<id>', array(
+Route::set('topic', '(group/<group_id>/)topic/<id>', array(
+		'group_id'	=> '\w+',
 		'id'		=> '\d+',
 	))
 	->defaults(array(

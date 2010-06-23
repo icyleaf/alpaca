@@ -14,9 +14,9 @@
 			<strong>快速导航:</strong>
 			<ul>
 				<li><a href="http://v2.kohana.cn/download">中文框架下载</a></li>
-				<li><?php echo HTML::anchor(Route::get('topic')->uri(array('id' => 1000032)), '中文文档'); ?></li>
+				<li><?php echo HTML::anchor('group/news/topic/1000032', '中文文档'); ?></li>
 				<li><?php echo HTML::anchor(URL::base(FALSE), '社区支持'); ?></li>
-				<li><?php echo HTML::anchor(Route::get('topic')->uri(array('id' => 1000030)), '群组讨论'); ?></li>
+				<li><?php echo HTML::anchor('group/news/topic/1000030', '群组讨论'); ?></li>
 				<li><?php echo HTML::anchor(Route::get('group')->uri(array('id' => 'RD')), '开发合作'); ?></li>
 			</ul>
 		</p>

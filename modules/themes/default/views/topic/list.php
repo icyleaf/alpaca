@@ -1,5 +1,6 @@
 <?php if (isset($head)): ?>
 <h3 id="topic-title" class="<?php echo $head['class']; ?>">
+	<?php if (isset($topic_sort)): ?>
 	<ul class="right">
 	<?php foreach ($topic_sort as $uri => $title): ?>
 	<li>
@@ -9,6 +10,7 @@
 	</li>
 	<?php endforeach; ?>
 	</ul>
+	<?php endif ?>
 	<div class="left"><?php echo $head['title']; ?></div>
 	<div class="clear"></div>
 </h3>
@@ -26,9 +28,10 @@ if ($count > 0): ?>
 		<?php echo Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE);?>
 		<div class="collection">
 			<div class="collection_inset">
-				<?php
-				if ( ! isset($hide_group)):
-					echo HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+				<?php if ( ! isset($hide_group)):
+					echo HTML::anchor(Route::get('group')->uri(array(
+							'id' => Alpaca_Group::the_uri($group)
+						)),
 						$group->name,
 						array('class' => 'groups')
 						);
@@ -77,11 +80,22 @@ if ($count > 0): ?>
 		</div>
 
 		<div class="topic_details">
-			<?php echo HTML::anchor(Route::get('topic')->uri(array('id' => $topic->id)),
-				$topic->title, array('class' => 'subject')); ?>
+			<?php echo HTML::anchor(Route::get('topic')->uri(array(
+					'group_id'	=> Alpaca_Group::the_uri($group),
+					'id' => $topic->id
+				)),
+				$topic->title,
+				array('class' => 'subject')
+				);
+			?>
 			<div class="meta">
-			<?php echo HTML::anchor(Route::get('user')->uri(array('id' => Alpaca_User::the_uri($author))),
-				$author->nickname, array('class'=>'author')); ?>
+				<?php echo HTML::anchor(Route::get('user')->uri(array(
+						'id' => Alpaca_User::the_uri($author)
+					)),
+					$author->nickname,
+					array('class' => 'author')
+					);
+				?>
 				<span class="divider">•</span>
 				<?php if ($topic->count > 1): ?>
 				<?php echo __(':number replies', array(':number' => $topic->count)) ?>

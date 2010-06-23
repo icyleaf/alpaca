@@ -28,7 +28,7 @@ class Controller_Feed extends Controller {
 			{
 				$feed[] = array(
 					'title'		=> htmlspecialchars($topic->title),
-					'link'			=> URL::site(Route::get('topic')->uri(array('id' => $topic->id))),
+					'link'			=> Route::url('topic', array('id' => $topic->id)),
 					'description'	=> Alpaca::format_html($topic->content, TRUE),
 					'author'		=> $topic->author->nickname,
 					'pubDate'		=> $topic->created,
@@ -73,7 +73,7 @@ class Controller_Feed extends Controller {
 				{
 					$feed[] = array(
 						'title'		=> htmlspecialchars($topic->title),
-						'link'			=> URL::site(Route::get('topic')->uri(array('id' => $topic->id))),
+						'link'			=> Route::url('topic', array('id' => $topic->id)),
 						'description'	=> Alpaca::format_html($topic->content, TRUE),
 						'author'		=> $topic->author->nickname,
 						'pubDate'		=> $topic->created,
@@ -90,7 +90,7 @@ class Controller_Feed extends Controller {
 				$user_link = $user->nickname;
 			}
 			
-			$link = URL::site(Route::get('user')->uri(array('id' => Alpaca_user::the_uri($user))));
+			$link = Route::url('user', array('id' => Alpaca_user::the_uri($user)));
 			$this->_render(__('Latest updates @:user', array(':user' => $user_link)), $feed, $link);
 		}
 	}

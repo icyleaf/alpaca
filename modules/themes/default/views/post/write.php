@@ -25,7 +25,7 @@
 	</form>
 	<?php else: ?>
 	<div class="tips" style="padding-left: 7px"><?php echo __('Post new reply after log in'); ?></div>
-	<form method="post" action="<?php echo URL::site(Route::get('login')->uri()); ?>">
+	<form method="post" action="<?php echo Route::url('login'); ?>">
 	<input type="hidden" name="redir" value="<?php echo URL::site(Request::current()->uri); ?>" />
 	<div class="comments-body">
 	<table>

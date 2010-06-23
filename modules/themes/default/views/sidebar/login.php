@@ -4,7 +4,7 @@
 		<?php echo __('User Login'); ?>
 		<small><?php echo HTML::anchor(Route::get('register')->uri(), '('.__('Sign up').')')?></small>
 	</h3>
-	<form action="<?php echo URL::site(Route::get('login')->uri()); ?>" method="POST">
+	<form action="<?php echo Route::url('login'); ?>" method="POST">
 	<input type="hidden" name="redir" value="<?php echo URL::base(); ?>" />
 	<dl>
 		<dd>

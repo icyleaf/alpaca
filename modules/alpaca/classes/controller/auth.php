@@ -77,7 +77,7 @@ class Controller_Auth extends Controller_Alpaca {
 					}
 
 					$email_subject = __('Account Verity');
-					$verity_url = URL::site(Route::get('verity')->uri(array('code' => $hash_code)));
+					$verity_url = Route::url('verity', array('code' => $hash_code));
 					$email_content = '感谢您在 Kohana 中文注册的账户，于此同时，麻烦您一点时间，我们需要验证注册账户的真实性，'.
 						'需要您点击下面的链接完成验证过程：<br /><br />'.
 						HTML::anchor($verity_url, $verity_url).'<br /><br />'.
@@ -264,7 +264,7 @@ class Controller_Auth extends Controller_Alpaca {
 				{
 					$hash_code = $verity->general_code($email, 'lostpassword', 4, '');
 				}
-				$verity_url = URL::site(Route::get('changepassword')->uri(array('code'=>$hash_code)));
+				$verity_url = Route::url('changepassword', array('code'=>$hash_code));
 				$email_content = __('Your request has been passed, Click the following link to reset your password:').
 					'<br /><br />'.
 					HTML::anchor($verity_url, $verity_url).'<br /><br />'.
@@ -415,7 +415,7 @@ class Controller_Auth extends Controller_Alpaca {
 						if ($verity->loaded())
 						{						
 							$hash_code = $verity->code;
-							$verity_url = URL::site(Route::get('verity')->uri(array('code' => $hash_code)));
+							$verity_url = Route::url('verity', array('code' => $hash_code));
 							$email_content = '感谢您在'.$this->_website.
 								'注册的账户，于此同时，麻烦您一点时间，我们需要验证注册账户的真实性，'.
 								'需要您点击下面的链接完成验证过程：<br /><br />'.

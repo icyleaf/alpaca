@@ -60,11 +60,14 @@ class Controller_User extends Controller_Alpaca {
 	 */
 	protected function profile(Model_User $user)
 	{
+		$title = __('Subscribe the latest updates @:user...', array(
+			':user' => $user->nickname
+		));
 		$this->header->title->set($user->nickname);
 		$this->header->title->append($this->config->title);
 		
-		$link = URL::site(Route::get('user/feed')->uri(array('id' => Alpaca_User::the_uri($user))));
-		$this->header->link->append($link, __(':user的最新动态', array(':user' => $user->nickname)));
+		$link = Route::url('user/feed', array('id' => Alpaca_User::the_uri($user)));
+		$this->header->link->append($link, $title);
 				
 		$this->template->content = View::factory('user/profile')
 			->bind('user', $user);
@@ -78,11 +81,19 @@ class Controller_User extends Controller_Alpaca {
 	 */
 	protected function topics(Model_User $user)
 	{
-		$this->header->title->set(__(':user发表的话题', array(':user' => $user->nickname)));
+		$title = __('Posted Topics by :user', array(':user' => $user->nickname));
+		$topics = $user->topics->order_by('created', 'DESC')->find_all();
+		$head = array(
+			'title' => $title,
+			'class' => 'hits',
+		);
+		
+		$this->header->title->set($title);
 		$this->header->title->append($this->config->title);
 		
 		$this->template->content = View::factory('topic/list')
-			->set('topics', $user->topics->order_by('created', 'DESC')->find_all());
+			->set('head', $head)
+			->set('topics', $topics);
 		$this->template->sidebar = '';	
 	}
 	
@@ -94,11 +105,19 @@ class Controller_User extends Controller_Alpaca {
 	 */
 	protected function posts(Model_User $user)
 	{
-		$this->header->title->set(__(':user评论的话题', array(':user' => $user->nickname)));
+		$title = __('Replies Topics by :user', array(':user' => $user->nickname));
+		$topics = (object) $user->posted_topics($user->id);
+		$head = array(
+			'title' => $title,
+			'class' => 'hits',
+		);
+
+		$this->header->title->set($title);
 		$this->header->title->append($this->config->title);
 		
 		$this->template->content = View::factory('topic/list')
-			->set('topics', (object) $user->posted_topics($user->id));
+			->set('head', $head)
+			->set('topics', $topics);
 		$this->template->sidebar = '';
 	}
 	
@@ -128,26 +147,44 @@ class Controller_User extends Controller_Alpaca {
 	 */
 	protected function collections(Model_User $user)
 	{
-		$this->header->title->set(__(':user收藏的话题', array(':user' => $user->nickname)));
-		$this->header->title->append($this->config->title);
-		
-		$this->template->content = View::factory('topic/list')
-			->bind('topics', $topics);
-			
-		$this->template->sidebar = '';
-		
+		$title = __('Replies Topics by :user', array(':user' => $user->nickname));
 		$collections = ORM::factory('collection')
 			->where('user_id', '=', $user->id)
 			->find_all();
-		
+
 		$topics = array();
 		if ($collections->count() > 0)
 		{
 			foreach ($collections as $collection)
 			{
-				$topics[] = $collection->topic;
+				$topic = $collection->topic;
+				if ($topic->loaded())
+				{
+					$topics[] = $topic;
+				}
+				else
+				{
+					/* TODO: Collected the deleted topic
+					 * 1. Store the topic title in collection table to render collection items
+					 * 2. Render 'deleted tips' on the missing topic
+					 */
+				}
 			}
 		}
+
+		$head = array(
+			'title' => $title,
+			'class' => 'hits',
+		);
+		
+		$this->header->title->set($title);
+		$this->header->title->append($this->config->title);
+		
+		$this->template->content = View::factory('topic/list')
+			->set('head', $head)
+			->set('topics', $topics);
+			
+		$this->template->sidebar = '';
 	}
 	
 	/**

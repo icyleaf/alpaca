@@ -123,15 +123,15 @@ class Alpaca_Group {
 	{
 		$default = array
 		(
-			'title'			=> __('小组'),
-			'child_of'			=> FALSE,
-			'sort' 				=> array(
-				'column'		=>'count', 
-				'direction'	=>'DESC'
+			'title'			=> __('Group'),
+			'child_of'		=> FALSE,
+			'sort' 			=> array(
+				'column'		=>'count',
+				'direction'		=>'DESC'
 				),
-			'link_before'		=> '',
-			'link_after' 		=> '',
-			'render' 			=> FALSE
+			'link_before'	=> '',
+			'link_after' 	=> '',
+			'render' 		=> FALSE
 		);
 		
 		if (is_array($config))
@@ -219,15 +219,15 @@ class Alpaca_Group {
 	{
 		$default = array
 		(
-			'title'			=> __('最新讨论话题'),
+			'title'			=> __('Latest topics'),
 			'count'			=> 10,
-			'sort' 				=> array(
-				'column'		=>'updated', 
-				'direction'	=>'DESC'
+			'sort' 			=> array(
+				'column'		=>'updated',
+				'direction'		=>'DESC'
 				),
-			'link_before'		=> '',
-			'link_after' 		=> '',
-			'render' 			=> FALSE
+			'link_before'	=> '',
+			'link_after' 	=> '',
+			'render' 		=> FALSE
 		);
 		
 		if (is_array($config))
@@ -253,11 +253,14 @@ class Alpaca_Group {
 				'<div class="content"><ul>';
 			foreach ($topics as $topic) 
 			{
-				$link_uri = Route::get('topic')->uri(array('id'=>$topic->id));
+				$link_uri = Route::get('topic')->uri(array(
+					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'id' => $topic->id
+				));
 				$link_title = $config['link_before'] . $topic->title . $config['link_after'];
 				
 				$output .= '<li class="topic_item topic-item-'.$topic->id.'">' . 
-							HTML::anchor($link_uri, $link_title) . '</li>';
+					HTML::anchor($link_uri, $link_title) . '</li>';
 			}
 			$output .= '</ul></div></div>';
 		}

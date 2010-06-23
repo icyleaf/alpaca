@@ -25,8 +25,11 @@
 		<?php 
 		foreach ($user->as_array() as $key => $value)
 		{
-			$hidden = array('nickname', 'skill', 'job', 'location', 'website', 'created');
-			if ( ! empty($value) AND in_array($key, $hidden))
+			$hidden = array(
+				'id', 'password', 'username', 'email', 'gender',
+				'hits', 'logins', 'last_login', 'last_ua'
+			);
+			if ( ! empty($value) AND  ! in_array($key, $hidden))
 			{
 				if ($key == 'created')
 				{
@@ -72,7 +75,7 @@
 					</div>
 				</div>
 				<div class="span-3">
-					<div class="sides">
+					<div class="sides last">
 						<div class="header"><?php echo __('Collections'); ?>:</div>
 						<?php
 							$link = Route::get('user')->uri(array(
@@ -84,6 +87,7 @@
 						?>
 					</div>
 				</div>
+				<!--
 				<div class="span-3">
 					<div class="sides last">
 						<div class="header"><?php echo __('Groups'); ?>:</div>
@@ -97,7 +101,6 @@
 						?>
 					</div>
 				</div>
-				<!--
 				<div class="span-3">
 					<div class="sides">
 						<div class="header"><?php echo __('Followings'); ?>:</div>
@@ -137,8 +140,8 @@
 			?>
 			</div>
 		</div>
-		<div class="clear"></div>
 	</div>
+	<div class="clear"></div>
 </div>
 
 <div class="span-15">

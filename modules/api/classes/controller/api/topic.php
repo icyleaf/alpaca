@@ -41,55 +41,49 @@ class Controller_API_Topic extends Controller_API_Core {
 
 			if ($topics)
 			{
-				if ($this->_alt == 'html')
+				$entry = array();
+				foreach ($topics as $key => $topic)
 				{
-					$this->request->response = View::factory('topic/list')
-						->set('head', array('title' => $title, 'class'=>'recent'))
-						->set('topics', $topics);
-				}
-				else
-				{
-					$entry = array();
-					foreach ($topics as $key => $topic)
-					{
-						$group = $topic->group;
-						$group = array(
-							'id' => $group->id,
-							'name' => $group->name,
-							'link' => URL::site(Route::get('group')->uri(array(
-								'id' => Alpaca_Group::the_uri($group)
-							))),
-						);
-
-						$author = $topic->author;
-						$author = array(
-							'id' => $author->id,
-							'username' => $author->username,
-							'nickname' => $author->nickname,
-							'avatar' => Alpaca_User::avatar($author)->__toString(),
-							'location' => $author->location,
-							'website' => $author->website,
-						);
-
-						$entry[$key] = array(
-							'id' => $topic->id,
-							'author' => $author,
-							'title' => $topic->title,
-							'group' => $group,
-							'comments' => $topic->count,
-							'hits' => $topic->hits,
-							'created' => date('r', $topic->created),
-						);
-					}
-
-					$output = array(
-						'title'	=> $title,
-						'link'	=> URL::site($this->request->uri),
-						'entry' => $entry,
+					$group = $topic->group;
+					$group = array(
+						'id' => $group->id,
+						'name' => $group->name,
+						'link' => Route::url('group', array(
+							'id' => Alpaca_Group::the_uri($group)
+						)),
 					);
 
-					$this->_render($output);
+					$author = $topic->author;
+					$author = array(
+						'id' => $author->id,
+						'username'	=> $author->username,
+						'nickname'	=> $author->nickname,
+						'avatar' 	=> Alpaca_User::avatar($author)->__toString(),
+						'location'	=> $author->location,
+						'website'	=> $author->website,
+					);
+
+					$entry[$key] = array(
+						'id'		=> $topic->id,
+						'author'	=> $author,
+						'title'		=> $topic->title,
+						'group'		=> $group,
+						'comments'	=> $topic->count,
+						'hits'		=> $topic->hits,
+						'created'	=> date('r', $topic->created),
+						'link'		=> Route::url('topic', array(
+							'id' => $topic->id
+						)),
+					);
 				}
+
+				$output = array(
+					'title' => $title,
+					'link' => Route::url($type),
+					'entry' => $entry,
+				);
+
+				$this->_render($output);
 			}
 			else
 			{

@@ -890,6 +890,7 @@ ul.novice li small {
 #profile .statistics .sides a .count:hover,
 #profile .statistics .sides .count:hover {
 	color: #990000;
+	text-decoration: none;
 }
 
 #profile .user-record {

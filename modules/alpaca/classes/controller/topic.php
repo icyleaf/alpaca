@@ -21,11 +21,21 @@ class Controller_Topic extends Controller_Alpaca {
 	 *
 	 * @param int $topic_id 
 	 */
-	public function action_view($topic_id)
+	public function action_view($group_id = NULL, $topic_id)
 	{
 		$topic = ORM::factory('topic', $topic_id);
 		if ($topic->loaded())
 		{
+			if (preg_match('/^topic\/(\d+)/', $this->request->uri))
+			{
+				// redirect to page with group uri
+				$this->request->status = 301;
+				$this->request->redirect(Route::get('topic')->uri(array(
+					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'id' => $topic->id
+				)));
+			}
+			
 			$title = $topic->title;
 			$topic->hits += 1;
 			$topic->save();
@@ -122,7 +132,10 @@ class Controller_Topic extends Controller_Alpaca {
 							
 						if ($topic->loaded())
 						{
-							$this->request->redirect(Route::get('topic')->uri(array('id' => $topic->id)));
+							$this->request->redirect(Route::get('topic')->uri(array(
+								'group_id' => Alpaca_Group::the_uri($topic->group),
+								'id' => $topic->id
+							)));
 						}
 					}
 
@@ -137,7 +150,10 @@ class Controller_Topic extends Controller_Alpaca {
 						$group->count += 1;
 						$group->save();
 						
-						$this->request->redirect(Route::get('topic')->uri(array('id' => $topic->id)));
+						$this->request->redirect(Route::get('topic')->uri(array(
+							'group_id' => Alpaca_Group::the_uri($topic->group),
+							'id' => $topic->id
+						)));
 					}
 					else
 					{
@@ -189,7 +205,10 @@ class Controller_Topic extends Controller_Alpaca {
 				// Upate
 				$topic->save();
 
-				$this->request->redirect(Route::get('topic')->uri(array('id' => $topic_id)));
+				$this->request->redirect(Route::get('topic')->uri(array(
+					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'id' => $topic->id
+				)));
 			}
 			else
 			{
@@ -313,7 +332,10 @@ class Controller_Topic extends Controller_Alpaca {
 			{
 				$topic->group_id = $group_id;
 				$topic->save();
-				$this->request->redirect(Route::get('topic')->uri(array('id' => $topic_id)));
+				$this->request->redirect(Route::get('topic')->uri(array(
+					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'id' => $topic->id
+				)));
 			}
 			else
 			{

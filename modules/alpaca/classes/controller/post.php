@@ -44,7 +44,10 @@ class Controller_Post extends Controller_Alpaca {
 				$topic->count += 1;
 				$topic->save();
 				
-				$this->request->redirect(Route::get('topic')->uri(array('id' => $topic->id)));
+				$this->request->redirect(Route::get('topic')->uri(array(
+					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'id' => $topic->id
+				)));
 			}
 			else
 			{
@@ -69,7 +72,10 @@ class Controller_Post extends Controller_Alpaca {
 			{
 				$post->save();
 			
-				$this->request->redirect(Route::get('topic')->uri(array('id' => $post->topic->id)));
+				$this->request->redirect(Route::get('topic')->uri(array(
+					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'id' => $post->topic->id
+				)));
 			}
 			else
 			{
@@ -146,7 +152,10 @@ class Controller_Post extends Controller_Alpaca {
 				// Delete the post
 				$post->delete();
 				
-				$this->request->redirect(Route::get('topic')->uri(array('id' => $post->topic->id)));
+				$this->request->redirect(Route::get('topic')->uri(array(
+					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'id' => $post->topic->id
+				)));
 			}
 			else
 			{
