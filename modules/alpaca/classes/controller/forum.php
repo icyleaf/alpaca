@@ -38,7 +38,7 @@ class Controller_Forum extends Controller_Alpaca {
 				$title = __('Top collection topics');
 				break;
 			default:
-			case 'touched':
+			case 'latest':
 				$title = __('Latest topics');
 				$type = 'touched';
 				break;
@@ -52,9 +52,9 @@ class Controller_Forum extends Controller_Alpaca {
 
 		// hide 'touched' anchor on index page
 		$topic_sort = array();
-		if ( ! in_array($this->request->uri , array('', '/', 'touched')))
+		if ( ! in_array($this->request->uri , array('', '/', 'latest')))
 		{
-			$topic_sort['touched'] = __('Latest');
+			$topic_sort['latest'] = __('Latest');
 		}
 		$topic_sort['hits'] = __('Top hits');
 		$topic_sort['collections'] = __('Top collections');

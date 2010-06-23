@@ -67,7 +67,7 @@ Route::set('changepassword', 'changepassword/<code>', array(
 		'action'    => 'changepassword',
 	));
 
-Route::set('touched', 'touched')
+Route::set('touched', 'latest')
 	->defaults(array(
 		'controller'=> 'forum',
 		'action'    => 'index',
