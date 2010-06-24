@@ -138,7 +138,7 @@ var alpaca = {
 			var s_input = $('#'+source);
 			var t_input = $('#'+target);
 
-			$('form').bind('event', function(){
+			$('form').bind('submit', function(){
 				t_input.val(s_input.val());
 			});
 		});
