@@ -28,7 +28,7 @@ $content_error = isset($errors['content'])?$errors['content']:'';
 			</span>
 			<span class="left">
 				<?php echo HTML::anchor(Route::get('topic')->uri(array(
-						'group_id' => Alpaca_Group::the_uri($topic->group),
+						'group_id' => Alpaca_Group::the_uri($post->topic->group),
 						'id' => $post->topic->id
 					)),
 					__('Undo'),

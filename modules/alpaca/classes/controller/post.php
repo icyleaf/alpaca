@@ -73,7 +73,7 @@ class Controller_Post extends Controller_Alpaca {
 				$post->save();
 			
 				$this->request->redirect(Route::get('topic')->uri(array(
-					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'group_id' => Alpaca_Group::the_uri($post->topic->group),
 					'id' => $post->topic->id
 				)));
 			}
@@ -153,7 +153,7 @@ class Controller_Post extends Controller_Alpaca {
 				$post->delete();
 				
 				$this->request->redirect(Route::get('topic')->uri(array(
-					'group_id' => Alpaca_Group::the_uri($topic->group),
+					'group_id' => Alpaca_Group::the_uri($post->topic->group),
 					'id' => $post->topic->id
 				)));
 			}
