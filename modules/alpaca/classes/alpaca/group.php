@@ -101,13 +101,11 @@ class Alpaca_Group {
 		);
 		if (is_array($link))
 		{
-			$image = HTML::anchor(Route::get('group')
-				->uri($group_uri), $image, $attr);
+			$image = HTML::anchor(Route::url('group', $group_uri), $image, $attr);
 		}
 		elseif ($link)
 		{
-			$image = HTML::anchor(Route::get('group')
-				->uri($group_uri), $image);
+			$image = HTML::anchor(Route::url('group', $group_uri), $image);
 		}
 		
 		return $image;
@@ -156,7 +154,7 @@ class Alpaca_Group {
 				Alpaca_Group::$_group_id = $group->id;
 				Alpaca_Group::$_group_name = $group->name;
 				
-				$link_uri = Route::get('group')->uri(array('id'=>Alpaca_Group::the_uri($group)));
+				$link_uri = Route::url('group', array('id' => Alpaca_Group::the_uri($group)));
 				$link_title = $config['link_before'] . $group->name . $config['link_after'];
 					
 				if ($config['child_of'])
@@ -172,7 +170,7 @@ class Alpaca_Group {
 							$output .= '<ul id="group_children">';
 							foreach ($children as $child)
 							{
-								$link_uri = Route::get('group')->uri(array(
+								$link_uri = Route::url('group', array(
 									'id' => Alpaca_Group::the_uri($child)
 								));
 								$link_title = $config['link_before'] . $child->name . $config['link_after'];
@@ -253,7 +251,7 @@ class Alpaca_Group {
 				'<div class="content"><ul>';
 			foreach ($topics as $topic) 
 			{
-				$link_uri = Route::get('topic')->uri(array(
+				$link_uri = Route::url('topic', array(
 					'group_id' => Alpaca_Group::the_uri($topic->group),
 					'id' => $topic->id
 				));

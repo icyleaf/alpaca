@@ -125,7 +125,7 @@ class Controller_Group extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		$title = __('Create Category/Group');
@@ -181,7 +181,7 @@ class Controller_Group extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		if (is_numeric($group_id))
@@ -215,7 +215,7 @@ class Controller_Group extends Controller_Alpaca {
 				{
 					$group->save();
 	
-					$this->request->redirect(Route::get('group')->uri(array('id' => $group_id)));
+					$this->request->redirect(Route::url('group', array('id' => $group_id)));
 				}
 				else
 				{
@@ -244,7 +244,7 @@ class Controller_Group extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		$group = ORM::factory('group', $group_id);

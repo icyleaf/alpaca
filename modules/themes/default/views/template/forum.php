@@ -28,7 +28,7 @@
 			</div>
 		</div>
 	
-		<div id="website">`
+		<div id="website">
 		<?php echo HTML::anchor(
 				URL::base(),
 				HTML::image($config->logo), array('alt' => $config->title),

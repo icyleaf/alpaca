@@ -2,7 +2,7 @@
 <div id="login_form" class="widget">
 	<h3>
 		<?php echo __('User Login'); ?>
-		<small><?php echo HTML::anchor(Route::get('register')->uri(), '('.__('Sign up').')')?></small>
+		<small><?php echo HTML::anchor(Route::url('register'), '('.__('Sign up').')')?></small>
 	</h3>
 	<form action="<?php echo Route::url('login'); ?>" method="POST">
 	<input type="hidden" name="redir" value="<?php echo URL::base(); ?>" />

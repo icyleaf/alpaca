@@ -19,7 +19,7 @@
 		<label><?php echo __('View your public profile'); ?></label>
 		<p>
 		<?php echo __(':click_here to view your public profile.', array(
-			':click_here' => HTML::anchor(Route::get('user')->uri(array('id' => Alpaca_User::the_uri($user))), __('Click here'))
+			':click_here' => HTML::anchor(Route::url('user', array('id' => Alpaca_User::the_uri($user))), __('Click here'))
 			)); ?>
 		</p>
 	</div>

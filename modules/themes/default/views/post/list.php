@@ -46,7 +46,7 @@
 				echo Alpaca_User::avatar($author, $avatar_config, array('id' => 'avatar-'.$post->id, 'class' => 'avatar', TRUE));
 				
 				echo HTML::anchor(
-					Route::get('user')->uri(array('id' => Alpaca_User::the_uri($author))),
+					Route::url('user', array('id' => Alpaca_User::the_uri($author))),
 					$author->nickname); 
 			?>
 		</li>

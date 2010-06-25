@@ -26,7 +26,7 @@
 					<div class="sides">
 						<div class="header"><?php echo __('Topics'); ?>:</div>
 						<?php
-							$link = Route::get('user')->uri(array(
+							$link = Route::url('user', array(
 								'id'	=> Alpaca_User::the_uri($user),
 								'type'	=> 'topics',
 								));
@@ -39,7 +39,7 @@
 					<div class="sides">
 						<div class="header"><?php echo __('Replies'); ?>:</div>
 						<?php
-							$link = Route::get('user')->uri(array(
+							$link = Route::url('user', array(
 								'id'	=> Alpaca_User::the_uri($user),
 								'type'	=> 'posts',
 								));
@@ -52,7 +52,7 @@
 					<div class="sides last">
 						<div class="header"><?php echo __('Collections'); ?>:</div>
 						<?php
-							$link = Route::get('user')->uri(array(
+							$link = Route::url('user', array(
 								'id'	=> Alpaca_User::the_uri($user),
 								'type'	=> 'collections',
 								));
@@ -66,7 +66,7 @@
 					<div class="sides last">
 						<div class="header"><?php //echo __('Groups'); ?>:</div>
 						<?php
-//							$link = Route::get('user')->uri(array(
+//							$link = Route::url('user', array(
 //								'id'	=> Alpaca_User::the_uri($user),
 //								'type'	=> 'groups',
 //								));
@@ -79,7 +79,7 @@
 					<div class="sides">
 						<div class="header"><?php //echo __('Followings'); ?>:</div>
 						<?php
-//							$link = Route::get('user')->uri(array(
+//							$link = Route::url('user', array(
 //								'id'	=> Alpaca_User::the_uri($user),
 //								'type'	=> 'followings',
 //								));
@@ -91,7 +91,7 @@
 					<div class="sides last">
 						<div class="header"><?php //echo __('Friends'); ?>:</div>
 						<?php
-//							$link = Route::get('user')->uri(array(
+//							$link = Route::url('user', array(
 //								'id'	=> Alpaca_User::the_uri($user),
 //								'type'	=> 'followers',
 //								));
@@ -130,7 +130,7 @@
 			$user_link = $user->nickname;
 		}
 		
-		echo HTML::anchor(Route::get('user/feed')->uri(array('id' => Alpaca_User::the_uri($user))),
+		echo HTML::anchor(Route::url('user/feed', array('id' => Alpaca_User::the_uri($user))),
 			__('Subscribe the latest updates @:user...', array(':user' => $user_link)));
 	?>
 	</h4>

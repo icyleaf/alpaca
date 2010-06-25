@@ -141,7 +141,7 @@ class Controller_Alpaca extends Controller_Template {
 					{
 						foreach ($children as $child)
 						{
-							$child_menu->add(Route::get('group')->uri(array(
+							$child_menu->add(Route::url('group', array(
 									'id' => Alpaca_Group::the_uri($child)
 								)),
 								$child->name

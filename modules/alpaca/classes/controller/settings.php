@@ -23,7 +23,7 @@ class Controller_Settings extends Controller_Alpaca {
 		if ( ! $this->user)
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		if (I18n::$lang == 'zh-cn')

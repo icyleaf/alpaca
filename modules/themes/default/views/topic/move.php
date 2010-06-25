@@ -13,7 +13,7 @@ if ($groups->count())
 			echo '<li>'.$group->name.'<ul class="groups">';
 			foreach ($children as $child)
 			{
-				$route = Route::get('topic/move')->uri(array(
+				$route = Route::url('topic/move', array(
 					'topic_id'	=> $topic->id,
 					'group_id'	=> $child->id,
 					));

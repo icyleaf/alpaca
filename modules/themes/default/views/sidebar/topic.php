@@ -1,7 +1,7 @@
 <div class="widget">
 	<div class="block group">
 	<?php 
-		echo HTML::anchor(Route::get('group')->uri(array('id'=>$topic->group)),
+		echo HTML::anchor(Route::url('group', array('id'=>$topic->group)),
 			__('返回:group小组', array(':group' => $topic->group->name)));
 	?>
 	</div>
@@ -42,7 +42,7 @@
 <div class="widget">
 	<div class="block collection">
 	<?php 
-		echo HTML::anchor(Route::get('topic/collectors')->uri(array(
+		echo HTML::anchor(Route::url('topic/collectors', array(
 			'topic_id' => $topic->id)),__('view who collected this!'));
 	?>
 	</div>

@@ -29,7 +29,7 @@ class Controller_Topic extends Controller_Alpaca {
 			if (preg_match('/^topic\/(\d+)/', $this->request->uri))
 			{
 				// redirect to page with group uri
-				$this->request->redirect(Route::get('topic')->uri(array(
+				$this->request->redirect(Route::url('topic', array(
 					'group_id' => Alpaca_Group::the_uri($topic->group),
 					'id' => $topic->id
 				)), 301);
@@ -94,7 +94,7 @@ class Controller_Topic extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		if (is_numeric($group_id))
@@ -131,7 +131,7 @@ class Controller_Topic extends Controller_Alpaca {
 							
 						if ($topic->loaded())
 						{
-							$this->request->redirect(Route::get('topic')->uri(array(
+							$this->request->redirect(Route::url('topic', array(
 								'group_id' => Alpaca_Group::the_uri($topic->group),
 								'id' => $topic->id
 							)));
@@ -149,7 +149,7 @@ class Controller_Topic extends Controller_Alpaca {
 						$group->count += 1;
 						$group->save();
 						
-						$this->request->redirect(Route::get('topic')->uri(array(
+						$this->request->redirect(Route::url('topic', array(
 							'group_id' => Alpaca_Group::the_uri($topic->group),
 							'id' => $topic->id
 						)));
@@ -161,9 +161,9 @@ class Controller_Topic extends Controller_Alpaca {
 				}
 				// TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
 						Alpaca_Group::image($group, TRUE)).'</div>';
-				$sidebar .= HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+				$sidebar .= HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
 					'返回'.$group->name.'小组');
 				
 				$this->template->sidebar = $sidebar;
@@ -192,7 +192,7 @@ class Controller_Topic extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		$topic = ORM::factory('topic', $topic_id);
@@ -204,7 +204,7 @@ class Controller_Topic extends Controller_Alpaca {
 				// Upate
 				$topic->save();
 
-				$this->request->redirect(Route::get('topic')->uri(array(
+				$this->request->redirect(Route::url('topic', array(
 					'group_id' => Alpaca_Group::the_uri($topic->group),
 					'id' => $topic->id
 				)));
@@ -234,9 +234,9 @@ class Controller_Topic extends Controller_Alpaca {
 				$group = $topic->group;
 				// TODO: change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-				HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+				HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
 					Alpaca_Group::image($group, TRUE)).'</div>';
-				$sidebar .= HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+				$sidebar .= HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
 				'返回'.$group->name.'小组');
 			
 				$this->template->sidebar = $sidebar;
@@ -265,7 +265,7 @@ class Controller_Topic extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		$this->template->content = View::factory('template/general')
@@ -289,7 +289,7 @@ class Controller_Topic extends Controller_Alpaca {
 				
 				$topic->delete();
 				
-				$this->request->redirect(Route::get('group')->uri(array('id' => $group->id)));
+				$this->request->redirect(Route::url('group', array('id' => $group->id)));
 			}
 			else
 			{
@@ -317,7 +317,7 @@ class Controller_Topic extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		$this->template->content = View::factory('template/general')
@@ -331,7 +331,7 @@ class Controller_Topic extends Controller_Alpaca {
 			{
 				$topic->group_id = $group_id;
 				$topic->save();
-				$this->request->redirect(Route::get('topic')->uri(array(
+				$this->request->redirect(Route::url('topic', array(
 					'group_id' => Alpaca_Group::the_uri($topic->group),
 					'id' => $topic->id
 				)));

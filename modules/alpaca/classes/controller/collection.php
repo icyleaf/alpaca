@@ -63,7 +63,7 @@ class Controller_Collection extends Controller_Alpaca {
 			if ( ! $this->auth->logged_in())
 			{
 				$current_uri = URL::query(array('redir' => $this->request->uri));
-				$this->request->redirect(Route::get('login')->uri().$current_uri);
+				$this->request->redirect(Route::url('login').$current_uri);
 			}
 			
 			$result = 'FALSE';

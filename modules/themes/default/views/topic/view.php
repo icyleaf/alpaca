@@ -50,7 +50,7 @@ $author = $topic->author;
 			
 			echo '<span class="avatar">'.HTML::image($avatar).'</span>';
 			echo '<span class="author">'.
-				HTML::anchor(Route::get('user')->uri(array('id'=>Alpaca_User::the_uri($author))),
+				HTML::anchor(Route::url('user', array('id'=>Alpaca_User::the_uri($author))),
 				$author->nickname).'</span>';
 			echo '<span class="date">'.date($config->date_format, $topic->created).'</span>';
 		?>

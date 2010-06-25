@@ -14,7 +14,7 @@ class Controller_Post extends Controller_Alpaca {
 		if ( ! $this->auth->logged_in())
 		{
 			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::get('login')->uri().$current_uri);
+			$this->request->redirect(Route::url('login').$current_uri);
 		}
 		
 		// add auto resize to textarea
@@ -44,7 +44,7 @@ class Controller_Post extends Controller_Alpaca {
 				$topic->count += 1;
 				$topic->save();
 				
-				$this->request->redirect(Route::get('topic')->uri(array(
+				$this->request->redirect(Route::url('topic', array(
 					'group_id' => Alpaca_Group::the_uri($topic->group),
 					'id' => $topic->id
 				)));
@@ -72,14 +72,14 @@ class Controller_Post extends Controller_Alpaca {
 			{
 				$post->save();
 			
-				$this->request->redirect(Route::get('topic')->uri(array(
+				$this->request->redirect(Route::url('topic', array(
 					'group_id' => Alpaca_Group::the_uri($post->topic->group),
 					'id' => $post->topic->id
 				)));
 			}
 			else
 			{
-				echo Kohana::debug($post->validate()->errors('validate'));
+				$errors = $post->validate()->errors('validate');
 			}
 		}
 		
@@ -96,15 +96,16 @@ class Controller_Post extends Controller_Alpaca {
 			if (($auth_user->id == $post->author->id) OR $has_role)
 			{
 				$this->template->content = View::factory('post/edit')
+					->bind('errors', $errors)
 					->bind('post', $post);
 				
 				$group = $post->topic->group;
 				//TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
 						Alpaca_Group::image($group, TRUE)).
 					'</div>'.
-					HTML::anchor(Route::get('group')->uri(array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
 					'返回'.$group->name.'小组');
 			
 				$this->template->sidebar = $sidebar;
@@ -152,7 +153,7 @@ class Controller_Post extends Controller_Alpaca {
 				// Delete the post
 				$post->delete();
 				
-				$this->request->redirect(Route::get('topic')->uri(array(
+				$this->request->redirect(Route::url('topic', array(
 					'group_id' => Alpaca_Group::the_uri($post->topic->group),
 					'id' => $post->topic->id
 				)));

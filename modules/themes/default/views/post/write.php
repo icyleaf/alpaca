@@ -4,7 +4,7 @@
 	<h3><?php echo __('Post new reply'); ?></h3>
 	<?php if ($auth->logged_in()): ?>
 	<div class="tips" style="padding-left: 7px"><?php echo __('Wanna say something?'); ?></div>
-	<form method="post" action="<?php echo Route::get('forum')->uri(array('controller' => 'post', 'action' => 'add')); ?>">
+	<form method="post" action="<?php echo Route::url('forum', array('controller' => 'post', 'action' => 'add')); ?>">
 	<input type="hidden" name="topic_id" value="<?php echo $topic->id; ?>" />
 	<input type="hidden" name="user_id" value="<?php echo $author->id; ?>" />
 	<div class="comments-body">
@@ -57,7 +57,7 @@
 	<div class="txt_right">
 		<?php echo HTML::anchor(URL::base(), __('Home Back')); ?>
 		 | 
-		<?php echo HTML::anchor(Route::get('group')->uri(array('id' => $topic->group->id)), $topic->group->name); ?>
+		<?php echo HTML::anchor(Route::url('group', array('id' => $topic->group->id)), $topic->group->name); ?>
 		 | 
 		<a href="javascript:window.scrollTo(0,0);"><?php echo __('Top Back'); ?></a>
 	</div>

@@ -1,7 +1,7 @@
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
-		<small><?php echo HTML::anchor(Route::get('register')->uri(), '('.__('Sign up').')'); ?></small>
+		<small><?php echo HTML::anchor(Route::url('register'), '('.__('Sign up').')'); ?></small>
 	</h2>
 	<form method="post">
 	<input type="hidden" name="redir" value="<?php echo $redir; ?>" />

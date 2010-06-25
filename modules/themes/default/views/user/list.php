@@ -6,7 +6,7 @@
 foreach ($collections as $collection):
 	$user = $collection->user;
 	$avatar = Alpaca_User::avatar($user, array('size' => 48), array('class' => 'avatar'), TRUE);
-	$user_url = Route::get('user')->uri(array('id' => Alpaca_User::the_uri($user)));
+	$user_url = Route::url('user', array('id' => Alpaca_User::the_uri($user)));
 	$nickname = (strlen($user->nickname) > 24) ? substr($user->nickname, 0, 24).'...' : $user->nickname;
 	
 	echo '<li class="user_item"><div>'.$avatar.'</div>'.
