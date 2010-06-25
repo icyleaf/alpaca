@@ -1,11 +1,3 @@
-<?php
-$email = Arr::get($_POST, 'email');
-
-$error_email = Arr::get($errors, 'email');
-$error_pwd = Arr::get($errors, 'password');
-
-$redir = empty($_SERVER['HTTP_REFERER']) ? URL::base() : $_SERVER['HTTP_REFERER'];
-?>
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
@@ -16,14 +8,14 @@ $redir = empty($_SERVER['HTTP_REFERER']) ? URL::base() : $_SERVER['HTTP_REFERER'
 	<div id="authform-body">
 		<p>
 			<label><?php echo __('Email'); ?>:</label><br />
-			<input id="email" name="email" type="text" tabindex="10" value="<?php echo $email; ?>" />
-			<br /><span class="error"><?php echo $error_email; ?></span>
+			<input id="email" name="email" type="text" tabindex="10" value="<?php echo Arr::get($_POST, 'email'); ?>" />
+			<br /><span class="error"><?php echo Arr::get($errors, 'email'); ?></span>
 		</p>
 		<p>
 			<label><?php echo __('Password'); ?>:</label>
 			<?php echo HTML::anchor('lostpassword', '('.__('Lost Password').')'); ?><br />
 			<input id="password" name="password" type="password" tabindex="20" />
-			<br /><span class="error"><?php echo $error_pwd; ?></span>
+			<br /><span class="error"><?php echo Arr::get($errors, 'password'); ?></span>
 		</p>
 		<p>
 			<input id="remember" type="checkbox" tabindex="90" value="true" name="remember"/>

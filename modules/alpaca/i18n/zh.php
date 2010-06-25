@@ -144,7 +144,8 @@ return array
 	'Friends'				=> '好友人数',
 	'Subscribe the latest updates @:user...' => '订阅:user的最新动态...',
 	'Registered at :created. Last signed in at :last. :logins logins.' => ':user注册于 :created，最后一次登录是:last，共计登录 :logins 次。',
-	
+	':user\'s Groups'		=> ':user的小组',
+
 	/**
 	 * Settings
 	 */
@@ -214,6 +215,7 @@ return array
 	'The page no longer exists' => '页面被人间蒸发了...',
 	'You were looking for your puppy and got lost' => '在寻找心爱的小狗的时候走丢了',
 	'You like 404 page' => '您喜爱 404 页面',
+	'Not found the user, please spell check the username.' => '未找到该用户，请合适用户名或 id 是否正确拼写。',
 	
 	/**
 	 * Validate messages

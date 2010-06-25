@@ -1,7 +1,3 @@
-<?php
-$email = Arr::get($_POST, 'email');
-$error_email = Arr::get($errors, 'email');
-?>
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
@@ -11,8 +7,8 @@ $error_email = Arr::get($errors, 'email');
 	<div id="authform-body">
 		<p>
 			<label><?php echo __('email'); ?>:</label><br />
-			<input id="email" name="email" type="text" tabindex="10" value="<?php echo $email; ?>" />
-			<br /><span class="wrong"><?php echo $error_email; ?></span>
+			<input id="email" name="email" type="text" tabindex="10" value="<?php echo Arr::get($_POST, 'email'); ?>" />
+			<br /><span class="wrong"><?php echo Arr::get($errors, 'email'); ?></span>
 		</p>
 		<p class="submit">
 			<input id="submit" type="submit" tabindex="100" value="<?php echo __('Request Invite'); ?>" />

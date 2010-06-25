@@ -77,7 +77,7 @@ $config = array
  *	E.g, 2009-11-11T11:11:11+08:00
  *	It means Nov. 11th 2009 11:11:11 in Timezone 08:00
  *
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 $holiday = array
 (

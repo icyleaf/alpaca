@@ -3,7 +3,7 @@
  * iMailer class
  *
  * @package core
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class iMailer {
 	/**

@@ -3,7 +3,7 @@
  * Alpaca Auth Entry
  *
  * @package controller
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Controller_Auth extends Controller_Alpaca {
 	
@@ -165,9 +165,11 @@ class Controller_Auth extends Controller_Alpaca {
 		$title = __('Log in').Alpaca::beautify_str($this->config->title, TRUE);
 		$this->header->title->set($title);
 		$this->template->content = View::factory('auth/login')
+			->bind('redir', $redir)
 			->bind('title', $title)
 			->bind('errors', $errors);
-		
+
+		$redir = Arr::get($_SERVER, 'HTTP_REFERER', URL::base());
 		if ($_POST)
 		{
 			$user = ORM::factory('user');
@@ -318,7 +320,7 @@ class Controller_Auth extends Controller_Alpaca {
 			$this->template->content = View::factory('auth/changepassword')
 				->bind('title', $title)
 				->set('user', $user)
-				->bind('errors', $errors);	
+				->bind('errors', $errors);
 			
 			if ($_POST AND $user->loaded())
 			{

@@ -2,8 +2,8 @@
 /**
  * Alpaca Helper
  *
- * @package alpaca
- * @author icyleaf
+ * @package Alpaca
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Alpaca {
 	

@@ -3,7 +3,7 @@
  * Alpaca Group helper
  *
  * @package Alpaca
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Alpaca_Group {
 		 
@@ -91,7 +91,7 @@ class Alpaca_Group {
 		{
 			$image = HTML::image($image, $attr);
 		}
-		else if ($attr)
+		elseif ($attr)
 		{
 			$image = HTML::image($image);
 		}
@@ -104,7 +104,7 @@ class Alpaca_Group {
 			$image = HTML::anchor(Route::get('group')
 				->uri($group_uri), $image, $attr);
 		}
-		else if ($link)
+		elseif ($link)
 		{
 			$image = HTML::anchor(Route::get('group')
 				->uri($group_uri), $image);

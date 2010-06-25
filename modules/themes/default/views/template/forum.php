@@ -2,46 +2,25 @@
 <div id="wrap">
 	<div id="header">
 		<div class="block">
-		<?php 
-			if ($user = $auth->get_user())
-			{
-				$auth_links = array
-				(
-					Route::get('user')->uri(array('id' => Alpaca_User::the_uri($user))) => array(
-						'title' => $user->nickname, 
-						'attr' => array('class' => 'user')
-						),
-					'settings'	=> array('title' => __('Settings')),
-					'logout'	=> array('title' => __('Log out')),
-				);
-			}
-			else
-			{
-				$auth_links = array
-				(
-					'register'	=> array('title' => __('Sign up'), 'attr' => array('style' => 'color: #7F2D20')),
-					'login'		=> array('title' => __('Log in')),
-				);
-			}
-			$auth_menu = array();
+			<?php $auth_menu = array();
 			foreach ($auth_links as $link => $item)
 			{
 				$attr = isset($item['attr'])?$item['attr']:array();
 				if (empty($link))
 				{
-					$auth_menu[] = $item['title']; 
+					$auth_menu[] = $item['title'];
 				}
-				else if (preg_match('/^<(\w+)>$/i', $link, $match))
+				elseif (preg_match('/^<(\w+)>$/i', $link, $match))
 				{
-					$auth_menu[] = '<'.$match[1].HTML::attributes($attr).'>'.$item['title'].'</'.$match[1].'>';
+					$auth_menu[] = '<'.$match[1].HTML::attributes($attr).'>'.
+						$item['title'].'</'.$match[1].'>';
 				}
 				else
 				{
 					$auth_menu[] = HTML::anchor($link, $item['title'], $attr);
 				}
-			}
-			echo '<div class="auth">'.join('|', $auth_menu).'</div>';
-		?>
+			} ?>
+			<div class="auth"><?php echo implode('|', $auth_menu); ?></div>
 			<div class="search">
 			<form action="<?php echo URL::site('search'); ?>">
 				<input type="text" name="q" id="header_search_query" value="<?php echo __('Search Topic'); ?>"/><input type="submit" value="<?php echo __('Go'); ?>" />
@@ -49,13 +28,12 @@
 			</div>
 		</div>
 	
-		<div id="website">
-		<?php 
-			echo HTML::anchor(
+		<div id="website">`
+		<?php echo HTML::anchor(
 				URL::base(),
-				HTML::image($config->logo), array('alt' => $config->title), array('id' => 'logo')
-				);
-		?>
+				HTML::image($config->logo), array('alt' => $config->title),
+				array('id' => 'logo')
+				); ?>
 		</div><!-- /website -->
 		<div class="clear"></div>
 		
@@ -64,6 +42,7 @@
 			<div class="clear"></div>
 		</div><!-- /cpanel -->
 	</div><!-- /header -->
+
 	<div id="container">
 		<!--[if lt IE 7]>
 		<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;margin-bottom: 20px;'>

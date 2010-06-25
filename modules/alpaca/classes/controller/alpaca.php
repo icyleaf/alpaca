@@ -3,7 +3,7 @@
  * Base Alpaca Template 
  *
  * @package controller
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Controller_Alpaca extends Controller_Template {
 
@@ -61,12 +61,47 @@ class Controller_Alpaca extends Controller_Template {
 		$menu = $this->general_menu();
 		// Check remember me 
 		$this->auth->auto_login();
+
+		if ($user = $this->auth->get_user())
+		{
+			$user_link = Route::url('user', array('id' => Alpaca_User::the_uri($user)));
+			$auth_links = array
+			(
+				$user_link => array(
+					'title' => $user->nickname,
+					'attr' => array('class' => 'user')
+				),
+				'settings' => array(
+					'title' => __('Settings')
+				),
+				'logout' => array(
+					'title' => __('Log out')
+				),
+			);
+		}
+		else
+		{
+			$auth_links = array
+			(
+				'register' => array(
+					'title' => __('Sign up'),
+					'attr' => array('style' => 'color: #7F2D20')
+				),
+				'login' => array(
+					'title' => __('Log in')
+				),
+			);
+		}
+
 		
-		// View
+		// Set global varibales in View
 		View::bind_global('config', $this->config);
 		View::bind_global('auth', $this->auth);
+
+		// Base Template
 		$this->template = View::factory($this->template)
 			->bind('menu', $menu)
+			->bind('auth_links', $auth_links)
 			->bind('header_body', $header_body)
 			->bind('footer_body', $footer_body);
 		

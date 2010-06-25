@@ -1,12 +1,3 @@
-<?php
-$email = Arr::get($_POST, 'email');
-$nickname = Arr::get($_POST, 'nickname');
-
-$error_email = Arr::get($errors, 'email');
-$error_pwd = Arr::get($errors, 'password');
-$error_pwd_conf = Arr::get($errors, 'password_confirm');
-$error_nickname = Arr::get($errors, 'nickname');
-?>
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
@@ -16,18 +7,18 @@ $error_nickname = Arr::get($errors, 'nickname');
 	<div id="authform-body">
 		<p>
 			<label><?php echo __('Your Email'); ?>:</label><br />
-			<input id="email" name="email" type="text" tabindex="10" value="<?php echo $email; ?>" />
-			<br /><span class="error"><?php echo $error_email; ?></span>
+			<input id="email" name="email" type="text" tabindex="10" value="<?php echo Arr::get($_POST, 'email'); ?>" />
+			<br /><span class="error"><?php echo Arr::get($errors, 'email'); ?></span>
 		</p>
 		<p>
 			<label><?php echo __('New Password'); ?>:</label><br />
 			<input id="password" name="password" type="password" tabindex="20" />
-			<br /><span class="error"><?php echo $error_pwd; ?></span>
+			<br /><span class="error"><?php echo Arr::get($errors, 'password'); ?></span>
 		</p>
 		<p>
 			<label><?php echo __('Pick a nickname'); ?>:</label><br />
-			<input id="nickname" name="nickname" type="text" tabindex="40" value="<?php echo $nickname; ?>" />
-			<br /><span class="error"><?php echo $error_nickname; ?></span>
+			<input id="nickname" name="nickname" type="text" tabindex="40" value="<?php echo Arr::get($_POST, 'nickname'); ?>" />
+			<br /><span class="error"><?php echo Arr::get($errors, 'password_confirm'); ?></span>
 		</p>
 		<p class="submit">
 			<input id="random" name="random" type="hidden" value="<?php echo time(); ?>" />

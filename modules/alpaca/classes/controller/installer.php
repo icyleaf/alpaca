@@ -3,7 +3,7 @@
  * Alpaca Installer
  *
  * @package controller
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  *
  * @TODO: Finish it
  */

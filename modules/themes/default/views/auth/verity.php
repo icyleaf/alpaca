@@ -1,10 +1,5 @@
-<?php
-$hash_code = Arr::get($_POST, 'hash_code');
-$error_hash_code = Arr::get($errors, 'hash_code');
-
-if ( ! empty($action) AND $action == 'resend'):
+<?php if ( ! empty($action) AND $action == 'resend'):
 	$email = isset($email) ? $email : Arr::get($_POST, 'email');
-	$error_email = Arr::get($errors, 'email');
 ?>
 <div id="authform">	
 	<h2><?php echo __('Send me again'); ?></h2>
@@ -13,7 +8,7 @@ if ( ! empty($action) AND $action == 'resend'):
 		<p>
 			<label><?php echo __('Email'); ?>:</label><br />
 			<input id="email" name="email" type="text" tabindex="100" value="<?php echo $email; ?>" />
-			<br /><span class="wrong"><?php echo $error_email; ?></span>
+			<br /><span class="wrong"><?php echo Arr::get($errors, 'email'); ?></span>
 		</p>
 		<p class="submit">
 			<input id="submit" class="button" type="submit" tabindex="200" value="<?php echo __('Send'); ?>" />
@@ -33,8 +28,8 @@ if ( ! empty($action) AND $action == 'resend'):
 			(<?php echo HTML::anchor('auth/verity?action=resend&email='.$email, '重新发送'); ?>)
 			<?php endif ?>
 			<br />
-			<input id="email" name="hash_code" type="text" tabindex="10" value="<?php echo $hash_code; ?>" />
-			<br /><span class="wrong"><?php echo $error_hash_code; ?></span>
+			<input id="email" name="hash_code" type="text" tabindex="10" value="<?php echo Arr::get($_POST, 'hash_code'); ?>" />
+			<br /><span class="wrong"><?php echo Arr::get($errors, 'hash_code'); ?></span>
 		</p>
 		<p class="submit">
 			<input id="submit" class="button" type="submit" tabindex="50" value="<?php echo __('Verity'); ?>" />

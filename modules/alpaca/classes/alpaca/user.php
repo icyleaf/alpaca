@@ -3,7 +3,7 @@
  * Alpaca User helper
  *
  * @package Alpaca
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Alpaca_User {
 	
@@ -56,7 +56,7 @@ class Alpaca_User {
 		{
 			$image = HTML::image($image, $attr);
 		}
-		else if ($attr)
+		elseif ($attr)
 		{
 			$image = HTML::image($image);
 		}

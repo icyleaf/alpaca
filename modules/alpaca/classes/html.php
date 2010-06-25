@@ -3,7 +3,7 @@
  * Overwite HTML
  *
  * @package kohana
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class HTML extends Kohana_HTML {
 	

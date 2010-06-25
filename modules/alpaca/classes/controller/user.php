@@ -3,7 +3,7 @@
  * Alpaca User Entry
  *
  * @package controller
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Controller_User extends Controller_Alpaca {
 	
@@ -48,7 +48,7 @@ class Controller_User extends Controller_Alpaca {
 		}
 		else
 		{
-			$this->template->content = '未找到该用户，请合适用户名或 id 是否正确拼写。';
+			$this->template->content = __('Not found the user, please spell check the username.');
 		}
 	}
 	
@@ -63,14 +63,53 @@ class Controller_User extends Controller_Alpaca {
 		$title = __('Subscribe the latest updates @:user...', array(
 			':user' => $user->nickname
 		));
+		$link = Route::url('user/feed', array('id' => Alpaca_User::the_uri($user)));
 		$this->header->title->set($user->nickname);
 		$this->header->title->append($this->config->title);
-		
-		$link = Route::url('user/feed', array('id' => Alpaca_User::the_uri($user)));
+		// Insert the user rss link
 		$this->header->link->append($link, $title);
-				
+		
 		$this->template->content = View::factory('user/profile')
-			->bind('user', $user);
+			->bind('user', $user)
+			->bind('user_profiles', $user_profiles)
+			->bind('topics', $topics)
+			->bind('replies', $replies)
+			->bind('groups', $groups)
+			->bind('collections_count', $collections_count)
+			->bind('following_count', $following_count)
+			->bind('follower_count', $follower_count);
+
+		$topics = $user->topics->order_by('created', 'DESC')->find_all();
+		$replies = $user->posted_topics($user->id);
+		$groups = $user->groups->order_by('created', 'DESC')->find_all();
+		$collections_count = ORM::factory('collection')->where('user_id', '=', $user->id)->find_all()->count();
+		$following_count = 0;
+		$follower_count = 0;
+
+		$user_profiles = array();
+		foreach ($user->as_array() as $key => $value)
+		{
+			// NEVER display the key below in public page
+			$hidden = array(
+				'id', 'password', 'username', 'email', 'gender',
+				'hits', 'logins', 'last_login', 'last_ua'
+			);
+
+			if ( ! empty($value) AND  ! in_array($key, $hidden))
+			{
+				if ($key == 'created')
+				{
+					$key = 'Member Since';
+					$value = date('Y-m-d', $value);
+				}
+				elseif ($key == 'website' AND Validate::url($value))
+				{
+					$value = Text::auto_link_urls($value);
+				}
+
+				$user_profiles[__(ucfirst($key))] = $value;
+			}
+		}
 	}
 	
 	/**
@@ -94,7 +133,7 @@ class Controller_User extends Controller_Alpaca {
 		$this->template->content = View::factory('topic/list')
 			->set('head', $head)
 			->set('topics', $topics);
-		$this->template->sidebar = '';	
+		$this->template->sidebar = '';
 	}
 	
 	/**
@@ -129,7 +168,7 @@ class Controller_User extends Controller_Alpaca {
 	 */
 	protected function groups(Model_User $user)
 	{
-		$this->header->title->set(__(':user的小组', array(':user' => $user->nickname)));
+		$this->header->title->set(__(':user\'s Groups', array(':user' => $user->nickname)));
 		$this->header->title->append($this->config->title);
 		
 		$this->template->content = View::factory('group/list')

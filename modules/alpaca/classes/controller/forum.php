@@ -3,7 +3,7 @@
  * Alpaca Forum Entry
  *
  * @package controller
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Controller_Forum extends Controller_Alpaca {
 	

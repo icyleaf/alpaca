@@ -3,7 +3,7 @@
  * Widget Class
  *
  * @package alpaca
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Widgets {
 	

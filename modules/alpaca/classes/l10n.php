@@ -3,7 +3,7 @@
  * L10n
  *
  * @package library
- * @author icyleaf
+ * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class L10n {
 	
@@ -99,7 +99,7 @@ class L10n {
 				{
 					$files[$full_name] = $item;
 				}
-				else if (preg_match('/(\w+).\w+/', $full_name, $match))
+				elseif (preg_match('/(\w+).\w+/', $full_name, $match))
 				{
 					$files[$match[1]] = $item;
 				}
@@ -134,7 +134,7 @@ class L10n {
 			{
 				$file = $directory[$filename];
 			}
-			else if (preg_match('/^(\w+\/)+/', $directory))
+			elseif (preg_match('/^(\w+\/)+/', $directory))
 			{
 				$folders = explode('/', $directory);
 				foreach($folders as $folder)
