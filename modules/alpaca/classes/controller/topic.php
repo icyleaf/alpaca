@@ -29,11 +29,10 @@ class Controller_Topic extends Controller_Alpaca {
 			if (preg_match('/^topic\/(\d+)/', $this->request->uri))
 			{
 				// redirect to page with group uri
-				$this->request->status = 301;
 				$this->request->redirect(Route::get('topic')->uri(array(
 					'group_id' => Alpaca_Group::the_uri($topic->group),
 					'id' => $topic->id
-				)));
+				)), 301);
 			}
 			
 			$title = $topic->title;
