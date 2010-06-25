@@ -4,6 +4,7 @@
  *
  * @package libraries
  * @author maartenvanvliet, icyleaf
+ * @version 1.1
  * @license http://www.opensource.org/licenses/bsd-license.php
  * 
  *
@@ -85,7 +86,6 @@ class Head_Partial extends Head {
 	{
 		$this->setFlags(ArrayObject::ARRAY_AS_PROPS);
 	}
-
 }
 
 // Title
@@ -188,13 +188,21 @@ class Head_Javascript_File extends Head_Partial {
 		$html = '';
 		foreach ($this as $field)
 		{
-			if ( empty($field[1]) )
+			if (empty($field[1]))
 			{
 				$html .= HTML::script($field[0]);
 			}
-			else if ( $field[1]=='date' )
+			elseif ($field[1] == 'date')
 			{
-				$date = file_exists($field[0])?(filemtime($field[0])?'?ver='.(date('Ymd', filemtime($field[0]))):''):'';
+				$file_array = explode('/', $field[0]);
+				$file_array_count = count($file_array);
+				$file_base_path = ($file_array_count > 1) ? $file_array[0] : '';
+				list($filename, $file_ext) = explode('.', $file_array[$file_array_count - 1]);
+				$file_path = str_replace($file_base_path.'/', '', $field[0]);
+				$file_path = str_replace('.'.$file_ext, '', $file_path);
+				$file = Kohana::find_file($file_base_path, $file_path, $file_ext);
+
+				$date = file_exists($file)?(filemtime($file)?'?ver='.(date('Ymd', filemtime($file))):''):'';
 				$html .= '<script type="text/javascript" src="'.URL::base().$field[0].$date.'"></script>';
 			}
 			else
@@ -230,14 +238,22 @@ class Head_Js_Brower_Hacks extends Head_Partial{
 		$html = '';
 		foreach ($this as $field)
 		{
-            if ( $field[2]=='7' ) {
-                $html .= "<!--[if lt ".$field[1]." 7]>\n".HTML::script($field[0])."<![endif]-->";
-            } else if ( $field[2]=='8' ) {
-                $html .= "<!--[if lt ".$field[1]." 8]>\n".HTML::script($field[0])."<![endif]-->";
-            } else {
-                $html .= "<!--[if ".$field[1]."]>\n".HTML::script($field[0])."<![endif]-->";
-            }
-            $html .= "\r\n";
+			switch ($field[2])
+			{
+				case 7:
+					$ver_str = ' 7';
+					break;
+				case 8:
+					$ver_str = ' 8';
+					break;
+				default:
+					$ver_str = '';
+					break;
+			}
+
+			$html .= '<!--[if lt '.$field[1].$ver_str.']>'
+				.HTML::script($field[0])
+				.'<![endif]-->'."\r\n";
 		}
 		return $html;
 	}
@@ -280,16 +296,24 @@ class Head_Css_File extends Head_Partial {
 		$html = '';
 		foreach ($this as $field)
 		{
-			if ( empty($field[1]) )
+			if (empty($field[1]))
 			{
 				$html .= HTML::style($field[0], array('media' => $field[2]));
 			}
-			else if ( $field[1]=='date' )
+			elseif ($field[1] == 'date')
 			{
-				$date = file_exists($field[0])?(filemtime($field[0])?'?ver='.(date('Ymd', filemtime($field[0]))):''):'';
+				$file_array = explode('/', $field[0]);
+				$file_array_count = count($file_array);
+				$file_base_path = ($file_array_count > 1) ? $file_array[0] : '';
+				list($filename, $file_ext) = explode('.', $file_array[$file_array_count - 1]);
+				$file_path = str_replace($file_base_path.'/', '', $field[0]);
+				$file_path = str_replace('.'.$file_ext, '', $file_path);
+				$file = Kohana::find_file($file_base_path, $file_path, $file_ext);
+
+				$date = file_exists($file)?(filemtime($file)?'?ver='.(date('Ymd', filemtime($file))):''):'';
 				$html .= HTML::style($field[0].$date, array('media' => $field[2]));
 			}
-			else if ( $field[1]=='all' || $field[1]=='screen' || $field[1]=='print')
+			elseif ($field[1] == 'all' OR $field[1] == 'screen' OR $field[1] == 'print')
 			{
 				$html .= HTML::style($field[0], array('media' => $field[1]));
 			}
@@ -328,14 +352,22 @@ class Head_Css_Brower_Hacks extends Head_Partial {
 		$html = '';
 		foreach ($this as $field)
 		{
-            if ( $field[2]=='7' ) {
-                $html .= "<!--[if lt ".$field[1]." 7]>\n".HTML::style($field[0])."<![endif]-->";
-            } else if ( $field[2]=='8' ) {
-                $html .= "<!--[if lt ".$field[1]." 8]>\n".HTML::style($field[0])."<![endif]-->";
-            } else {
-                $html .= "<!--[if ".$field[1]."]>\n".HTML::style($field[0])."<![endif]-->";
-            }
-            $html .= "\r\n";
+			switch ($field[2])
+			{
+				case 7:
+					$ver_str = ' 7';
+					break;
+				case 8:
+					$ver_str = ' 8';
+					break;
+				default:
+					$ver_str = '';
+					break;
+			}
+
+			$html .= '<!--[if lt '.$field[1].$ver_str.']>'
+				.HTML::style($field[0])
+				.'<![endif]-->'."\r\n";
 		}
 		return $html;
 	}
@@ -361,7 +393,7 @@ class Head_Link extends Head_Partial {
 				'rel' 	=> $link[2],
 			);
 			
-			if ( preg_match('/^http:\/\//i', $link[0]) )
+			if (preg_match('/^http:\/\//i', $link[0]))
 			{
 				$attributes['href'] = $link[0];
 			}
@@ -370,12 +402,12 @@ class Head_Link extends Head_Partial {
 				$attributes['href'] = URL::base(FALSE).$link[0];
 			}
 			
-			if ( !empty($link[3]) )
+			if ( ! empty($link[3]))
 			{
 				$attributes['type'] = $link[3];
 			}
 			
-			if ( !empty($link[1]) )
+			if ( ! empty($link[1]))
 			{
 				$attributes['title'] = $link[1];
 			}
@@ -387,3 +419,4 @@ class Head_Link extends Head_Partial {
 	}
 
 }
+
