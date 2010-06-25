@@ -110,6 +110,17 @@ class Model_User extends Model_Auth_User {
 
 		return $status;
 	}
+
+	/**
+	 * Check user role by role name
+	 *
+	 * @param  $role_name
+	 * @return bool
+	 */
+	public function has_role($role_name)
+	{
+		return $this->has('roles', ORM::factory('role', array('name' => $role_name)));
+	}
 	
 	/**
 	 * Get random uesrs

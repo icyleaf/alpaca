@@ -34,40 +34,90 @@ class Controller_Topic extends Controller_Alpaca {
 					'id' => $topic->id
 				)), 301);
 			}
-			
+
 			$title = $topic->title;
+			// TODO: ONLY store once for per user
 			$topic->hits += 1;
 			$topic->save();
-			
+
 			$pagination = Pagination::factory(array(
 				'view'				=> 'pagination/digg',
 				'total_items' 		=> $topic->count,
 				'items_per_page'	=> $this->config->post['per_page'],
 				));
-			
-			$this->template->content = View::factory('topic/view')
-				->set('post_count', $topic->posts->find_all()->count())
-				->bind('topic', $topic)
-				->bind('topic_posts', $topic_posts)
-				->bind('write_post', $write_post);
-				
-			$topic_posts = View::factory('post/list')
-				->set('post_count', $topic->posts->find_all()->count())
-				->bind('topic', $topic)
-				->bind('posts', $posts)
-				->bind('pagination', $pagination);
-				
+
+			$post_count = $topic->posts->find_all()->count();
 			$posts = $topic->posts
 				->where('reply_id', '=', 0)
 				->limit($pagination->items_per_page)
 				->offset($pagination->offset)
 				->find_all();
+
+			$auth_user = $this->auth->get_user();
+			$author = $topic->author;
+			if ($auth_user)
+			{
+				$actions = array();
+				$has_admin_role = $auth_user->has_role('admin');
+				if (($auth_user->id == $author->id) OR $has_admin_role)
+				{
+					// Topic Edit Anchor
+					$actions[] = HTML::anchor('topic/edit/' . $topic->id, __('Edit'), array(
+						'class' => 'edit',
+						'title' => __('Edit Topic'),
+					));
+					// Topic Delete Anchor
+					$actions[] = HTML::anchor('topic/delete/' . $topic->id, __('Delete'), array(
+						'class' => 'delete',
+						'title' => __('Delete this topic include all the replies'),
+						'rel' => __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
+					));
+				}
+				// ONLY Admin can MOVE topic
+				if ($has_admin_role)
+				{
+					// Topic Move Anchor
+					$actions[] = HTML::anchor('topic/move/' . $topic->id, __('Move'), array(
+						'title' => __('Move to other group')
+					));
+				}
+			}
 			
+			$user_avatar = Gravatar::instance($author->email, array(
+				'default' => URL::site('media/images/user-default.jpg')
+			));
+
+			$author_link = HTML::anchor(Route::url('user', array(
+					'id' => Alpaca_User::the_uri($author)
+				)), $author->nickname);
+			$details = array(
+				'id'			=> $topic->id,
+				'title'		=> $topic->title,
+				'user_avatar'	=> HTML::image($user_avatar),
+				'author_link'	=> $author_link,
+				'content'		=> Alpaca::format_html($topic->content),
+				'created'		=> date($this->config->date_format, $topic->created),
+			);
+			$details = (object) $details;
+
+			$this->template->content = View::factory('topic/view')
+				->bind('topic', $details)
+				->bind('topic_actions', $actions)
+				->bind('post_count', $post_count)
+				->bind('topic_posts', $topic_posts)
+				->bind('write_post', $write_post);
+
+			$topic_posts = View::factory('post/list')
+				->bind('post_count', $post_count)
+				->bind('topic', $topic)
+				->bind('posts', $posts)
+				->bind('pagination', $pagination);
+
 			$write_post = View::factory('post/write')
 				->bind('topic', $topic);
-	
+
 			$this->template->sidebar = View::factory('sidebar/topic')
-                                ->bind('title', $title)
+				->bind('title', $title)
 				->set('topic', $topic);
 		}
 		else
@@ -113,9 +163,11 @@ class Controller_Topic extends Controller_Alpaca {
 		$title = __('Create new topic');
 		if ($group->loaded())
 		{
+			$author = $this->auth->get_user();
 			if ($group->level == 1)
 			{
 				$this->template->content = View::factory('topic/add')
+					->set('author', $author)
 					->bind('group', $group)
 					->bind('errors', $errors);
 					
@@ -125,10 +177,10 @@ class Controller_Topic extends Controller_Alpaca {
 					if ( ! $this->config->topic_repeat)
 					{
 						$topic = ORM::factory('topic')
-							->where('user_id', '=', $_POST['user_id'])
-							->and_where('content', '=', trim($_POST['content']))
-							->find();
-							
+								->where('user_id', '=', $_POST['user_id'])
+								->and_where('content', '=', trim($_POST['content']))
+								->find();
+
 						if ($topic->loaded())
 						{
 							$this->request->redirect(Route::url('topic', array(
@@ -138,17 +190,19 @@ class Controller_Topic extends Controller_Alpaca {
 						}
 					}
 
+					$_POST['group_id'] = $group->id;
+					$_POST['user_id'] = $author->id;
 					// Create the new topic
 					$topic = ORM::factory('topic')->values($_POST);
 					if ($topic->check())
 					{
 						$topic->group_id = $group->id;
 						$topic->save();
-						
+
 						// Updated group's topic count
 						$group->count += 1;
 						$group->save();
-						
+
 						$this->request->redirect(Route::url('topic', array(
 							'group_id' => Alpaca_Group::the_uri($topic->group),
 							'id' => $topic->id
@@ -162,9 +216,9 @@ class Controller_Topic extends Controller_Alpaca {
 				// TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
 					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
-						Alpaca_Group::image($group, TRUE)).'</div>';
-				$sidebar .= HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
-					'返回'.$group->name.'小组');
+						Alpaca_Group::image($group, TRUE)).'</div>'.
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+						'返回'.$group->name.'小组');
 				
 				$this->template->sidebar = $sidebar;
 			}
@@ -234,10 +288,10 @@ class Controller_Topic extends Controller_Alpaca {
 				$group = $topic->group;
 				// TODO: change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-				HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
-					Alpaca_Group::image($group, TRUE)).'</div>';
-				$sidebar .= HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
-				'返回'.$group->name.'小组');
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+						Alpaca_Group::image($group, TRUE)).'</div>'.
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+					'返回'.$group->name.'小组');
 			
 				$this->template->sidebar = $sidebar;
 			}

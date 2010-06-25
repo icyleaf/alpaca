@@ -1,74 +1,41 @@
-<?php
-$auth_user = $auth->get_user();
-$author = $topic->author;
-?>
-<?php if ($auth_user AND ($auth_user->id == $author->id)): ?>
+<?php if (isset($topic_actions) > 0): ?>
 <div class="admin-panel">
 	<h4><?php echo __('Topic actions'); ?></h4>
 	<ul class="actions">
-		<li>
-			<?php echo HTML::anchor('topic/edit/'.$topic->id, __('Edit'), array(
-				'class'	=> 'edit', 
-				'title'	=> __('Edit Topic'),
-				)); ?>
-		</li>
-		<li>
-			<?php echo HTML::anchor('topic/delete/'.$topic->id, __('Delete'), array(
-				'class'	=> 'delete', 
-				'title'	=> __('Delete this topic include all the replies'),
-				'rel'	=> __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
-				));?>
-		</li>
-		<?php if ($auth_user AND $auth_user->has('roles', ORM::factory('role', array('name'=>'admin')))): ?>
-		<li>
-			<?php echo HTML::anchor('topic/move/'.$topic->id, __('Move'), array('title'	=> __('Move to other group'),));?>
-		</li>
-		<?php endif; ?>
+		<?php foreach ($topic_actions as $item): ?>
+		<li><?php echo $item; ?></li>
+		<?php endforeach; ?>
 	</ul>
 </div>
 <?php endif; ?>
 
-<div class="topic">
+<div class="topic" id="topic-<?php echo $topic->id; ?>">
 	<h2>
-		<?php echo HTML::image('media/images/star_empty.png'); ?>
+		<?php //TODO: echo HTML::image('media/images/star_empty.png'); ?>
 		<?php echo $topic->title; ?>
 	</h2>
 	
 	<div class="owner">
 		<div class="details">
-		<?php 
-			if ($author->loaded() AND ! empty($author->email))
-			{
-				$avatar = Gravatar::instance($author->email, array(
-					'default' => URL::base().'media/images/user-default.jpg'
-				));
-			}
-			else
-			{
-				$avatar = 'media/images/user-default.jpg';
-			}
-			
-			echo '<span class="avatar">'.HTML::image($avatar).'</span>';
-			echo '<span class="author">'.
-				HTML::anchor(Route::url('user', array('id'=>Alpaca_User::the_uri($author))),
-				$author->nickname).'</span>';
-			echo '<span class="date">'.date($config->date_format, $topic->created).'</span>';
-		?>
-		<div class="clear"></div>
+			<span class="avatar"><?php echo $topic->user_avatar; ?></span>
+			<span class="author"><?php echo $topic->author_link; ?></span>
+			<span class="date"><?php echo $topic->created; ?></span>
+			<div class="clear"></div>
 		</div>
-		
-		<div class="clear"></div>
-		<div class="topic-content">
-			<?php echo Alpaca::format_html($topic->content); ?>
-		</div>
+		<div class="topic-content"><?php echo $topic->content; ?></div>
 	</div>
-</div><!-- topic -->
+</div><!-- /topic -->
 
 <div class="options line txt_right">
 	<a href="javascript:window.scrollTo(0,0);"><?php echo __('Top Back'); ?></a>
 	 | 
 	<a href="#reply"><?php echo __('Reply Topic'); ?></a>
-</div>
+</div><!-- /options -->
 
+<!-- topic's replies -->
 <?php echo $topic_posts; ?>
-<?php echo $write_post; ?>
+<!-- /topic's replies -->
+
+<!-- reply form -->
+<?php echo $write_post;?>
+<!-- /reply form -->
