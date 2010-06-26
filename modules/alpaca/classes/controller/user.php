@@ -63,11 +63,10 @@ class Controller_User extends Controller_Alpaca {
 		$title = __('Subscribe the latest updates @:user...', array(
 			':user' => $user->nickname
 		));
-		$link = Route::url('user/feed', array('id' => Alpaca_User::the_uri($user)));
 		$this->header->title->set($user->nickname);
 		$this->header->title->append($this->config->title);
 		// Insert the user rss link
-		$this->header->link->append($link, $title);
+		$this->header->link->append(Alpaca_User::the_url('user/feed', $user), $title);
 		
 		$this->template->content = View::factory('user/profile')
 			->bind('user', $user)

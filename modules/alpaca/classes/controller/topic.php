@@ -29,10 +29,7 @@ class Controller_Topic extends Controller_Alpaca {
 			if (preg_match('/^topic\/(\d+)/', $this->request->uri))
 			{
 				// redirect to page with group uri
-				$this->request->redirect(Route::url('topic', array(
-					'group_id' => Alpaca_Group::the_uri($topic->group),
-					'id' => $topic->id
-				)), 301);
+				$this->request->redirect(Alpaca_Topic::the_url($topic), 301);
 			}
 
 			$title = $topic->title;
@@ -82,19 +79,12 @@ class Controller_Topic extends Controller_Alpaca {
 					));
 				}
 			}
-			
-			$user_avatar = Gravatar::instance($author->email, array(
-				'default' => URL::site('media/images/user-default.jpg')
-			));
 
-			$author_link = HTML::anchor(Route::url('user', array(
-					'id' => Alpaca_User::the_uri($author)
-				)), $author->nickname);
 			$details = array(
 				'id'			=> $topic->id,
 				'title'		=> $topic->title,
-				'user_avatar'	=> HTML::image($user_avatar),
-				'author_link'	=> $author_link,
+				'user_avatar'	=> Alpaca_User::avatar($author, NULL, TRUE),
+				'author_link'	=> HTML::anchor(Alpaca_User::the_url('user', $author), $author->nickname),
 				'content'		=> Alpaca::format_html($topic->content),
 				'created'		=> date($this->config->date_format, $topic->created),
 			);
@@ -186,10 +176,7 @@ class Controller_Topic extends Controller_Alpaca {
 
 						if ($topic->loaded())
 						{
-							$this->request->redirect(Route::url('topic', array(
-								'group_id' => Alpaca_Group::the_uri($topic->group),
-								'id' => $topic->id
-							)));
+							$this->request->redirect(Alpaca_Topic::the_url($topic));
 						}
 					}
 
@@ -204,10 +191,7 @@ class Controller_Topic extends Controller_Alpaca {
 						$group->count += 1;
 						$group->save();
 
-						$this->request->redirect(Route::url('topic', array(
-							'group_id' => Alpaca_Group::the_uri($topic->group),
-							'id' => $topic->id
-						)));
+						$this->request->redirect(Alpaca_Topic::the_url($topic));
 					}
 					else
 					{
@@ -259,14 +243,11 @@ class Controller_Topic extends Controller_Alpaca {
 				// Upate
 				$topic->save();
 
-				$this->request->redirect(Route::url('topic', array(
-					'group_id' => Alpaca_Group::the_uri($topic->group),
-					'id' => $topic->id
-				)));
+				$this->request->redirect(Alpaca_Topic::the_url($topic));
 			}
 			else
 			{
-				echo Kohana::debug($topic->validate()->errors('validate'));
+				$errors = $topic->validate()->errors('validate');
 			}
 		}
 
@@ -274,17 +255,18 @@ class Controller_Topic extends Controller_Alpaca {
 			->bind('title', $title)
 			->bind('content', $content);
 			
-		$title = __('Ooops');		
+		$title = __('Ooops');
 		if ($topic->loaded())
 		{
 			$title = __('Edit ":title" topic', array(':title' => $topic->title));
 			
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has('roles', ORM::factory('role', array('name' => 'admin')));
+			$has_role = $auth_user->has_role('admin');
 			if (($auth_user->id == $topic->author->id) OR $has_role)
 			{
 				$this->template->content = View::factory('topic/edit')
-					->bind('topic', $topic);
+					->bind('topic', $topic)
+					->bind('errors', $errors);
 				
 				$group = $topic->group;
 				// TODO: change the sidebar
@@ -332,7 +314,7 @@ class Controller_Topic extends Controller_Alpaca {
 		{
 			$title = __('Delete ":title" topic', array(':title' => $topic->title));
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has('roles', ORM::factory('role', array('name' => 'admin')));
+			$has_role = $auth_user->has_role('admin');
 			if (($auth_user->id == $topic->author->id) OR $has_role)
 			{
 				$topic->posts->delete_all();
@@ -386,17 +368,14 @@ class Controller_Topic extends Controller_Alpaca {
 			{
 				$topic->group_id = $group_id;
 				$topic->save();
-				$this->request->redirect(Route::url('topic', array(
-					'group_id' => Alpaca_Group::the_uri($topic->group),
-					'id' => $topic->id
-				)));
+				$this->request->redirect(Alpaca_Topic::the_url($topic));
 			}
 			else
 			{
 				$title = __('Move ":title" topic', array(':title' => $topic->title));
 		
 				$auth_user = $this->auth->get_user();
-				$has_role = $auth_user->has('roles', ORM::factory('role', array('name' => 'admin')));
+				$has_role = $auth_user->has_role('admin');
 				if (($auth_user->id == $topic->author->id) OR $has_role)
 				{
 					

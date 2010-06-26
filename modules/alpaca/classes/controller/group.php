@@ -200,7 +200,7 @@ class Controller_Group extends Controller_Alpaca {
 		}
 		
 		$auth_user = $this->auth->get_user();
-		if ($auth_user->has('roles', ORM::factory('role', array('name' => 'admin'))))
+		if ($auth_user->has_role('admin'))
 		{
 			$this->template->content = View::factory('group/edit')
 				->bind('title', $title)
@@ -251,7 +251,7 @@ class Controller_Group extends Controller_Alpaca {
 		if ($group->loaded())
 		{
 			$auth_user = $this->auth->get_user();
-			if ($auth_user->has('roles', ORM::factory('role', array('name' => 'admin'))))
+			if ($auth_user->has_role('admin'))
 			{
 				if ($group->level == 1)
 				{

@@ -44,10 +44,7 @@ class Controller_Post extends Controller_Alpaca {
 				$topic->count += 1;
 				$topic->save();
 				
-				$this->request->redirect(Route::url('topic', array(
-					'group_id' => Alpaca_Group::the_uri($topic->group),
-					'id' => $topic->id
-				)));
+				$this->request->redirect(Alpaca_Topic::the_url($topic));
 			}
 			else
 			{
@@ -72,10 +69,7 @@ class Controller_Post extends Controller_Alpaca {
 			{
 				$post->save();
 			
-				$this->request->redirect(Route::url('topic', array(
-					'group_id' => Alpaca_Group::the_uri($post->topic->group),
-					'id' => $post->topic->id
-				)));
+				$this->request->redirect(Alpaca_Topic::the_url($post->topic));
 			}
 			else
 			{
@@ -92,7 +86,7 @@ class Controller_Post extends Controller_Alpaca {
 			$title = __("Edit Reply");
 			
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has('roles', ORM::factory('role', array('name' => 'admin')));
+			$has_role = $auth_user->has_role('admin');
 			if (($auth_user->id == $post->author->id) OR $has_role)
 			{
 				$this->template->content = View::factory('post/edit')
@@ -142,7 +136,7 @@ class Controller_Post extends Controller_Alpaca {
 			$title = __('Delete Reply');
 			
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has('roles', ORM::factory('role', array('name' => 'admin')));
+			$has_role = $auth_user->has_role('admin');
 			if (($auth_user->id == $post->author->id) OR $has_role)
 			{
 				// Updated post count
@@ -153,10 +147,7 @@ class Controller_Post extends Controller_Alpaca {
 				// Delete the post
 				$post->delete();
 				
-				$this->request->redirect(Route::url('topic', array(
-					'group_id' => Alpaca_Group::the_uri($post->topic->group),
-					'id' => $post->topic->id
-				)));
+				$this->request->redirect(Alpaca_Topic::the_url($post->topic));
 			}
 			else
 			{

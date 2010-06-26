@@ -251,14 +251,10 @@ class Alpaca_Group {
 				'<div class="content"><ul>';
 			foreach ($topics as $topic) 
 			{
-				$link_uri = Route::url('topic', array(
-					'group_id' => Alpaca_Group::the_uri($topic->group),
-					'id' => $topic->id
-				));
 				$link_title = $config['link_before'] . $topic->title . $config['link_after'];
 				
 				$output .= '<li class="topic_item topic-item-'.$topic->id.'">' . 
-					HTML::anchor($link_uri, $link_title) . '</li>';
+					HTML::anchor(Alpaca_Topic::the_url($topic), $link_title) . '</li>';
 			}
 			$output .= '</ul></div></div>';
 		}

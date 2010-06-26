@@ -3,13 +3,13 @@
 	<div class="content">
 		<p>
 		你现在在<?php echo $config->title; ?>的个人主页是: <br />
-		<?php echo Route::url('user', array('id' => $user->id)); ?>
+		<?php echo HTML::anchor(Alpaca_User::the_url('user', $user)); ?>
 		</p>
 		<p>
 			你可以自选一个 username 代替你现在的数字用户ID(<?php echo $user->id; ?>)。
 			这样你可以拥有个性化的URL指向你的在<?php echo $config->title; ?>的个人主页。
 			比如，如果你用 "alpaca" 作 username，你的个人主页变为: <br />
-			<?php echo Route::url('user', array('id' => 'alpaca')); ?><br />
+			<?php echo HTML::anchor(Route::url('user', array('id' => 'alpaca'))); ?><br />
 		</p>
 		
 		<p>

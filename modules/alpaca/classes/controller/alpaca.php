@@ -64,7 +64,7 @@ class Controller_Alpaca extends Controller_Template {
 
 		if ($user = $this->auth->get_user())
 		{
-			$user_link = Route::url('user', array('id' => Alpaca_User::the_uri($user)));
+			$user_link = Alpaca_User::the_url('user', $user);
 			$auth_links = array
 			(
 				$user_link => array(

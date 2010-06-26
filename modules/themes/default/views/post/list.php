@@ -17,7 +17,7 @@
 	?>
 	<div class="meta<?php echo $style; ?>">
 	<?php if ($auth_user AND ($auth_user->id == $author->id OR
-		$auth_user->has('roles', ORM::factory('role', array('name' => 'admin'))))):
+		$auth_user->has_role('admin'))):
 	?>
 	<ul class="actions right">
 		<li><?php echo HTML::anchor('post/delete/'.$post->id, __('Delete'), array(
@@ -45,9 +45,7 @@
 				// Display author avatar
 				echo Alpaca_User::avatar($author, $avatar_config, array('id' => 'avatar-'.$post->id, 'class' => 'avatar', TRUE));
 				
-				echo HTML::anchor(
-					Route::url('user', array('id' => Alpaca_User::the_uri($author))),
-					$author->nickname); 
+				echo HTML::anchor(Alpaca_User::the_url('user', $author), $author->nickname);
 			?>
 		</li>
 		<li class="date">

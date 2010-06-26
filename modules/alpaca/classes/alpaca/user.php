@@ -6,7 +6,22 @@
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Alpaca_User {
-	
+	/**
+	 * Get topic url
+	 *
+	 * @param  $route
+	 * @param Model_User $user
+	 * @param  $type
+	 * @return string
+	 */
+	public static function the_url($route, Model_User $user, $type = NULL)
+	{
+		return Route::url($route, array(
+			'id' 	=> Alpaca_User::the_uri($user),
+			'type'	=> $type,
+		));
+	}
+
 	/**
 	 * General user uri (either number or string)
 	 *
@@ -61,16 +76,13 @@ class Alpaca_User {
 			$image = HTML::image($image);
 		}
 
-		$user_uri = array(
-			'id' => Alpaca_User::the_uri($user)
-		);
 		if (is_array($link))
 		{
-			$image = HTML::anchor(Route::url('user', $user_uri), $image, $attr);
+			$image = HTML::anchor(Alpaca_User::the_url('user', $user), $image, $attr);
 		}
 		elseif ($link)
 		{
-			$image = HTML::anchor(Route::url('user', $user_uri), $image);
+			$image = HTML::anchor(Alpaca_User::the_url('user', $user), $image);
 		}
 		
 		return $image;
@@ -92,9 +104,8 @@ class Alpaca_User {
 			$output .= '<ul class="novice">';
 			foreach ($users as $user)
 			{
-				$the_uri = Alpaca_User::the_uri($user);
 				$avatar = Alpaca_User::avatar($user, array('size' => 16), array('class' => 'avatar'));
-				$link = HTML::anchor(Route::url('user', array('id' => $the_uri)), $avatar.$user->nickname);
+				$link = HTML::anchor(Alpaca_User::the_url('user', $user), $avatar.$user->nickname);
 				$date = '<small>'.Alpaca::time_ago($user->created).'</small>';
 				$output .= '<li>'.$link.$date.'</li>';
 			}
@@ -121,9 +132,8 @@ class Alpaca_User {
 			$output .= '<ul class="novice">';
 			foreach ($users as $user)
 			{
-				$the_uri = Alpaca_User::the_uri($user);
 				$avatar = Alpaca_User::avatar($user, array('size' => 16), array('class' => 'avatar'));
-				$link = HTML::anchor(Route::url('user', array('id' => $the_uri)), $avatar.$user->nickname);
+				$link = HTML::anchor(Alpaca_User::the_url('user', $user), $avatar.$user->nickname);
 				$date = '<small>'.Alpaca::time_ago($user->created).'</small>';
 				$output .= '<li>'.$link.$date.'</li>';
 			}

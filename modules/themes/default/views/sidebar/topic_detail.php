@@ -1,9 +1,6 @@
 <div class="widget">
 	<div class="block group">
-	<?php echo HTML::anchor(Route::url('topic', array(
-			'group_id' => Alpaca_Group::the_uri($topic->group),
-			'id' => $topic->id
-		)), $topic->title);
+	<?php echo HTML::anchor(Alpaca_Topic::the_url($topic), $topic->title);
 	?>
 	</div>
 </div>

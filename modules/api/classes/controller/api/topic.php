@@ -71,9 +71,7 @@ class Controller_API_Topic extends Controller_API_Core {
 						'comments'	=> $topic->count,
 						'hits'		=> $topic->hits,
 						'created'	=> date('r', $topic->created),
-						'link'		=> Route::url('topic', array(
-							'id' => $topic->id
-						)),
+						'link'		=> Alpaca_Topic::the_url($topic),
 					);
 				}
 

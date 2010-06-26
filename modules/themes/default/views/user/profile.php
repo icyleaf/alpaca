@@ -26,10 +26,7 @@
 					<div class="sides">
 						<div class="header"><?php echo __('Topics'); ?>:</div>
 						<?php
-							$link = Route::url('user', array(
-								'id'	=> Alpaca_User::the_uri($user),
-								'type'	=> 'topics',
-								));
+							$link = Alpaca_User::the_url('user', $user, 'topics');
 							$count = '<div class="count">'.$topics->count().'</div>';
 							echo ($topics->count() > 0) ? HTML::anchor($link, $count) : $count;
 						?>
@@ -39,10 +36,7 @@
 					<div class="sides">
 						<div class="header"><?php echo __('Replies'); ?>:</div>
 						<?php
-							$link = Route::url('user', array(
-								'id'	=> Alpaca_User::the_uri($user),
-								'type'	=> 'posts',
-								));
+							$link = Alpaca_User::the_url('user', $user, 'posts');
 							$count = '<div class="count">'.$replies->count().'</div>';
 							echo ($replies->count() > 0) ? HTML::anchor($link, $count) : $count;
 						?>
@@ -52,10 +46,7 @@
 					<div class="sides last">
 						<div class="header"><?php echo __('Collections'); ?>:</div>
 						<?php
-							$link = Route::url('user', array(
-								'id'	=> Alpaca_User::the_uri($user),
-								'type'	=> 'collections',
-								));
+							$link = Alpaca_User::the_url('user', $user, 'collections');
 							$count = '<div class="count">'.$collections_count.'</div>';
 							echo ($collections_count > 0) ? HTML::anchor($link, $count) : $count;
 						?>
@@ -66,10 +57,7 @@
 					<div class="sides last">
 						<div class="header"><?php //echo __('Groups'); ?>:</div>
 						<?php
-//							$link = Route::url('user', array(
-//								'id'	=> Alpaca_User::the_uri($user),
-//								'type'	=> 'groups',
-//								));
+//							$link = Alpaca_User::the_url('user', $user, 'groups');
 //							$count = '<div class="count">'.$groups->count().'</div>';
 //							echo ($groups->count() > 0) ? HTML::anchor($link, $count) : $count;
 						?>
@@ -79,10 +67,7 @@
 					<div class="sides">
 						<div class="header"><?php //echo __('Followings'); ?>:</div>
 						<?php
-//							$link = Route::url('user', array(
-//								'id'	=> Alpaca_User::the_uri($user),
-//								'type'	=> 'followings',
-//								));
+//							$link = Alpaca_User::the_url('user', $user, 'followings');
 //							echo '<div class="count">'.$following_count.'</div>';
 						?>
 					</div>
@@ -91,10 +76,7 @@
 					<div class="sides last">
 						<div class="header"><?php //echo __('Friends'); ?>:</div>
 						<?php
-//							$link = Route::url('user', array(
-//								'id'	=> Alpaca_User::the_uri($user),
-//								'type'	=> 'followers',
-//								));
+//							$link = Alpaca_User::the_url('user/feed', $user, 'followers');
 //							echo '<div class="count">'.$follower_count.'</div>';
 						?>
 					</div>
@@ -130,7 +112,7 @@
 			$user_link = $user->nickname;
 		}
 		
-		echo HTML::anchor(Route::url('user/feed', array('id' => Alpaca_User::the_uri($user))),
+		echo HTML::anchor(Alpaca_User::the_url('user/feed', $user),
 			__('Subscribe the latest updates @:user...', array(':user' => $user_link)));
 	?>
 	</h4>

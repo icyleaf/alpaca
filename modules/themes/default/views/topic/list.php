@@ -80,22 +80,9 @@ if ($count > 0): ?>
 		</div>
 
 		<div class="topic_details">
-			<?php echo HTML::anchor(Route::url('topic', array(
-					'group_id'	=> Alpaca_Group::the_uri($group),
-					'id' => $topic->id
-				)),
-				$topic->title,
-				array('class' => 'subject')
-				);
-			?>
+			<?php echo HTML::anchor(Alpaca_Topic::the_url($topic, $group), $topic->title, array('class' => 'subject'));?>
 			<div class="meta">
-				<?php echo HTML::anchor(Route::url('user', array(
-						'id' => Alpaca_User::the_uri($author)
-					)),
-					$author->nickname,
-					array('class' => 'author')
-					);
-				?>
+				<?php echo HTML::anchor(Alpaca_User::the_url('user', $author), $author->nickname, array('class' => 'author')); ?>
 				<span class="divider">•</span>
 				<?php if ($topic->count > 1): ?>
 				<?php echo __(':number replies', array(':number' => $topic->count)) ?>

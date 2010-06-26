@@ -24,13 +24,7 @@
 				<input class="button_submit" type="submit" value="<?php echo __('Edit Reply'); ?>" />
 			</span>
 			<span class="left">
-				<?php echo HTML::anchor(Route::url('topic', array(
-						'group_id' => Alpaca_Group::the_uri($post->topic->group),
-						'id' => $post->topic->id
-					)),
-					__('Undo'),
-					array('class' => 'button'));
-				?>
+				<?php echo HTML::anchor(Alpaca_Topic::the_url($post->topic), __('Undo'), array('class' => 'button'));?>
 			</span>
 		</td>
 	</tr>
