@@ -422,6 +422,15 @@ h4 {
 	padding: 3px;
 }
 
+.table .error {
+	color: #EA340A;
+	font-size: 1.1em;
+	line-height: 20px;
+	background: none;
+	border: none;
+	padding: 0;
+}
+
 /********** POST ****************/
 .post {
 /*	border-bottom: 1px solid #CCCCCC;*/

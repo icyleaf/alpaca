@@ -52,7 +52,7 @@ return array
 	
 	'title' => array
 	(
-		'not_empty'			=> __(':field must not be empty'),
+		'not_empty'			=> __('Title must not be empty'),
 	),
 	
 	'desc' => array
@@ -62,7 +62,7 @@ return array
 	
 	'content' => array
 	(
-		'not_empty'			=> __(':field must not be empty'),
+		'not_empty'			=> __('Content must not be empty'),
 	),
 	
 	'author' => array

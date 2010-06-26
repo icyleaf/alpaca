@@ -173,6 +173,9 @@ class Controller_Topic extends Controller_Alpaca {
 					
 				if ($_POST)
 				{
+					$_POST['group_id'] = $group->id;
+					$_POST['user_id'] = $author->id;
+					
 					// Check the topic if it exist in database
 					if ( ! $this->config->topic_repeat)
 					{
@@ -190,8 +193,6 @@ class Controller_Topic extends Controller_Alpaca {
 						}
 					}
 
-					$_POST['group_id'] = $group->id;
-					$_POST['user_id'] = $author->id;
 					// Create the new topic
 					$topic = ORM::factory('topic')->values($_POST);
 					if ($topic->check())

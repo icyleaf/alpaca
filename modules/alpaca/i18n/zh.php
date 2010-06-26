@@ -244,6 +244,9 @@ return array
 	// Validation
 	'Validation code must not be empty' => '验证码不能为空',
 	'Invalid Validation code. Do you pass the verify or typo?' => '无效验证码，请确认是否已经通过验证或输入无误。',	
+	// Topic
+	'Title must not be empty' 	=> '标题不能为空',
+	'Content must not be empty' 	=> '内容不能为空',
 	// Common
 	':field must not be empty' => ':field不能为空',
 	':field must be the same as :param1' => ':field和:param1不一致',
