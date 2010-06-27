@@ -16,8 +16,7 @@
 		$publish_date = Alpaca::time_ago($post->created);
 	?>
 	<div class="meta<?php echo $style; ?>">
-	<?php if ($auth_user AND ($auth_user->id == $author->id OR
-		$auth_user->has_role('admin'))):
+	<?php if ($auth_user AND ($auth_user->id == $author->id OR $auth_user->has_role('admin'))):
 	?>
 	<ul class="actions right">
 		<li><?php echo HTML::anchor('post/delete/'.$post->id, __('Delete'), array(

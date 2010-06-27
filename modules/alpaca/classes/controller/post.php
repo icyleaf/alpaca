@@ -45,6 +45,7 @@ class Controller_Post extends Controller_Alpaca {
 			}
 			else
 			{
+				// TODO: debug code, sub
 				echo Kohana::debug($post->validate()->errors('validate'));
 			}
 		}
@@ -74,17 +75,14 @@ class Controller_Post extends Controller_Alpaca {
 			}
 		}
 		
-		$this->template->content = View::factory('template/general')
-			->bind('title', $title)
-			->bind('content', $content);
+		$this->template->content = Alpaca::error_page($title, $content);
 			
 		if ($post->loaded())
 		{
 			$title = __("Edit Reply");
 			
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has_role('admin');
-			if (($auth_user->id == $post->author->id) OR $has_role)
+			if (($auth_user->id == $post->author->id) OR $auth_user->has_role('admin'))
 			{
 				$this->template->content = View::factory('post/edit')
 					->bind('errors', $errors)
@@ -123,18 +121,15 @@ class Controller_Post extends Controller_Alpaca {
 	 */
 	public function action_delete($post_id)
 	{
-		$this->template->content = View::factory('template/general')
-			->bind('title', $title)
-			->bind('content', $content);
-			
+		$this->template->content = Alpaca::error_page($title, $content);
+
 		$post = ORM::factory('post', $post_id);
 		if ($post->loaded())
 		{
 			$title = __('Delete Reply');
 			
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has_role('admin');
-			if (($auth_user->id == $post->author->id) OR $has_role)
+			if (($auth_user->id == $post->author->id) OR $auth_user->has_role('admin'))
 			{
 				// Updated post count
 				$topic = $post->topic;
@@ -150,7 +145,6 @@ class Controller_Post extends Controller_Alpaca {
 			{
 				$content = __('Not enough permission to perform this operation.');
 			}
-				
 		}
 		else
 		{

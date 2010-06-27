@@ -86,9 +86,7 @@ class Controller_Auth extends Controller_Alpaca {
 					if (Alpaca::email($user->email, $email_subject, $email_content))
 					{
 						// Display success information
-						$this->template->content = View::factory('template/general')
-							->bind('title', $title)
-							->bind('content', $content);
+						$this->template->content = Alpaca::error_page($title, $content);
 
 						$verity_url = Route::url('verity') .'?email='.$user->email;
 
@@ -105,9 +103,7 @@ class Controller_Auth extends Controller_Alpaca {
 					}
 					else
 					{
-						$this->template->content = View::factory('template/general')
-							->bind('title', $title)
-							->bind('content', $content);
+						$this->template->content = Alpaca::error_page($title, $content);
 
 						$content = __('Send failed! You may :try_again. '.
 							'If it also failed, contact the website administrator.', array(
@@ -119,9 +115,7 @@ class Controller_Auth extends Controller_Alpaca {
 				else
 				{
 					// Maybe a robot (spam)
-					$this->template->content = View::factory('template/general')
-						->bind('title', $title)
-						->bind('content', $content);
+					$this->template->content = Alpaca::error_page($title, $content);
 
 					$content = __('Are you a robot (spam) ?');
 
@@ -274,9 +268,7 @@ class Controller_Auth extends Controller_Alpaca {
 
 				if (Alpaca::email($email, $title, $email_content))
 				{
-					$this->template->content = View::factory('template/general')
-						->bind('title', $title)
-						->bind('content', $content);
+					$this->template->content = Alpaca::error_page($title, $content);
 						
 					$content = __('Done! We sended a mail to your :email address to reset password.', array(
 							':email' => $email
@@ -285,9 +277,7 @@ class Controller_Auth extends Controller_Alpaca {
 				}
 				else
 				{
-					$this->template->content = View::factory('template/general')
-						->bind('title', $title)
-						->bind('content', $content);
+					$this->template->content = Alpaca::error_page($title, $content);
 					
 					$content = __('Send failed! You may :try_again. '.
 						'If it also failed, contact the website administrator.', array(
@@ -330,9 +320,7 @@ class Controller_Auth extends Controller_Alpaca {
 					$verity->delete();
 					
 					// Display successful information
-					$this->template->content = View::factory('template/general')
-						->bind('title', $title)
-						->bind('content', $content);
+					$this->template->content = Alpaca::error_page($title, $content);
 						
 					$content = __('Your password has been updated!').' '.
 						__('Thanks for support to :website.', array(':website' => $this->_website)).
@@ -347,9 +335,7 @@ class Controller_Auth extends Controller_Alpaca {
 		}
 		else
 		{
-			$this->template->content = View::factory('template/general')
-				->bind('title', $title)
-				->bind('content', $content);
+			$this->template->content = Alpaca::error_page($title, $content);
 			$content = __('Invalid validation code! Please confirm it correctly or had been actived.').
 				'<br /><br />'.
 				HTML::anchor(Route::url('changepassword', array('code' => $hash_code)),
@@ -392,9 +378,7 @@ class Controller_Auth extends Controller_Alpaca {
 				{
 					if ($verity->validate_hash_code($_POST))
 					{
-						$this->template->content = View::factory('template/general')
-							->bind('title', $title)
-							->bind('content', $content);
+						$this->template->content = Alpaca::error_page($title, $content);
 					}
 					else
 					{
@@ -426,9 +410,7 @@ class Controller_Auth extends Controller_Alpaca {
 	
 							if (Alpaca::email($email, $title, $email_content))
 							{
-								$this->template->content = View::factory('template/general')
-									->bind('title', $title)
-									->bind('content', $content);
+								$this->template->content = Alpaca::error_page($title, $content);
 									
 								$content = __('Done! We sended a mail to your :email address again.', array(
 										':email' => $email
@@ -442,9 +424,7 @@ class Controller_Auth extends Controller_Alpaca {
 							}
 							else
 							{
-								$this->template->content = View::factory('template/general')
-									->bind('title', $title)
-									->bind('content', $content);
+								$this->template->content = Alpaca::error_page($title, $content);
 								
 								$content = __('Send failed! You may :try_again. '.
 									'If it also failed, contact the website administrator.', array(
@@ -468,9 +448,7 @@ class Controller_Auth extends Controller_Alpaca {
 		}
 		else
 		{
-			$this->template->content = View::factory('template/general')
-				->bind('title', $title)
-				->bind('content', $content);
+			$this->template->content = Alpaca::error_page($title, $content);
 			
 			if ( ! $verity->verity_code($code))
 			{

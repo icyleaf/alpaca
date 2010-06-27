@@ -441,5 +441,19 @@ class Alpaca {
 
 		return $logged_in;
 	}
+
+	/**
+	 * Error Page
+	 *
+	 * @param  $title
+	 * @param  $content
+	 * @return Kohana_View
+	 */
+	public static function error_page(&$title, &$content)
+	{
+		return View::factory('template/general')
+			->bind('title', $title)
+			->bind('content', $content);
+	}
 }
 

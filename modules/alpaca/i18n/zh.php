@@ -277,7 +277,7 @@ return array
 	'Sorry, Do not provide this service for the moment.' => '暂时还不提供此服务。',
 	'Not enough permission to perform this operation.' => '没有权限执行本操作。',
 	'This is CATEGORY which could not create topics!' => '分类板块无法创建话题，请在小组发布话题。',
-	'Not found this group!'	=> '找不到要发布的小组！',
+	'Not found this group!'	=> '找不到该小组！',
 	'Not found this topic!'	=> '找不到该话题！',
 	'Not found this reply!'	=> '找不到该评论！',
 	'Operation Error'			=> '操作错误',

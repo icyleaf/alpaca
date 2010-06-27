@@ -62,13 +62,13 @@ class Controller_Alpaca extends Controller_Template {
 		// Check remember me 
 		$this->auth->auto_login();
 
-		if ($user = $this->auth->get_user())
+		if ($auth_user = $this->auth->get_user())
 		{
-			$user_link = Alpaca_User::url('user', $user);
+			$user_link = Alpaca_User::url('user', $auth_user);
 			$auth_links = array
 			(
 				$user_link => array(
-					'title' => $user->nickname,
+					'title' => $auth_user->nickname,
 					'attr' => array('class' => 'user')
 				),
 				'settings' => array(
@@ -170,6 +170,6 @@ class Controller_Alpaca extends Controller_Template {
 	
 		return $menu->render($config);
 	}
-	
+
 }
 

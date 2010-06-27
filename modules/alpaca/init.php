@@ -104,7 +104,7 @@ Route::set('group', 'group/<id>', array(
 
 Route::set('topic', '(group/<group_id>/)topic/<id>', array(
 		'group_id'	=> '\w+',
-		'id'		=> '\d+',
+		'id'		=> '\w+',
 	))
 	->defaults(array(
 		'controller'=> 'topic',

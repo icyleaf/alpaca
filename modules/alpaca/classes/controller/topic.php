@@ -112,9 +112,7 @@ class Controller_Topic extends Controller_Alpaca {
 		}
 		else
 		{
-			$this->template->content = View::factory('template/general')
-				->bind('title', $title)
-				->bind('content', $content);
+			$this->template->content = Alpaca::error_page($title, $content);
 				
 			$title = __('Ooops');
 			$content = __('Not found this topic!');
@@ -143,9 +141,7 @@ class Controller_Topic extends Controller_Alpaca {
 			$group = ORM::factory('group')->where('uri', '=', $group_id)->find();
 		}
 		
-		$this->template->content = View::factory('template/general')
-			->bind('title', $title)
-			->bind('content', $content);
+		$this->template->content = Alpaca::error_page($title, $content);
 					
 		$title = __('Start a new topic');
 		if ($group->loaded())
@@ -247,9 +243,7 @@ class Controller_Topic extends Controller_Alpaca {
 			}
 		}
 
-		$this->template->content = View::factory('template/general')
-			->bind('title', $title)
-			->bind('content', $content);
+		$this->template->content = Alpaca::error_page($title, $content);
 			
 		$title = __('Ooops');
 		if ($topic->loaded())
@@ -257,8 +251,7 @@ class Controller_Topic extends Controller_Alpaca {
 			$title = __('Edit ":title" topic', array(':title' => $topic->title));
 			
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has_role('admin');
-			if (($auth_user->id == $topic->author->id) OR $has_role)
+			if (($auth_user->id == $topic->author->id) OR $auth_user->has_role('admin'))
 			{
 				$this->template->content = View::factory('topic/add_edit')
 					->set('title', $title)
@@ -303,17 +296,14 @@ class Controller_Topic extends Controller_Alpaca {
 		// Check login status else redirect to login page
 		Alpaca::logged_in();
 		
-		$this->template->content = View::factory('template/general')
-			->bind('title', $title)
-			->bind('content', $content);
+		$this->template->content = Alpaca::error_page($title, $content);
 			
 		$topic = ORM::factory('topic', $topic_id);
 		if ($topic->loaded())
 		{
 			$title = __('Delete ":title" topic', array(':title' => $topic->title));
 			$auth_user = $this->auth->get_user();
-			$has_role = $auth_user->has_role('admin');
-			if (($auth_user->id == $topic->author->id) OR $has_role)
+			if (($auth_user->id == $topic->author->id) OR $auth_user->has_role('admin'))
 			{
 				$topic->posts->delete_all();
 				
@@ -352,10 +342,8 @@ class Controller_Topic extends Controller_Alpaca {
 		// Check login status else redirect to login page
 		Alpaca::logged_in();
 		
-		$this->template->content = View::factory('template/general')
-			->bind('title', $title)
-			->bind('content', $content);
-			
+		$this->template->content = Alpaca::error_page($title, $content);
+		
 		$topic = ORM::factory('topic', $topic_id);
 		if ($topic->loaded())
 		{
@@ -370,10 +358,8 @@ class Controller_Topic extends Controller_Alpaca {
 				$title = __('Move ":title" topic', array(':title' => $topic->title));
 		
 				$auth_user = $this->auth->get_user();
-				$has_role = $auth_user->has_role('admin');
-				if (($auth_user->id == $topic->author->id) OR $has_role)
+				if (($auth_user->id == $topic->author->id) OR $auth_user->has_role('admin'))
 				{
-					
 					$this->template->content = View::factory('topic/move')
 						->bind('topic', $topic);
 				}
@@ -411,10 +397,8 @@ class Controller_Topic extends Controller_Alpaca {
 		}
 		else
 		{
-			$this->template->content = View::factory('template/general')
-				->bind('title', $title)
-				->bind('content', $content);
-				
+			$this->template->content = Alpaca::error_page($title, $content);
+			
 			$title = __('Ooops');
 			$content = __('Not found this topic!');
 		}
