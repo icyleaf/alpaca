@@ -30,7 +30,7 @@ class Controller_Search extends Controller_Alpaca {
 				$pagination = Pagination::factory();
 				$query = Arr::get($_GET, 'q');
 				$type = Arr::get($_GET, 'type' , 'topic');
-				$total = ORM::factory($type)->search_count($query);
+				$total = ORM::factory($type)->search($query)->count();
 				$topics = ORM::factory($type)->search($query, $pagination->items_per_page, $pagination->offset);
 
 				$pagination->setup(array(

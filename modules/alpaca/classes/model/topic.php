@@ -72,9 +72,10 @@ class Model_Topic extends ORM {
 	 * @param  $query
 	 * @param int $limit
 	 * @param int $offset
+	 * @param int $cache
 	 * @return ORM
 	 */
-	public function search($query, $limit = 0, $offset = 0)
+	public function search($query, $limit = 0, $offset = 0, $cache = 120)
 	{
 		$keywords = explode(' ', $query);
 		$keyword_count = count($keywords);
@@ -139,22 +140,22 @@ class Model_Topic extends ORM {
 			$this->order_by('created', 'DESC');
 		}
 
-		return $this->limit($limit)
-			->offset($offset)
-			->find_all();
-	}
+		if ( ! empty($limit))
+		{
+			$this->limit($limit);
+		}
 
-	/**
-	 * Total of Search result
-	 *
-	 * @param  $query
-	 * @return int
-	 */
-	public function search_count($query)
-	{
-		return $this->search($query)
-			->find_all()
-			->count();
+		if ( ! empty($offset))
+		{
+			$this->offset($offset);
+		}
+
+		if ( ! empty($cache))
+		{
+			$this->cached($cache);
+		}
+
+		return $this->find_all();
 	}
 
 	public function find_topic(Array $data)
