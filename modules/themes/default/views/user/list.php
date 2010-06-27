@@ -9,7 +9,7 @@ foreach ($collections as $collection):
 	$nickname = (strlen($user->nickname) > 24) ? substr($user->nickname, 0, 24).'...' : $user->nickname;
 	
 	echo '<li class="user_item"><div>'.$avatar.'</div>'.
-		HTML::anchor(Alpaca_User::the_url('user', $user), $nickname, array('title' => $user->nickname)).'</li>';
+		HTML::anchor(Alpaca_User::url('user', $user), $nickname, array('title' => $user->nickname)).'</li>';
 endforeach;
 endif;?>
 </ul>

@@ -8,7 +8,7 @@
 	$desc_error = Arr::get($errors, 'desc');
 ?>
 <h3 class="hot"><?php echo $title; ?></h3>
-<form method="post" class="form_table">
+<form method="post">
 <table class="table">
 	<tr>
 		<td class="column"><label><?php echo __('Name'); ?>:</label></td>

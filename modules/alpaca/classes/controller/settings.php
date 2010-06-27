@@ -20,11 +20,9 @@ class Controller_Settings extends Controller_Alpaca {
 		
 		$this->status = FALSE;
 		$this->user = $this->auth->get_user();
-		if ( ! $this->user)
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		if (I18n::$lang == 'zh-cn')
 		{

@@ -1,5 +1,5 @@
 <h3>正在从 "<?php echo $topic->group->name; ?>" 移动 "<?php echo $topic->title; ?>" 话题至:</h3>
-<form method="post" class="form_table">
+<form method="post">
 <?php
 $groups = ORM::factory('group')->where('level', '=', 0)->find_all();
 

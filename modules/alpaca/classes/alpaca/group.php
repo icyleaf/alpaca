@@ -19,7 +19,7 @@ class Alpaca_Group {
 	 * @param boolean $render 
 	 * @return mixed
 	 */
-	public static function the_id($render = TRUE)
+	public static function id($render = TRUE)
 	{
 		$group_id = empty(Alpaca_Group::$_group_id) ? 0 : Alpaca_Group::$_group_id;
 		if ($render)
@@ -40,7 +40,7 @@ class Alpaca_Group {
 	 * @param boolean $render 
 	 * @return mixed
 	 */
-	public static function the_title($before = '', $after = '', $render = TRUE)
+	public static function title($before = '', $after = '', $render = TRUE)
 	{
 		if (strlen(Alpaca_Group::$_group_name) == 0)
 		{
@@ -61,17 +61,17 @@ class Alpaca_Group {
 	/**
 	 * Get group id either number or string
 	 *
-	 * @param Model_Group $group 
+	 * @param Model_Group $group
 	 * @return mixed
 	 */
-	public static function the_uri(Model_Group $group)
+	public static function uri(Model_Group $group)
 	{
 		if ($group->loaded())
 		{
 			return empty($group->uri) ? $group->id : $group->uri;
 		}
 	}
-	
+
 	/**
 	 * General group image
 	 *
@@ -97,7 +97,7 @@ class Alpaca_Group {
 		}
 
 		$group_uri = array(
-			'id' => Alpaca_Group::the_uri($group)
+			'id' => Alpaca_Group::uri($group)
 		);
 		if (is_array($link))
 		{
@@ -154,7 +154,7 @@ class Alpaca_Group {
 				Alpaca_Group::$_group_id = $group->id;
 				Alpaca_Group::$_group_name = $group->name;
 				
-				$link_uri = Route::url('group', array('id' => Alpaca_Group::the_uri($group)));
+				$link_uri = Route::url('group', array('id' => Alpaca_Group::uri($group)));
 				$link_title = $config['link_before'] . $group->name . $config['link_after'];
 					
 				if ($config['child_of'])
@@ -171,7 +171,7 @@ class Alpaca_Group {
 							foreach ($children as $child)
 							{
 								$link_uri = Route::url('group', array(
-									'id' => Alpaca_Group::the_uri($child)
+									'id' => Alpaca_Group::uri($child)
 								));
 								$link_title = $config['link_before'] . $child->name . $config['link_after'];
 								$output .= '<li class="group_item group-item-'.$child->id.'">' . 
@@ -254,7 +254,7 @@ class Alpaca_Group {
 				$link_title = $config['link_before'] . $topic->title . $config['link_after'];
 				
 				$output .= '<li class="topic_item topic-item-'.$topic->id.'">' . 
-					HTML::anchor(Alpaca_Topic::the_url($topic), $link_title) . '</li>';
+					HTML::anchor(Alpaca_Topic::url($topic), $link_title) . '</li>';
 			}
 			$output .= '</ul></div></div>';
 		}

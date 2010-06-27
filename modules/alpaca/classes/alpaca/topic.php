@@ -13,11 +13,11 @@ class Alpaca_Topic {
 	 * @param Model_Group $group
 	 * @return string
 	 */
-	public static function the_url($topic, Model_Group $group = NULL)
+	public static function url($topic, Model_Group $group = NULL)
 	{
 		$group = $group ? $group : $topic->group;
 		return Route::url('topic', array(
-			'group_id' => Alpaca_Group::the_uri($group),
+			'group_id' => Alpaca_Group::uri($group),
 			'id' => $topic->id
 		));
 	}

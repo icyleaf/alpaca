@@ -49,7 +49,7 @@ class Controller_API_Topic extends Controller_API_Core {
 						'id' => $group->id,
 						'name' => $group->name,
 						'link' => Route::url('group', array(
-							'id' => Alpaca_Group::the_uri($group)
+							'id' => Alpaca_Group::uri($group)
 						)),
 					);
 
@@ -71,7 +71,7 @@ class Controller_API_Topic extends Controller_API_Core {
 						'comments'	=> $topic->count,
 						'hits'		=> $topic->hits,
 						'created'	=> date('r', $topic->created),
-						'link'		=> Alpaca_Topic::the_url($topic),
+						'link'		=> Alpaca_Topic::url($topic),
 					);
 				}
 

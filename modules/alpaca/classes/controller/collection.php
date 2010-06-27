@@ -60,11 +60,8 @@ class Controller_Collection extends Controller_Alpaca {
 		}
 		else
 		{
-			if ( ! $this->auth->logged_in())
-			{
-				$current_uri = URL::query(array('redir' => $this->request->uri));
-				$this->request->redirect(Route::url('login').$current_uri);
-			}
+			// Check login status else redirect to login page
+			Alpaca::logged_in();
 			
 			$result = 'FALSE';
 			$user = $this->auth->get_user();
@@ -87,6 +84,7 @@ class Controller_Collection extends Controller_Alpaca {
 				$topic->save();
 
 				$result = '创建成功！';
+				$this->request->redirect(Alpaca_Topic::url($topic));
 			}
 			else
 			{

@@ -130,6 +130,26 @@ class Model_Topic extends ORM {
 
 		return $this;
 	}
+
+	public function find_topic(Array $data)
+	{
+		$first_where = (count($data) > 0) ? TRUE : FALSE;
+		
+		foreach ($data as $key => $value)
+		{
+			if ($first_where)
+			{
+				$this->where($key, '=', $value);
+				$first_where = FALSE;
+			}
+			else
+			{
+				$this->and_where($key, '=', $value);
+			}
+		}
+
+		return $this->find();
+	}
 	
 	public function values($values)
 	{

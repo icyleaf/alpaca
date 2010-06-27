@@ -416,5 +416,30 @@ class Alpaca {
 		
 		return $string;
 	}
+
+	/**
+	 * Check login status else redirect to source page (default: login page)
+	 *
+	 * @param  $redirect_url
+	 * @return boolean
+	 */
+	public static function logged_in($redirect_url = NULL)
+	{
+		$logged_in = Auth::instance()->logged_in();
+		if ( ! $logged_in)
+		{
+			$request= Request::current();
+			if (empty($redirect_url))
+			{
+				$redirect_url = Route::url('login').URL::query(array(
+					'redir' => $request->uri
+				));
+			}
+
+			$request->redirect($redirect_url);
+		}
+
+		return $logged_in;
+	}
 }
 

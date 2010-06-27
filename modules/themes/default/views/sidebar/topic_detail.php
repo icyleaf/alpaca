@@ -1,6 +1,6 @@
 <div class="widget">
 	<div class="block group">
-	<?php echo HTML::anchor(Alpaca_Topic::the_url($topic), $topic->title);
+	<?php echo HTML::anchor(Alpaca_Topic::url($topic), $topic->title);
 	?>
 	</div>
 </div>

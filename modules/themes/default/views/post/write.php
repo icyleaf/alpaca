@@ -30,11 +30,11 @@
 	<div class="comments-body">
 	<table>
 		<tr>
-			<td><label><?php echo __('Email'); ?></label></td>
+			<td class="label"><label><?php echo __('Email'); ?></label></td>
 			<td><input type="text" name="email" value="" tabindex="100" /></td>
 		</tr>
 		<tr>
-			<td><label><?php echo __('Password'); ?></label></td>
+			<td class="label"><label><?php echo __('Password'); ?></label></td>
 			<td><input type="password" name="password" value=""  tabindex="101" /></td>
 		</tr>
 		<tr>

@@ -30,7 +30,7 @@ if ($count > 0): ?>
 			<div class="collection_inset">
 				<?php if ( ! isset($hide_group)):
 					echo HTML::anchor(Route::url('group', array(
-							'id' => Alpaca_Group::the_uri($group)
+							'id' => Alpaca_Group::uri($group)
 						)),
 						$group->name,
 						array('class' => 'groups')
@@ -80,9 +80,9 @@ if ($count > 0): ?>
 		</div>
 
 		<div class="topic_details">
-			<?php echo HTML::anchor(Alpaca_Topic::the_url($topic, $group), $topic->title, array('class' => 'subject'));?>
+			<?php echo HTML::anchor(Alpaca_Topic::url($topic, $group), $topic->title, array('class' => 'subject'));?>
 			<div class="meta">
-				<?php echo HTML::anchor(Alpaca_User::the_url('user', $author), $author->nickname, array('class' => 'author')); ?>
+				<?php echo HTML::anchor(Alpaca_User::url('user', $author), $author->nickname, array('class' => 'author')); ?>
 				<span class="divider">•</span>
 				<?php if ($topic->count > 1): ?>
 				<?php echo __(':number replies', array(':number' => $topic->count)) ?>

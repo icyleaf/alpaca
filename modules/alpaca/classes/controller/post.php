@@ -11,11 +11,8 @@ class Controller_Post extends Controller_Alpaca {
 	{
 		parent::before();
 		
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		// add auto resize to textarea
 		$this->header->javascript->append_file('media/js/jquery/autoresize.js', '1.04');
@@ -44,7 +41,7 @@ class Controller_Post extends Controller_Alpaca {
 				$topic->count += 1;
 				$topic->save();
 				
-				$this->request->redirect(Alpaca_Topic::the_url($topic));
+				$this->request->redirect(Alpaca_Topic::url($topic));
 			}
 			else
 			{
@@ -69,7 +66,7 @@ class Controller_Post extends Controller_Alpaca {
 			{
 				$post->save();
 			
-				$this->request->redirect(Alpaca_Topic::the_url($post->topic));
+				$this->request->redirect(Alpaca_Topic::url($post->topic));
 			}
 			else
 			{
@@ -96,10 +93,10 @@ class Controller_Post extends Controller_Alpaca {
 				$group = $post->topic->group;
 				//TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
 						Alpaca_Group::image($group, TRUE)).
 					'</div>'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
 					'返回'.$group->name.'小组');
 			
 				$this->template->sidebar = $sidebar;
@@ -147,7 +144,7 @@ class Controller_Post extends Controller_Alpaca {
 				// Delete the post
 				$post->delete();
 				
-				$this->request->redirect(Alpaca_Topic::the_url($post->topic));
+				$this->request->redirect(Alpaca_Topic::url($post->topic));
 			}
 			else
 			{

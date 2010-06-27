@@ -122,11 +122,8 @@ class Controller_Group extends Controller_Alpaca {
 	 */
 	public function action_add() 
 	{
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		$title = __('Create Category/Group');
 		$this->header->title->prepend($title);
@@ -178,11 +175,8 @@ class Controller_Group extends Controller_Alpaca {
 	 */
 	public function action_edit($group_id)
 	{
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		if (is_numeric($group_id))
 		{
@@ -241,11 +235,8 @@ class Controller_Group extends Controller_Alpaca {
 	 */
 	public function action_delete($group_id)
 	{
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		$group = ORM::factory('group', $group_id);
 		if ($group->loaded())

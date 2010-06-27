@@ -66,7 +66,7 @@ class Controller_User extends Controller_Alpaca {
 		$this->header->title->set($user->nickname);
 		$this->header->title->append($this->config->title);
 		// Insert the user rss link
-		$this->header->link->append(Alpaca_User::the_url('user/feed', $user), $title);
+		$this->header->link->append(Alpaca_User::url('user/feed', $user), $title);
 		
 		$this->template->content = View::factory('user/profile')
 			->bind('user', $user)

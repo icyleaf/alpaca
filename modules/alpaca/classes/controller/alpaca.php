@@ -64,7 +64,7 @@ class Controller_Alpaca extends Controller_Template {
 
 		if ($user = $this->auth->get_user())
 		{
-			$user_link = Alpaca_User::the_url('user', $user);
+			$user_link = Alpaca_User::url('user', $user);
 			$auth_links = array
 			(
 				$user_link => array(
@@ -142,7 +142,7 @@ class Controller_Alpaca extends Controller_Template {
 						foreach ($children as $child)
 						{
 							$child_menu->add(Route::url('group', array(
-									'id' => Alpaca_Group::the_uri($child)
+									'id' => Alpaca_Group::uri($child)
 								)),
 								$child->name
 							);

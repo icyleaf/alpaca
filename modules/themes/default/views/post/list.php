@@ -45,7 +45,7 @@
 				// Display author avatar
 				echo Alpaca_User::avatar($author, $avatar_config, array('id' => 'avatar-'.$post->id, 'class' => 'avatar', TRUE));
 				
-				echo HTML::anchor(Alpaca_User::the_url('user', $author), $author->nickname);
+				echo HTML::anchor(Alpaca_User::url('user', $author), $author->nickname);
 			?>
 		</li>
 		<li class="date">

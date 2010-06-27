@@ -29,7 +29,7 @@ class Controller_Topic extends Controller_Alpaca {
 			if (preg_match('/^topic\/(\d+)/', $this->request->uri))
 			{
 				// redirect to page with group uri
-				$this->request->redirect(Alpaca_Topic::the_url($topic), 301);
+				$this->request->redirect(Alpaca_Topic::url($topic), 301);
 			}
 
 			$title = $topic->title;
@@ -84,7 +84,7 @@ class Controller_Topic extends Controller_Alpaca {
 				'id'			=> $topic->id,
 				'title'		=> $topic->title,
 				'user_avatar'	=> Alpaca_User::avatar($author, NULL, TRUE),
-				'author_link'	=> HTML::anchor(Alpaca_User::the_url('user', $author), $author->nickname),
+				'author_link'	=> HTML::anchor(Alpaca_User::url('user', $author), $author->nickname),
 				'content'		=> Alpaca::format_html($topic->content),
 				'created'		=> date($this->config->date_format, $topic->created),
 			);
@@ -131,11 +131,8 @@ class Controller_Topic extends Controller_Alpaca {
 	 */
 	public function action_add($group_id) 
 	{
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		if (is_numeric($group_id))
 		{
@@ -150,33 +147,34 @@ class Controller_Topic extends Controller_Alpaca {
 			->bind('title', $title)
 			->bind('content', $content);
 					
-		$title = __('Create new topic');
+		$title = __('Start a new topic');
 		if ($group->loaded())
 		{
 			$author = $this->auth->get_user();
 			if ($group->level == 1)
 			{
-				$this->template->content = View::factory('topic/add')
+				$this->template->content = View::factory('topic/add_edit')
+					->set('title', $title)
 					->set('author', $author)
+					->set('topic_title', '')
+					->set('topic_content', '')
+					->set('submit', __('Post it'))
 					->bind('group', $group)
 					->bind('errors', $errors);
-					
+
 				if ($_POST)
 				{
-					$_POST['group_id'] = $group->id;
-					$_POST['user_id'] = $author->id;
-					
-					// Check the topic if it exist in database
 					if ( ! $this->config->topic_repeat)
 					{
-						$topic = ORM::factory('topic')
-								->where('user_id', '=', $_POST['user_id'])
-								->and_where('content', '=', trim($_POST['content']))
-								->find();
+						// Check the topic if it exist in database
+						$topic = ORM::factory('topic')->find_topic(array(
+							'user_id'	=> $author->id,
+							'content'	=> Arr::get($_POST, 'content'),
+						));
 
 						if ($topic->loaded())
 						{
-							$this->request->redirect(Alpaca_Topic::the_url($topic));
+							$this->request->redirect(Alpaca_Topic::url($topic));
 						}
 					}
 
@@ -185,13 +183,14 @@ class Controller_Topic extends Controller_Alpaca {
 					if ($topic->check())
 					{
 						$topic->group_id = $group->id;
+						$topic->user_id = $author->id;
 						$topic->save();
 
 						// Updated group's topic count
 						$group->count += 1;
 						$group->save();
 
-						$this->request->redirect(Alpaca_Topic::the_url($topic));
+						$this->request->redirect(Alpaca_Topic::url($topic));
 					}
 					else
 					{
@@ -200,9 +199,9 @@ class Controller_Topic extends Controller_Alpaca {
 				}
 				// TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
 						Alpaca_Group::image($group, TRUE)).'</div>'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
 						'返回'.$group->name.'小组');
 				
 				$this->template->sidebar = $sidebar;
@@ -228,11 +227,8 @@ class Controller_Topic extends Controller_Alpaca {
 	 */
 	public function action_edit($topic_id)
 	{
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page 
+		Alpaca::logged_in();
 		
 		$topic = ORM::factory('topic', $topic_id);
 		if ($_POST AND $topic->loaded())
@@ -243,7 +239,7 @@ class Controller_Topic extends Controller_Alpaca {
 				// Upate
 				$topic->save();
 
-				$this->request->redirect(Alpaca_Topic::the_url($topic));
+				$this->request->redirect(Alpaca_Topic::url($topic));
 			}
 			else
 			{
@@ -264,16 +260,21 @@ class Controller_Topic extends Controller_Alpaca {
 			$has_role = $auth_user->has_role('admin');
 			if (($auth_user->id == $topic->author->id) OR $has_role)
 			{
-				$this->template->content = View::factory('topic/edit')
-					->bind('topic', $topic)
+				$this->template->content = View::factory('topic/add_edit')
+					->set('title', $title)
+					->set('author', $topic->author)
+					->set('topic_title', $topic->title)
+					->set('topic_content', $topic->content)
+					->set('submit', __('Reply it'))
+					->bind('group', $group)
 					->bind('errors', $errors);
-				
+					
 				$group = $topic->group;
 				// TODO: change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
 						Alpaca_Group::image($group, TRUE)).'</div>'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::the_uri($group))),
+					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
 					'返回'.$group->name.'小组');
 			
 				$this->template->sidebar = $sidebar;
@@ -299,11 +300,8 @@ class Controller_Topic extends Controller_Alpaca {
 	 */
 	public function action_delete($topic_id)
 	{
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		$this->template->content = View::factory('template/general')
 			->bind('title', $title)
@@ -351,11 +349,8 @@ class Controller_Topic extends Controller_Alpaca {
 	 */
 	public function action_move($topic_id, $group_id = NULL)
 	{
-		if ( ! $this->auth->logged_in())
-		{
-			$current_uri = URL::query(array('redir' => $this->request->uri));
-			$this->request->redirect(Route::url('login').$current_uri);
-		}
+		// Check login status else redirect to login page
+		Alpaca::logged_in();
 		
 		$this->template->content = View::factory('template/general')
 			->bind('title', $title)
@@ -368,7 +363,7 @@ class Controller_Topic extends Controller_Alpaca {
 			{
 				$topic->group_id = $group_id;
 				$topic->save();
-				$this->request->redirect(Alpaca_Topic::the_url($topic));
+				$this->request->redirect(Alpaca_Topic::url($topic));
 			}
 			else
 			{

@@ -27,16 +27,12 @@
 			</form>
 			</div>
 		</div>
-	
-		<div id="website">
-		<?php echo HTML::anchor(
-				URL::base(),
-				HTML::image($config->logo), array('alt' => $config->title),
-				array('id' => 'logo')
-				); ?>
-		</div><!-- /website -->
+
+		<div class="logo">
+			<?php echo HTML::anchor(URL::base(), HTML::image($config->logo), array('alt' => $config->title)); ?>
+		</div><!-- /logo -->
 		<div class="clear"></div>
-		
+
 		<div id="cpanel">
 			<?php echo $menu; ?>
 			<div class="clear"></div>
@@ -60,7 +56,7 @@
 		</div>
 		</div>
 		<![endif]-->
-		
+
 		<?php if (isset($sidebar)): ?>
 	 	<div id="sidebar">
 			<?php if (isset($sidebar)) echo $sidebar; ?>
@@ -68,20 +64,20 @@
 		<div id="content" class="right_column">
 		<?php else: ?>
 		<div id="content">
-		<?php endif; ?>			
+		<?php endif; ?>
 			<?php if (isset($content)) echo $content; ?>
 		</div><!-- /content -->
-		
+
 		<div class="clear"></div>
 	</div><!-- /container -->
-	
+
 	<div id="footer">
 		<div class="left">
 			<?php echo Alpaca::copyright(Kohana::config('alpaca.copyright_year')); ?>
 		</div>
 		<div id="right">
 			<?php if ($config->execution_time): ?>
-				Rendered in {execution_time}. 
+				Rendered in {execution_time}.
 			<?php endif ?>
 			Powered by <?php echo HTML::anchor($config->project['url'], $config->project['name']); ?>.
 		</div>

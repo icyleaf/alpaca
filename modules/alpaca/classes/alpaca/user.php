@@ -14,10 +14,10 @@ class Alpaca_User {
 	 * @param  $type
 	 * @return string
 	 */
-	public static function the_url($route, Model_User $user, $type = NULL)
+	public static function url($route, Model_User $user, $type = NULL)
 	{
 		return Route::url($route, array(
-			'id' 	=> Alpaca_User::the_uri($user),
+			'id' 	=> Alpaca_User::uri($user),
 			'type'	=> $type,
 		));
 	}
@@ -28,7 +28,7 @@ class Alpaca_User {
 	 * @param Model_User $user 
 	 * @return mixed
 	 */
-	public static function the_uri($user)
+	public static function uri($user)
 	{
 		if (is_array($user))
 		{
@@ -78,11 +78,11 @@ class Alpaca_User {
 
 		if (is_array($link))
 		{
-			$image = HTML::anchor(Alpaca_User::the_url('user', $user), $image, $attr);
+			$image = HTML::anchor(Alpaca_User::url('user', $user), $image, $attr);
 		}
 		elseif ($link)
 		{
-			$image = HTML::anchor(Alpaca_User::the_url('user', $user), $image);
+			$image = HTML::anchor(Alpaca_User::url('user', $user), $image);
 		}
 		
 		return $image;
@@ -105,7 +105,7 @@ class Alpaca_User {
 			foreach ($users as $user)
 			{
 				$avatar = Alpaca_User::avatar($user, array('size' => 16), array('class' => 'avatar'));
-				$link = HTML::anchor(Alpaca_User::the_url('user', $user), $avatar.$user->nickname);
+				$link = HTML::anchor(Alpaca_User::url('user', $user), $avatar.$user->nickname);
 				$date = '<small>'.Alpaca::time_ago($user->created).'</small>';
 				$output .= '<li>'.$link.$date.'</li>';
 			}
@@ -133,7 +133,7 @@ class Alpaca_User {
 			foreach ($users as $user)
 			{
 				$avatar = Alpaca_User::avatar($user, array('size' => 16), array('class' => 'avatar'));
-				$link = HTML::anchor(Alpaca_User::the_url('user', $user), $avatar.$user->nickname);
+				$link = HTML::anchor(Alpaca_User::url('user', $user), $avatar.$user->nickname);
 				$date = '<small>'.Alpaca::time_ago($user->created).'</small>';
 				$output .= '<li>'.$link.$date.'</li>';
 			}

@@ -1,5 +1,5 @@
 <h3 class="blue"><?php echo __('Edit Reply'); ?></h3>
-<form method="post" class="form_table">
+<form method="post">
 <table class="table">
 	<tr>
 		<td class="column"><label><?php echo __('Title'); ?>:</label></td>
@@ -24,7 +24,7 @@
 				<input class="button_submit" type="submit" value="<?php echo __('Edit Reply'); ?>" />
 			</span>
 			<span class="left">
-				<?php echo HTML::anchor(Alpaca_Topic::the_url($post->topic), __('Undo'), array('class' => 'button'));?>
+				<?php echo HTML::anchor(Alpaca_Topic::url($post->topic), __('Undo'), array('class' => 'button'));?>
 			</span>
 		</td>
 	</tr>

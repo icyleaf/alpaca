@@ -3,7 +3,7 @@
 	<div class="content">
 		<p>
 		你现在在<?php echo $config->title; ?>的个人主页是: <br />
-		<?php echo HTML::anchor(Alpaca_User::the_url('user', $user)); ?>
+		<?php echo HTML::anchor(Alpaca_User::url('user', $user)); ?>
 		</p>
 		<p>
 			你可以自选一个 username 代替你现在的数字用户ID(<?php echo $user->id; ?>)。

@@ -19,6 +19,11 @@ ul, ol {
 	padding-left: 15px;
 }
 
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+}
+
 h4 {
 	margin-bottom: 5px;
 }
@@ -31,7 +36,9 @@ h4 {
 
 /****  HEADER  ****/
 #header {
+	margin-top: 3px;
 	display: block;
+	margin-bottom: 20px;
 }
 
 #header .block {
@@ -39,42 +46,38 @@ h4 {
 	white-space: nowrap;
 	float: right;
 	text-align: right;
-	margin: 2px 0;
+	margin-bottom: 5px;
 }
 
-#header .block .auth a {
+#header .auth a {
 	padding: 0 3px;
 }
 
-#header .block .auth a.user {
+#header .auth a.user {
 	color: #000000;
 	font-weight: bold;
 }
 
-#header .block .search {
+#header .search {
 	margin-top: 15px;
 	border: 1px solid #CCCCCC;
 }
 
-#header .block .search input {
+#header .search input {
 	color: #999999;
 	border: none;
 	padding: 4px 8px 3px 8px;
 	margin: 0;
 }
 
-#header .block .search input[type=submit] {
+#header .search input[type=submit] {
 	font-weight: bolder;
 	color: #666666;
 	line-height: 17px;
 }
 
-#website {
-	float: left;
-	margin: 6px  8px;
-}
-
-#website #logo {
+#header .logo {
+	margin: 6px;
 	font-size: 1.6em;
 }
 
@@ -332,11 +335,11 @@ h4 {
 
 .topic-content {
 	line-height: 16px;
-	margin-left: 4px; 
+	margin-left: 4px;
 	margin-bottom: 60px;
 }
 
-.topic-content img.tpi, 
+.topic-content img.tpi,
 .post-content img.tpi {
 	float: none;
 	margin: 5px 5px 0 0;
@@ -344,7 +347,7 @@ h4 {
 	max-height: 600px;
 }
 
-.topic-content p, 
+.topic-content p,
 .post-content p{
 	margin-bottom: 15px;
 }
@@ -412,7 +415,7 @@ h4 {
 	margin: 0;
 }
 
-.table textarea.content{ 
+.table textarea.content{
 	border:1px solid #CCCCCC;
 	font-family: arial,san serif;
 	font-size: 1.2em;
@@ -552,20 +555,21 @@ h4 {
 	padding-top: 10px;
 }
 
-#content .comments .comments-body label {
+#content .comments .comments-body .label {
 	font-size: 14px;
-	padding-left: 15px;
+	padding-left: 20px;
+	width: 60px;
 }
 
 #content .comments .comments-body input[type=text],
 #content .comments .comments-body input[type=password] {
 	padding: 8px;
-	width: 510px;
+	width: 480px;
 	color: #666666;
 }
 
 #content .comments .comments-body input[type=checkbox] {
-	margin-left: 68px;
+	margin-left: 15px;
 }
 
 #content .comments .comments-actions {
@@ -594,7 +598,7 @@ h4 {
 }
 
 .options {
-	padding: 5px 0 10px 0; 
+	padding: 5px 0 10px 0;
 	color: #A2A2A2;
 }
 
@@ -1016,7 +1020,7 @@ ul.settings-menu li.current{
 }
 
 .settings-content label.tips {
-	color: #DA3838;	
+	color: #DA3838;
 }
 
 .settings-content input.field {
@@ -1124,7 +1128,7 @@ h4.rss {
 
 #auth-form-body label,
 #auth-form #notice {
-	color: #006FB7; 
+	color: #006FB7;
 	font-size: 1.2em;
 	font-weight: normal;
 }
@@ -1165,7 +1169,7 @@ ul.list_users li.user_item {
 }
 
 ul.list_users li.user_item div {
-	
+
 	margin-bottom: 1px;
 }
 
@@ -1254,8 +1258,8 @@ ul.list_users li.user_item a:hover {
 	padding: 5px;
 }
 
-.pagination .first, .pagination .previous, 
-.pagination .page, .pagination .current, 
+.pagination .first, .pagination .previous,
+.pagination .page, .pagination .current,
 .pagination .next, .pagination .last {
 	padding: 2px 5px;
 	margin: 0 1px;
