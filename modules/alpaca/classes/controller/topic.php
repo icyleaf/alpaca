@@ -175,11 +175,11 @@ class Controller_Topic extends Controller_Alpaca {
 					}
 
 					// Create the new topic
+					$_POST['group_id'] = $group->id;
+					$_POST['user_id'] = $author->id;
 					$topic = ORM::factory('topic')->values($_POST);
 					if ($topic->check())
 					{
-						$topic->group_id = $group->id;
-						$topic->user_id = $author->id;
 						$topic->save();
 
 						// Updated group's topic count
@@ -191,6 +191,7 @@ class Controller_Topic extends Controller_Alpaca {
 					else
 					{
 						$errors = $topic->validate()->errors('validate');
+						echo Kohana::debug($errors);
 					}
 				}
 				// TODO: Change the sidebar

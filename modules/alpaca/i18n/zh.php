@@ -44,7 +44,7 @@ return array
 	':number collection'		=> ':number 收藏',
 	':number collections'	=> ':number 收藏',
 	'Title'					=> '标题',
-	'Post it!'					=> '发布',
+	'Post it'					=> '发布',
 	'Undo'						=> '撤销',
 	'Post a topic'			=> '新话题',
 	'Start a new topic'		=> '发布新话题',
