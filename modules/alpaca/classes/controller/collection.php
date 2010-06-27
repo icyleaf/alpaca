@@ -15,6 +15,7 @@ class Controller_Collection extends Controller_Alpaca {
 	 */
 	public function action_topic($topic_id)
 	{
+		$collection = ORM::factory('collection');
 		if (Request::$is_ajax)
 		{
 			// Disable auto render
@@ -22,26 +23,11 @@ class Controller_Collection extends Controller_Alpaca {
 			
 			// the default render message
 			$result = 'FALSE';
-			if ($this->auth->logged_in())
+			if ($user = $this->auth->get_user())
 			{
-				$user = $this->auth->get_user();
-				
-				$collection = ORM::factory('collection');
-				$result = $collection->where('user_id', '=', $user->id)
-					->and_where('topic_id', '=', $topic_id)
-					->find()
-					->loaded();
-					
-				if ( ! $result)
+				if ( ! $collection->is_collected($topic_id, $user->id))
 				{
-					$collection->user_id = $user->id;
-					$collection->topic_id = $topic_id;
-					$collection->save();
-					
-					// update topic collections count
-					$topic = ORM::factory('topic', $topic_id);
-					$topic->collections += 1;
-					$topic->save();
+					$this->_saved();
 
 					$result = 'CREATED';
 				}
@@ -49,7 +35,6 @@ class Controller_Collection extends Controller_Alpaca {
 				{
 					$result = 'EXIST';
 				}
-	
 			}
 			else
 			{
@@ -67,21 +52,9 @@ class Controller_Collection extends Controller_Alpaca {
 			$user = $this->auth->get_user();
 				
 			$collection = ORM::factory('collection');
-			$result = $collection->where('user_id', '=', $user->id)
-				->and_where('topic_id', '=', $topic_id)
-				->find()
-				->loaded();
-				
-			if ( ! $result)
+			if ( ! $collection->is_collected($topic_id, $user->id))
 			{
-				$collection->user_id = $user->id;
-				$collection->topic_id = $topic_id;
-				$collection->save();
-				
-				// update topic collections count
-				$topic = ORM::factory('topic', $topic_id);
-				$topic->collections += 1;
-				$topic->save();
+				$this->_saved();
 
 				$result = '创建成功！';
 				$this->request->redirect(Alpaca_Topic::url($topic));
@@ -93,6 +66,26 @@ class Controller_Collection extends Controller_Alpaca {
 			
 			$this->request->response = $result;
 		}
+	}
+
+	/**
+	 * Added relation between user and topic
+	 *
+	 * @param  $collection
+	 * @param  $user_id
+	 * @param  $topic_id
+	 * @return void
+	 */
+	private function _saved($collection, $user_id, $topic_id)
+	{
+		$collection->user_id = $user_id;
+		$collection->topic_id = $topic_id;
+		$collection->save();
+
+		// update topic collections count
+		$topic = ORM::factory('topic', $topic_id);
+		$topic->collections += 1;
+		$topic->save();
 	}
 }
 

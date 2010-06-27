@@ -57,13 +57,24 @@ class Model_Topic extends ORM {
 		
 		return $this->find_all();
 	}
-	
+
+	public function get_topics_by_user($limit = NULL, $cache = 120)
+	{
+		return $this->limit($limit)
+			->order_by('created', 'DESC')
+			->cached($cache)
+			->find_all();
+	}
+
 	/**
 	 * Search topics
-	 * @param string $query
-	 * @return object
+	 * 
+	 * @param  $query
+	 * @param int $limit
+	 * @param int $offset
+	 * @return ORM
 	 */
-	public function search($query)
+	public function search($query, $limit = 0, $offset = 0)
 	{
 		$keywords = explode(' ', $query);
 		$keyword_count = count($keywords);
@@ -128,7 +139,22 @@ class Model_Topic extends ORM {
 			$this->order_by('created', 'DESC');
 		}
 
-		return $this;
+		return $this->limit($limit)
+			->offset($offset)
+			->find_all();
+	}
+
+	/**
+	 * Total of Search result
+	 *
+	 * @param  $query
+	 * @return int
+	 */
+	public function search_count($query)
+	{
+		return $this->search($query)
+			->find_all()
+			->count();
 	}
 
 	public function find_topic(Array $data)

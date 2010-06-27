@@ -61,12 +61,9 @@ class Controller_Feed extends Controller {
 		if ($user->loaded())
 		{
 			$feed = array();
-			$topics = $user->topics
-				->limit($this->_config->feed['per_page'])
-				->order_by('created', 'DESC')
-				->cached($this->_config->feed['cache'])
-				->find_all();
-				
+			$feed_config = $this->_config->feed;
+			$topics = $user->topics->get_topics_by_user($feed_config['per_page'], $feed_config['cache']);
+
 			if ($topics->count() > 0)
 			{
 				foreach ($topics as $topic)

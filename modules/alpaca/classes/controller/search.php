@@ -2,6 +2,8 @@
 /**
  * Alpaca Search Entry
  *
+ * TODO: ONLY support for topic
+ *
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
@@ -9,7 +11,7 @@ class Controller_Search extends Controller_Alpaca {
 	
 	private $_rules = array
 	(
-		'q'				=> array
+		'q'		=> array
 		(
 			'not_empty'	=> NULL,
 		)
@@ -17,14 +19,6 @@ class Controller_Search extends Controller_Alpaca {
 	
 	public function action_index()
 	{
-		$this->template->content = View::factory('search/topic')
-			->bind('query', $query)
-			->bind('total', $result_total)
-			->bind('topics', $topics)
-			->bind('pagination', $pagination);
-			
-		$this->template->sidebar = '';
-				
 		if ($_GET)
 		{
 			$get = Validate::factory($_GET)
@@ -36,20 +30,12 @@ class Controller_Search extends Controller_Alpaca {
 				$pagination = Pagination::factory();
 				$query = Arr::get($_GET, 'q');
 				$type = Arr::get($_GET, 'type' , 'topic');
-				$result_total = ORM::factory($type)
-					->search($query)
-					->find_all()
-					->count();
-					
-				$topics = ORM::factory($type)
-					->search($query)
-					->limit($pagination->items_per_page)
-					->offset($pagination->offset)
-					->find_all();
-	
+				$total = ORM::factory($type)->search_count($query);
+				$topics = ORM::factory($type)->search($query, $pagination->items_per_page, $pagination->offset);
+
 				$pagination->setup(array(
 					'view'				=> 'pagination/digg',
-					'total_items' 		=> $result_total,
+					'total_items' 		=> $total,
 					'items_per_page'	=> $this->config->topic['per_page'],
 				));
 				
@@ -59,6 +45,15 @@ class Controller_Search extends Controller_Alpaca {
 			}
 			
 		}
+
+		$this->template->content = View::factory('search/topic')
+			->bind('query', $query)
+			->bind('total', $total)
+			->bind('topics', $topics)
+			->bind('pagination', $pagination);
+
+		$this->template->sidebar = '';
 	}
+
 }
 
