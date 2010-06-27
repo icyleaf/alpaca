@@ -259,7 +259,7 @@ class Controller_Topic extends Controller_Alpaca {
 					->set('author', $topic->author)
 					->set('topic_title', $topic->title)
 					->set('topic_content', $topic->content)
-					->set('submit', __('Reply it'))
+					->set('submit', __('Update'))
 					->bind('group', $group)
 					->bind('errors', $errors);
 					
