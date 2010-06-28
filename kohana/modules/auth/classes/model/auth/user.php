@@ -3,40 +3,35 @@
 class Model_Auth_User extends ORM {
 
 	// Relationships
-	protected $_has_many = array
-	(
+	protected $_has_many = array(
 		'user_tokens' => array('model' => 'user_token'),
 		'roles' => array(
 			'model' => 'role', 
 			'through' => 'roles_users'
 		)
 	);
-	// Rules
-	protected $_rules = array
-	(
-		'username'			=> array
-		(
+
+	// Validation rules
+	protected $_rules = array(
+		'username'			=> array(
 			'not_empty'			=> NULL,
 			'min_length'		=> array(4),
 			'max_length'		=> array(32),
-			'regex'			=> array('![a-zA-Z0-9_.]!u'),
+			'regex'				=> array('/^[-\pL\pN_.]++$/uD'),
 		),
-		'password'			=> array
-		(
+		'password'			=> array(
 			'not_empty'			=> NULL,
 			'min_length'		=> array(5),
 			'max_length'		=> array(42),
 		),
-		'password_confirm'	=> array
-		(
+		'password_confirm'	=> array(
 			'matches'		=> array('password'),
 		),
-		'email'				=> array
-		(
+		'email'				=> array(
 			'not_empty'			=> NULL,
 			'min_length'		=> array(4),
 			'max_length'		=> array(127),
-			'validate::email'	=> NULL,
+			'email'				=> NULL,
 		),
 	);
 
@@ -185,8 +180,7 @@ class Model_Auth_User extends ORM {
 	/**
 	 * Saves the current object. Will hash password if it was changed
 	 *
-	 * @chainable
-	 * @return  $this
+	 * @return  ORM
 	 */
 	public function save()
 	{
