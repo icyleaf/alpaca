@@ -8,7 +8,7 @@ A swift, lightweight forum system (development)
 
 * PHP 5.2+
 * Mysql 5.0+
-* [Kohana v3.0.7](http://github.com/kohana/kohana)
+* [Kohana](http://github.com/kohana/kohana)
 * Kohana Modules: [Database](http://github.com/kohana/database), [ORM](http://github.com/kohana/orm), [Auth](http://github.com/icyleaf/alpaca/tree/master/modules/auth/), [Pagination](http://github.com/kohana/pagination), [Gravatar](http://github.com/icyleaf/alpaca/tree/master/modules/gravatar/) and [iMailer](http://github.com/icyleaf/alpaca/tree/master/modules/imailer/). (**they all include Alpaca**)
 
 ## Installation

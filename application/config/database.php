@@ -65,11 +65,11 @@ $production = array
 	(
 		'type'       => 'mysql',
 		'connection' => array(
-			'hostname'   => 'localhost',
-			'username'   => FALSE,
-			'password'   => FALSE,
+			'hostname'   => 'gfw.wiiseer.com',
+			'username'   => 'kocn',
+			'password'   => '1qaz2wsx',
 			'persistent' => FALSE,
-			'database'   => 'kohana',
+			'database'   => 'kocn_alpaca',
 		),
 		'table_prefix' => '',
 		'charset'      => 'utf8',
