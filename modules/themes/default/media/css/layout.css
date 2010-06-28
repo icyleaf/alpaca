@@ -524,10 +524,9 @@ h4 {
 	color: #555555;
 }
 
-.post-comment {
-	background: #E5E5E5;
-	margin-left: 35px;
-	margin-bottom: 10px;
+.thread-comment {
+	background: #EEEEEE;
+	margin: 0 0 10px 34px;
 	padding: 3px;
 }
 

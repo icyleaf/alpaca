@@ -16,13 +16,11 @@
 </h3>
 <?php endif ?>
 
-<?php $count = is_array($topics) ? count($topics) : $topics->count();
-if ($count > 0): ?>
+<?php if ($topics->count() > 0): ?>
 <ul id="topic-list" class="list">
 <?php foreach ($topics as $topic):
-	// Topics by user posted comments is just a Object or not Model.
-	$author = isset($topic->author) ? $topic->author : ORM::factory('user', $topic->user_id);
-	$group = isset($topic->group) ? $topic->group : ORM::factory('group', $topic->group_id);
+	$author = $topic->author;
+	$group = $topic->group;
 ?>
 	<li class="clearfix topic_<?php echo $topic->id ?>">
 		<?php echo Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE);?>
@@ -115,4 +113,7 @@ if ($count > 0): ?>
 <?php else: ?>
 <ul class="list"><?php echo __('Nothing here'); ?></ul>
 <?php endif; ?>
-<?php if (isset($pagination)){ echo $pagination->render();} ?>
+
+<?php if (isset($pagination)): ?>
+<?php echo $pagination->render(); ?>
+<?php endif; ?>

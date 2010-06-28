@@ -37,34 +37,29 @@ class Controller_Topic extends Controller_Alpaca {
 			$topic->hits += 1;
 			$topic->save();
 
+			// Pagiation
 			$pagination = Pagination::factory(array(
 				'view'				=> 'pagination/digg',
 				'total_items' 		=> $topic->count,
 				'items_per_page'	=> $this->config->post['per_page'],
 				));
 
-			$post_count = $topic->posts->find_all()->count();
-			$posts = $topic->posts
-				->where('reply_id', '=', 0)
-				->limit($pagination->items_per_page)
-				->offset($pagination->offset)
-				->find_all();
-
+			/** Topic **/
 			$auth_user = $this->auth->get_user();
 			$author = $topic->author;
 			if ($auth_user)
 			{
-				$actions = array();
+				$topic_actions = array();
 				$has_admin_role = $auth_user->has_role('admin');
 				if (($auth_user->id == $author->id) OR $has_admin_role)
 				{
 					// Topic Edit Anchor
-					$actions[] = HTML::anchor('topic/edit/' . $topic->id, __('Edit'), array(
+					$topic_actions[] = HTML::anchor('topic/edit/' . $topic->id, __('Edit'), array(
 						'class' => 'edit',
 						'title' => __('Edit Topic'),
 					));
 					// Topic Delete Anchor
-					$actions[] = HTML::anchor('topic/delete/' . $topic->id, __('Delete'), array(
+					$topic_actions[] = HTML::anchor('topic/delete/' . $topic->id, __('Delete'), array(
 						'class' => 'delete',
 						'title' => __('Delete this topic include all the replies'),
 						'rel' => __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
@@ -74,33 +69,86 @@ class Controller_Topic extends Controller_Alpaca {
 				if ($has_admin_role)
 				{
 					// Topic Move Anchor
-					$actions[] = HTML::anchor('topic/move/' . $topic->id, __('Move'), array(
+					$topic_actions[] = HTML::anchor('topic/move/' . $topic->id, __('Move'), array(
 						'title' => __('Move to other group')
 					));
 				}
 			}
 
-			$details = array(
+			$topic_details = array(
 				'id'			=> $topic->id,
-				'title'		=> $topic->title,
+				'title'			=> $topic->title,
 				'user_avatar'	=> Alpaca_User::avatar($author, NULL, TRUE),
 				'author_link'	=> HTML::anchor(Alpaca_User::url('user', $author), $author->nickname),
 				'content'		=> Alpaca::format_html($topic->content),
 				'created'		=> date($this->config->date_format, $topic->created),
 			);
-			$details = (object) $details;
+			$topic_details = (object) $topic_details;
+
+			/** Post **/
+			$posts = $topic->posts->get_posts(FALSE, $pagination->items_per_page, $pagination->offset);
+			$all_post_count = $topic->posts->find_all()->count();
+
+			if ($posts->count() > 0)
+			{
+				$post_details = array();
+				foreach ($posts as $key => $post)
+				{
+					$post_actions = array();
+					if (($auth_user->id == $post->author->id) OR $has_admin_role)
+					{
+						$post_actions[] = HTML::anchor('topic/delete/' . $topic->id, __('Delete'), array(
+							'class'	=> 'delete',
+							'title'	=> __('Delete Reply'),
+							'rel'	=> __('Do you really want to delete this reply?'),
+						));
+						$post_actions[] = HTML::anchor('post/edit/' . $topic->id, __('Edit'), array(
+							'class'	=> 'edit',
+							'title'	=> __('Edit Reply'),
+						));
+					}
+
+					$avatar_config = array
+					(
+						'default'	=> URL::site('media/images/user-default-small.jpg'),
+						'size'		=> 30
+					);
+
+					$post_avatar = Alpaca_User::avatar($post->author, $avatar_config, array(
+						'id' => 'avatar-'.$post->id,
+						'class' => 'avatar',
+						TRUE
+					));
+
+					$post_author = HTML::anchor(Alpaca_User::url('user', $post->author), $post->author->nickname);
+
+					$post_role = ($topic->author->id == $post->author->id) ? 'owner' : 'poster';
+					$post_details[$key] = array(
+						'id'		=> $post->id,
+						'role'		=> $post_role,
+						'actions'	=> $post_actions,
+						'author'	=> $post_author,
+						'avatar'	=> $post_avatar,
+						'content'	=> Alpaca::format_html($post->content),
+						'created'	=> date($this->config->date_format, $post->created),
+						'time_ago'	=> Alpaca::time_ago($post->created),
+					);
+
+					$post_details[$key] = (object)$post_details[$key];
+				}
+			}
 
 			$this->template->content = View::factory('topic/view')
-				->bind('topic', $details)
-				->bind('topic_actions', $actions)
-				->bind('post_count', $post_count)
+				->bind('topic', $topic_details)
+				->bind('topic_actions', $topic_actions)
+				->bind('post_count', $all_post_count)
 				->bind('topic_posts', $topic_posts)
 				->bind('write_post', $write_post);
 
 			$topic_posts = View::factory('post/list')
-				->bind('post_count', $post_count)
+				->bind('post_count', $all_post_count)
 				->bind('topic', $topic)
-				->bind('posts', $posts)
+				->bind('posts', $post_details)
 				->bind('pagination', $pagination);
 
 			$write_post = View::factory('post/write')

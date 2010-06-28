@@ -1,6 +1,5 @@
 <?php $author = $auth->get_user(); ?>
-<div class="comments">
-	<a name="reply"></a>
+<div class="comments" id="reply">
 	<h3><?php echo __('Post new reply'); ?></h3>
 	<?php if ($auth->logged_in()): ?>
 	<div class="tips" style="padding-left: 7px"><?php echo __('Wanna say something?'); ?></div>

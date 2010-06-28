@@ -54,7 +54,7 @@ class Controller_Group extends Controller_Alpaca {
 				$children_count = $children->count();
 				$children = $children->as_array();
 				$topics = ORM::factory('topic');
-				for ($i = 0;$i < $children_count;$i++)
+				for ($i = 0; $i < $children_count; $i++)
 				{
 					if ($i == 0)
 					{
@@ -138,7 +138,7 @@ class Controller_Group extends Controller_Alpaca {
 			->bind('errors', $errors);
 
 		$auth_user = $this->auth->get_user();
-		if ($auth_user->has('roles', ORM::factory('role', array('name'=>'admin'))))
+		if ($auth_user->has_role('admin'))
 		{
 			if ($_POST)
 			{

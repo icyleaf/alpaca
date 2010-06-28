@@ -155,30 +155,6 @@ class Model_User extends Model_Auth_User {
 	}
 	
 	/**
-	 * Get user posted topics
-	 *
-	 * @param int $uid 
-	 * @return object
-	 */
-	public function posted_topics($uid)
-	{
-		/*
-		ORM::factory('topic')
-			->distinct('*')
-			->from('posts')
-			->where('posts.topic_id', '=', 'id')
-			->and_where('posts.user_id', '=', '1000001')
-			->order_by('created', 'DESC')
-			->find_all();
-		*/
-		
-		$sql = 'SELECT DISTINCT `topics`.* FROM `topics`, `posts` '.
-			'WHERE `topics`.id=`posts`.topic_id AND `posts`.user_id='.$uid.' ORDER BY `created` DESC';
-			
-		return $this->_db->query(Database::SELECT, $sql, TRUE);
-	}
-	
-	/**
 	 * Search users
 	 * @param string $query
 	 * @return mixed

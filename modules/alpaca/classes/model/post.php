@@ -31,33 +31,33 @@ class Model_Post extends ORM {
 	protected $_operators = array('and', 'or');
 	
 	/**
-	 * Get all the specifically posts
+	 * Get all the topic's posts
 	 *
-	 * @param string $poster 
-	 * @param int $max 
-	 * @param int $index 
+	 * @param boolean $thread
+	 * @param int $limit
+	 * @param int $offset
 	 * @param int $cache 
 	 * @return ORM
 	 */
-	public function get_list($poster = TRUE, $max = 10, $index = 0, $cache = 0)
+	public function get_posts($thread = FALSE, $limit = 0, $offset = 0, $cache = 0)
 	{
-		if ($max)
+		if ($thread)
 		{
-			$this->offset($index)->limit($max);
-		}
-		
-		if (is_int($cache) AND $cache > 0)
-		{
-			$this->cached($cache);
-		}
-		
-		if ($poster)
-		{
-			$this->where('reply_id', '=', 0);
+			$this->where('reply_id', '!=', 0);
 		}
 		else
 		{
-			$this->where('reply_id', '!=', 0);
+			$this->where('reply_id', '=', 0);
+		}
+
+		if ( ! empty($limit))
+		{
+			$this->offset($offset)->limit($limit);
+		}
+		
+		if ( ! empty($cache))
+		{
+			$this->cached($cache);
 		}
 		
 		$this->order_by('created', 'ASC');

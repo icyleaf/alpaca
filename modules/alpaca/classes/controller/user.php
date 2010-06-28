@@ -79,7 +79,7 @@ class Controller_User extends Controller_Alpaca {
 			->bind('follower_count', $follower_count);
 
 		$topics = $user->topics->order_by('created', 'DESC')->find_all();
-		$replies = $user->posted_topics($user->id);
+		$replies = ORM::factory('topic')->posted_topics_by_user($user->id);
 		$groups = $user->groups->order_by('created', 'DESC')->find_all();
 		$collections_count = ORM::factory('collection')->where('user_id', '=', $user->id)->find_all()->count();
 		$following_count = 0;
@@ -144,7 +144,7 @@ class Controller_User extends Controller_Alpaca {
 	protected function posts(Model_User $user)
 	{
 		$title = __('Replies Topics by :user', array(':user' => $user->nickname));
-		$topics = (object) $user->posted_topics($user->id);
+		$topics = ORM::factory('topic')->posted_topics_by_user($user->id);
 		$head = array(
 			'title' => $title,
 			'class' => 'hits',
