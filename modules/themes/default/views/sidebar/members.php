@@ -1,13 +1,13 @@
 <div class="widget">
-	<h3><?php echo __('社区成员'); ?></h3>
+	<h3><?php echo __('forum memebers'); ?></h3>
 	<div class="content">
 		<div id="star_member">
-			<h4><?php echo __('随机成员'); ?></h4>
-			<?php echo Alpaca_User::get_random(); ?>
+			<h4><?php echo __('random memeber'); ?></h4>
+			<?php echo Alpaca_User::random(); ?>
 		</div>
 		<div id="novices">
-			<h4><?php echo __('最新加入成员'); ?></h4>
-			<?php echo Alpaca_User::get_recruits(); ?>
+			<h4><?php echo __('new members'); ?></h4>
+			<?php echo Alpaca_User::new_members(); ?>
 		</div>
 	</div>
 </div>

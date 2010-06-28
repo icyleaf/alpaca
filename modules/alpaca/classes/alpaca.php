@@ -309,9 +309,23 @@ class Alpaca {
 			$domain = substr(str_replace('http://', '', URL::site()), 0, -1);
 			$mailer->from_address('noreply@'.$domain, $config->title);
 		}
+
+		$user = ORM::factory('user')->where('email', '=', $email)->find();
+		if (I18n::$lang == 'zh-cn')
+		{
+			$website = Alpaca::beautify_str($config->title, TRUE, TRUE);
+			$username = Alpaca::beautify_str($user->nickname);
+		}
+		else
+		{
+			$website = $config->title;
+			$username = $user->nickname;
+		}
+
 		// mail message
 		$content = View::factory('template/mail')
-			->set('user', ORM::factory('user')->where('email', '=', $email)->find())
+			->set('username', $username)
+			->set('website', $website)
 			->set('config', $config)
 			->set('content', $content);
 			

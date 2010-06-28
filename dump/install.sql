@@ -1,17 +1,9 @@
--- phpMyAdmin SQL Dump
--- version 3.2.0.1
--- http://www.phpmyadmin.net
+-- Alpaca Mysql Dump
 --
--- Host: localhost
--- Generation Time: Jan 08, 2010 at 03:11 AM
--- Server version: 5.1.37
--- PHP Version: 5.3.0
+-- Exported by phpMyAdmin v3.2.0.1
+-- http://www.phpmyadmin.net
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Database: `alpaca`
---
 
 -- --------------------------------------------------------
 

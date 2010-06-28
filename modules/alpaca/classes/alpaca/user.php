@@ -58,7 +58,7 @@ class Alpaca_User {
 		
 		if (is_array($config))
 		{
-			if (isset($config['size']) AND $config['size'] != 30)
+			if (isset($config['size']) AND ! in_array($config['size'], array(30, 48)))
 			{
 				$gravatar_config['default'] = URL::site('media/images/user-default-'.$config['size'].'x'.$config['size'].'.jpg');
 			}
@@ -95,7 +95,7 @@ class Alpaca_User {
 	 * @param int $cache 
 	 * @return string
 	 */
-	public static function get_random($number = 1, $cache = 60)
+	public static function random($number = 1, $cache = 60)
 	{
 		$users = ORM::factory('user')->random_users($number, $cache);
 		$output = NULL;
@@ -116,14 +116,14 @@ class Alpaca_User {
 	}
 	
 	/**
-	 * Get novice
+	 * Get new members
 	 *
 	 * @param int $max 
 	 * @param int $offset 
 	 * @param int $cache 
 	 * @return string
 	 */
-	public static function get_recruits($max = 10, $offset = 0, $cache = 60)
+	public static function new_members($max = 10, $offset = 0, $cache = 60)
 	{
 		$users = ORM::factory('user')->recruits($max, $offset, $cache);
 		$output = NULL;

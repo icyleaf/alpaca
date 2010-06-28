@@ -20,8 +20,8 @@ class Controller_Feed extends Controller {
 	public function action_index()
 	{
 		$feed = array();
-		$topics = ORM::factory('topic')
-			->get_topics('', $this->_config->feed['per_page'], 0, $this->_config->feed['cache']);
+		$feed_config = $this->_config->feed;
+		$topics = ORM::factory('topic')->get_topics('', $feed_config['per_page'], 0, $feed_config['cache']);
 		if ($topics->count() > 0)
 		{
 			foreach ($topics as $topic)
@@ -35,8 +35,9 @@ class Controller_Feed extends Controller {
 				);
 			}
 		}
-		
-		$this->_render(__('Latest topics'), $feed);
+
+		$title = __('Latest topics');
+		$this->_render($title, $feed);
 	}
 	
 	/**
@@ -86,8 +87,9 @@ class Controller_Feed extends Controller {
 			{
 				$user_link = $user->nickname;
 			}
-			
-			$this->_render(__('Latest updates @:user', array(':user' => $user_link)), $feed, Alpaca_User::url($user));
+
+			$title = __('Latest updates @:user', array(':user' => $user_link));
+			$this->_render($title, $feed, Alpaca_User::url($user));
 		}
 	}
 	
