@@ -1,4 +1,4 @@
-<?php if (isset($topic_actions) > 0): ?>
+<?php if (count($topic_actions) > 0): ?>
 <div class="admin-panel">
 	<h4><?php echo __('Topic actions'); ?></h4>
 	<ul class="actions">

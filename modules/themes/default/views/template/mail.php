@@ -1,16 +1,3 @@
-<?php
-if (I18n::$lang == 'zh-cn')
-{
-	$website_link = Alpaca::beautify_str($config->title, TRUE, TRUE);
-	$user_name = Alpaca::beautify_str($user->nickname);
-}
-else
-{
-	$website_link = $config->title;
-	$user_name = $user->nickname;
-}
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8" lang="utf-8">
 <head>
@@ -19,12 +6,12 @@ else
 </head>
 <body>
 <?php $config = Kohana::config('alpaca'); ?>
-<?php echo __('Dear :user', array(':user' => $user_name)); ?>:
+<?php echo __('Dear :user', array(':user' => $username)); ?>:
 <br /><br />
 <?php echo $content; ?>
 <br /><br />
 <?php
-echo __('Thanks for support to :website.', array(':website' => $website_link)); 
+echo __('Thanks for support to :website.', array(':website' => $website)); 
 ?>
 <br /><br />
 /**<br />
