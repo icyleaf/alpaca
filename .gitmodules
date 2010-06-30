@@ -13,3 +13,6 @@
 [submodule "kohana/modules/dbmanager"]
 	path = kohana/modules/dbmanager
 	url = http://github.com/icyleaf/dbmanager.git
+[submodule "kohana/modules/auth"]
+	path = kohana/modules/auth
+	url = http://github.com/kohana/auth.git
