@@ -557,13 +557,13 @@ h4 {
 #content .comments .comments-body .label {
 	font-size: 14px;
 	padding-left: 20px;
-	width: 60px;
+	width: 80px;
 }
 
 #content .comments .comments-body input[type=text],
 #content .comments .comments-body input[type=password] {
 	padding: 8px;
-	width: 480px;
+	width: 470px;
 	color: #666666;
 }
 
@@ -1296,7 +1296,7 @@ ul.list_users li.user_item a:hover {
 
 #errors h2 {
 	font-size: 1.8em;
-	margin: 0.75em 0;
+	margin-bottom: 0.75em;
 }
 
 #errors h2 span {
