@@ -119,7 +119,6 @@ class Controller_Auth extends Controller_Alpaca {
 				{
 					// Maybe a robot (spam)
 					$this->template->content = Alpaca::error_page($title, $content);
-
 					$content = __('Are you a robot (spam) ?');
 
 					// Write log
@@ -146,8 +145,6 @@ class Controller_Auth extends Controller_Alpaca {
 			else
 			{
 				$errors = $user->validate()->errors('validate');
-
-				echo Kohana::debug($errors);
 			}
 		}
 		
