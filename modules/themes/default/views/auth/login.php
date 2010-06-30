@@ -6,9 +6,9 @@
 	<form method="post">
 	<div id="authform-body">
 		<p>
-			<label><?php echo __('Email'); ?>:</label><br />
+			<label><?php echo __('Login or Email'); ?>:</label><br />
 			<input id="email" name="username" type="text" tabindex="10" value="<?php echo Arr::get($_POST, 'email'); ?>" />
-			<br /><span class="error"><?php echo Arr::get($errors, 'email'); ?></span>
+			<br /><span class="error"><?php echo Arr::get($errors, 'username'); ?></span>
 		</p>
 		<p>
 			<label><?php echo __('Password'); ?>:</label>
@@ -21,6 +21,7 @@
 			<span class="tips"><?php echo __('Remember me'); ?></span>
 		</p>
 		<p class="submit">
+			<input type="hidden" name="redir" value="<?php echo $redir; ?>" />
 			<input class="button" id="submit" type="submit" tabindex="100" value="<?php echo __('Log in'); ?>" />
 		</p>
 		<div class="clear"></div>

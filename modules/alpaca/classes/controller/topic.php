@@ -142,6 +142,8 @@ class Controller_Topic extends Controller_Alpaca {
 				}
 			}
 
+			$redirect = $this->request->uri;
+
 			$this->template->content = View::factory('topic/view')
 				->bind('topic', $topic_details)
 				->bind('topic_actions', $topic_actions)
@@ -156,6 +158,7 @@ class Controller_Topic extends Controller_Alpaca {
 				->bind('pagination', $pagination);
 
 			$write_post = View::factory('post/write')
+				->bind('redir', $redirect)
 				->bind('topic', $topic);
 
 			$this->template->sidebar = View::factory('sidebar/topic')

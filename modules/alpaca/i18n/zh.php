@@ -82,6 +82,7 @@ return array
 	'Your Email'				=> '你的 Email 地址',
 	'New Password'				=> '设置一个密码',
 	'Pick a nickname'			=> '给自己一个昵称',
+	'Login or Email'			=> '账户或邮箱',
 	'Remember me'				=> '记住我的登录状态',
 	'Quick Register'			=> '快速注册',
 	'Lost Password'				=> '忘记密码',
@@ -225,6 +226,12 @@ return array
 	/**
 	 * Validate messages
 	 */
+	// Username
+	'Incorrect Login or Password'	=> '账户或密码错误',
+	'Login must not be empty'		=> '账户不能为空',
+	'Login is not register'			=> '账户尚未注册',
+	'Login has been registered'		=> '账户已经被注册',
+	'Record not found'				=> '没有找到该记录',
 	// Email
 	'Incorrect Email or Password'	=> 'Email 地址或密码错误',
 	'Email must not be empty'		=> 'Email 地址不能为空',

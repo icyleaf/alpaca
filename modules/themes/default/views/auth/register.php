@@ -18,7 +18,7 @@
 		<p>
 			<label><?php echo __('Pick a nickname'); ?>:</label><br />
 			<input id="nickname" name="nickname" type="text" tabindex="40" value="<?php echo Arr::get($_POST, 'nickname'); ?>" />
-			<br /><span class="error"><?php echo Arr::get($errors, 'password_confirm'); ?></span>
+			<br /><span class="error"><?php echo Arr::get($errors, 'nickname'); ?></span>
 		</p>
 		<p class="submit">
 			<input id="random" name="random" type="hidden" value="<?php echo time(); ?>" />

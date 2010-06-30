@@ -28,7 +28,7 @@
 	<div class="comments-body">
 	<table>
 		<tr>
-			<td class="label"><label><?php echo __('Email'); ?></label></td>
+			<td class="label"><label><?php echo __('Login or Email'); ?></label></td>
 			<td><input type="text" name="username" value="" tabindex="100" /></td>
 		</tr>
 		<tr>
@@ -45,6 +45,7 @@
 	</table>
 	</div>
 	<div class="comments-actions txt_right">
+		<input type="hidden" name="redir" value="<?php echo $redir; ?>" />
 		<input type="submit" tabindex="103"  value="<?php echo __('Log in'); ?>" />
 	</div>
 	</form>

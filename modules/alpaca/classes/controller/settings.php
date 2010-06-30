@@ -162,11 +162,11 @@ class Controller_Settings extends Controller_Alpaca {
 			{
 				$current_data = array
 				(
-					'email'	=> $this->user->email,
+					'username'	=> $this->user->email,
 					'password'	=> $_POST['current_password'],
 				);
-				$_POST['email'] = $this->user->email;
-				
+				$_POST['username'] = $this->user->email;
+
 				$user = ORM::factory('user');
 				if ($user->login($current_data))
 				{
@@ -193,6 +193,7 @@ class Controller_Settings extends Controller_Alpaca {
 				}
 				else
 				{
+					$errors = $current_data->errors('validate');
 					$this->status = array
 					(
 						'type'		=> 'error',
@@ -201,7 +202,10 @@ class Controller_Settings extends Controller_Alpaca {
 							)),
 					);
 					
-					$errors = $current_data->errors('validate');
+					if (isset($errors['username']))
+					{
+						$errors['current_password'] = $errors['username'];
+					}
 				}
 			}
 			else

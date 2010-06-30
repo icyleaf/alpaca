@@ -10,10 +10,10 @@ class Controller_Auth extends Controller_Alpaca {
 	// Validate rules
 	protected $_rules = array(
 		'email'				=> array(
-			'not_empty'		=> NULL,
-			'min_length'		=> array(4),
-			'max_length'		=> array(127),
-			'validate::email'	=> NULL,
+		'not_empty'			=> NULL,
+		'min_length'		=> array(4),
+		'max_length'		=> array(127),
+		'validate::email'	=> NULL,
 		)
 	);
 	
@@ -146,6 +146,8 @@ class Controller_Auth extends Controller_Alpaca {
 			else
 			{
 				$errors = $user->validate()->errors('validate');
+
+				echo Kohana::debug($errors);
 			}
 		}
 		
@@ -161,28 +163,26 @@ class Controller_Auth extends Controller_Alpaca {
 		$title = __('Log in').Alpaca::beautify_str($this->config->title, TRUE);
 		$this->header->title->set($title);
 		$this->template->content = View::factory('auth/login')
-			->bind('redir', $redir)
+			->bind('redir', $redirect)
 			->bind('title', $title)
 			->bind('errors', $errors);
 
-		$redir = Arr::get($_SERVER, 'HTTP_REFERER', URL::base());
-		$redir = Arr::get($_GET, 'redir', $redir);
-		if ($_POST)
+		$redirect = Arr::get($_SERVER, 'HTTP_REFERER', URL::base());
+		if ($data = $_POST)
 		{
 			$user = ORM::factory('user');
-			$remember = (boolean) Arr::get($_POST, 'remember', FALSE);
-			$data = $_POST;
-
-			if (ORM::factory('verity')->verity_email($data['email']))
+			if ($user->login($data))
 			{
-				if ($user->login($data, $remember))
+				if (ORM::factory('verity')->verity_email($user->email))
 				{
 					$disable_redirect = array
 					(
-						'auth', 'register', 'login', 'logout', 'invate', 
+						'auth', 'register', 'login', 'logout', 'invate',
 						'lostpassword', 'changepassword', 'verity'
 					);
-					
+
+					$redirect = Arr::get($_POST, 'redir', $redirect);
+					$redirect = Arr::get($_GET, 'redir', $redirect);
 					foreach ($disable_redirect as $key)
 					{
 						if (strpos($redirect, $key) !== FALSE)
@@ -196,17 +196,19 @@ class Controller_Auth extends Controller_Alpaca {
 				}
 				else
 				{
-					$errors = $data->errors('validate');
+					$validate = Validate::factory($data)
+						->filter(TRUE, 'trim')
+						->rules('email', array('not_empty' => NULL))
+						->error('email', 'not_actived');
+
+					$errors = $validate->errors('validate');
 				}
 			}
 			else
 			{
-				$validate = Validate::factory($data)
-					->filter(TRUE, 'trim')
-					->rules('email', array('not_empty' => NULL))
-					->error('email', 'not_actived');
+				$errors = $data->errors('validate');
 
-				$errors = $validate->errors('validate');
+				echo Kohana::debug($errors);
 			}
 		}
 	}
@@ -242,7 +244,7 @@ class Controller_Auth extends Controller_Alpaca {
 			$post = Validate::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('email',  $this->_rules['email'])
-				->callback('email', array(new Model_User, 'email_absent'));
+				->callback('email', array(new Model_User, 'email_not_available'));
 			
 			if ($post->check())
 			{
