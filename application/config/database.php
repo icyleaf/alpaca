@@ -1,10 +1,4 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
-/**
- * Database Configure
- *
- * hacked by icyleaf<icyleaf.cn@gmail.com>
- */
- 
 // Development Database Configure
 $development = array
 (
@@ -65,11 +59,11 @@ $production = array
 	(
 		'type'       => 'mysql',
 		'connection' => array(
-			'hostname'   => 'gfw.wiiseer.com',
-			'username'   => 'kocn',
-			'password'   => '1qaz2wsx',
+			'hostname'   => 'localhost',
+			'username'   => FALSE,
+			'password'   => FALSE,
 			'persistent' => FALSE,
-			'database'   => 'kocn_alpaca',
+			'database'   => 'alpaca',
 		),
 		'table_prefix' => '',
 		'charset'      => 'utf8',

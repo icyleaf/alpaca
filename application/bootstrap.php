@@ -76,14 +76,14 @@ Kohana::modules(array(
 	'alpaca'		=> ALPPATH.'alpaca',		// Alpaca Forum System
 	
 	// Kohana Modules
-	'auth'   		=> MODPATH.'auth', 			// Basic authentication
-	'database'   	=> MODPATH.'database',  	// Database access
-	'image'     	=> MODPATH.'image',     	// Image manipulation
+	'auth'			=> MODPATH.'auth', 			// Basic authentication
+	'database'		=> MODPATH.'database',		// Database access
+	'image'			=> MODPATH.'image',	// Image manipulation
 	'gravatar'		=> MODPATH.'gravatar',	 	// Gravatar
-	'orm'     		=> MODPATH.'orm',    		// KO3 Object Relationship Mapping
-	'pagination' 	=> MODPATH.'pagination',	// Paging of results
-	'imailer' 		=> MODPATH.'imailer',		// PHPMailer
-	'dbmanager'		=> MODPATH.'dbmanager',		// Database manager
+	'orm'			=> MODPATH.'orm',	 		// KO3 Object Relationship Mapping
+	'pagination'	=> MODPATH.'pagination',	// Paging of results
+	'imailer'		=> MODPATH.'imailer',		// PHPMailer
+	'dbmanager'	=> MODPATH.'dbmanager',	// Database manager
 	));
 
 /**
@@ -108,10 +108,10 @@ try
 }
 catch(Exception $e)
 {
-	if ( ! IN_PRODUCTION)
-	{
-		throw $e;
-	}
+//	if ( ! IN_PRODUCTION)
+//	{
+//		throw $e;
+//	}
 
 	// Log the error
 	Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
