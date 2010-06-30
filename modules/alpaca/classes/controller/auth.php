@@ -164,30 +164,23 @@ class Controller_Auth extends Controller_Alpaca {
 			->bind('errors', $errors);
 
 		$redir = Arr::get($_SERVER, 'HTTP_REFERER', URL::base());
+		$redir = Arr::get($_GET, 'redir', $redir);
 		if ($_POST)
 		{
 			$user = ORM::factory('user');
 			$remember = (boolean) Arr::get($_POST, 'remember', FALSE);
-			$post = $_POST;
+			$data = $_POST;
 
-			if (ORM::factory('verity')->verity_email($post['email']))
+			if (ORM::factory('verity')->verity_email($data['email']))
 			{
-				if ($user->login($post, $remember))
+				if ($user->login($data, $remember))
 				{
-					if ( ! empty($_POST['redir']))
-					{
-						$redirect = substr($_POST['redir'], strlen(URL::base(FALSE)));
-					}
-					if (isset($_GET['redir']) AND ! empty($_GET['redir']))
-					{
-						$redirect = $_GET['redir'];
-					}
-					
 					$disable_redirect = array
 					(
 						'auth', 'register', 'login', 'logout', 'invate', 
 						'lostpassword', 'changepassword', 'verity'
 					);
+					
 					foreach ($disable_redirect as $key)
 					{
 						if (strpos($redirect, $key) !== FALSE)
@@ -201,15 +194,16 @@ class Controller_Auth extends Controller_Alpaca {
 				}
 				else
 				{
-					$errors = $post->errors('validate');
+					$errors = $data->errors('validate');
 				}
 			}
 			else
 			{
-				$validate = Validate::factory($post)
+				$validate = Validate::factory($data)
 					->filter(TRUE, 'trim')
 					->rules('email', array('not_empty' => NULL))
 					->error('email', 'not_actived');
+
 				$errors = $validate->errors('validate');
 			}
 		}
@@ -456,17 +450,5 @@ class Controller_Auth extends Controller_Alpaca {
 			}
 		}
 	}
-	
-	/**
-	 * Email invate
-	 */
-	public function action_invite()
-	{
-		$title = __('Request Invite');
-		$this->header->title->set($title);
-		$this->template->content = View::factory('auth/invate')
-			->bind('title', $title);
-	}
-
 }
 

@@ -4,11 +4,10 @@
 		<small><?php echo HTML::anchor(Route::url('register'), '('.__('Sign up').')'); ?></small>
 	</h2>
 	<form method="post">
-	<input type="hidden" name="redir" value="<?php echo $redir; ?>" />
 	<div id="authform-body">
 		<p>
 			<label><?php echo __('Email'); ?>:</label><br />
-			<input id="email" name="email" type="text" tabindex="10" value="<?php echo Arr::get($_POST, 'email'); ?>" />
+			<input id="email" name="username" type="text" tabindex="10" value="<?php echo Arr::get($_POST, 'email'); ?>" />
 			<br /><span class="error"><?php echo Arr::get($errors, 'email'); ?></span>
 		</p>
 		<p>
