@@ -1,7 +1,7 @@
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
-		<small><?php echo HTML::anchor(Route::url('register'), '('.__('Sign up').')'); ?></small>
+		<small><?php echo HTML::anchor('register', '('.__('Sign up').')'); ?></small>
 	</h2>
 	<form method="post">
 	<div id="authform-body">

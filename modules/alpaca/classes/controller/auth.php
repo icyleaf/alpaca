@@ -47,12 +47,11 @@ class Controller_Auth extends Controller_Alpaca {
 			$random = Arr::get($_POST, 'random');
 			$nospam = Arr::get($_POST, 'nospam');
 
-			// Human
 			$user = ORM::factory('user')->values($_POST);
 			$user->validate()->callback('email', array(new Model_User, 'email_available'));
-
 			if ($user->check())
 			{
+				// Human
 				if ($random == $nospam)
 				{
 					//Save this user to schema
@@ -77,19 +76,23 @@ class Controller_Auth extends Controller_Alpaca {
 					}
 
 					$email_subject = __('Account Verity');
-					$verity_url = Route::url('verity', array('code' => $hash_code));
+					$verity_url = Route::url('auth/actions', array(
+						'action' => 'verity',
+ 						'code'   => $hash_code,
+					));
 					$email_content = '感谢您在 Kohana 中文注册的账户，于此同时，麻烦您一点时间，我们需要验证注册账户的真实性，'.
 						'需要您点击下面的链接完成验证过程：<br /><br />'.
 						HTML::anchor($verity_url, $verity_url).'<br /><br />'.
 						'温馨提示：如果您忘记了密码，使用网站提供的重设密码功能也会把重设密码的链接发给本邮箱哦 :)';
 
+					//TODO: validate email configurations before sending
 					if (Alpaca::email($user->email, $email_subject, $email_content))
 					{
 						// Display success information
 						$this->template->content = Alpaca::error_page($title, $content);
 
-						$verity_url = Route::url('verity') .'?email='.$user->email;
-
+						$verity_url = Route::url('auth/actions', array('action' => 'verity'));
+						$verity_url .= URL::query(array('email' => $user->email));
 						$title = __('Welcome to join :website!', array(':website' => $this->_website));
 						$content = __('Successful! We will send a mail to verity account in a moment.', array(
 								':email' => $user->email
@@ -97,7 +100,7 @@ class Controller_Auth extends Controller_Alpaca {
 							'<br /><br />'.
 							HTML::anchor($verity_url, __('Complete Verity'), array('class'=>'button')).
 							__(' or ').
-							HTML::anchor(Route::url('login'), __('Done! Continue Login'), array('class'=>'button')).
+							HTML::anchor(URL::site('login'), __('Done! Continue Login'), array('class'=>'button')).
 							'<br /><br />'.
 							__('Thanks for support to :website.', array(':website' => $this->_website));
 					}
@@ -144,7 +147,6 @@ class Controller_Auth extends Controller_Alpaca {
 			{
 				$errors = $user->validate()->errors('validate');
 			}
-
 		}
 		
 		$this->header->title->set($title);
@@ -254,7 +256,10 @@ class Controller_Auth extends Controller_Alpaca {
 				{
 					$hash_code = $verity->general_code($email, 'lostpassword', 4, '');
 				}
-				$verity_url = Route::url('changepassword', array('code'=>$hash_code));
+				$verity_url = Route::url('auth/actions', array(
+					'action' => 'changepassword',
+ 					'code'   => $hash_code,
+				));
 				$email_content = __('Your request has been passed, Click the following link to reset your password:').
 					'<br /><br />'.
 					HTML::anchor($verity_url, $verity_url).'<br /><br />'.
@@ -319,7 +324,7 @@ class Controller_Auth extends Controller_Alpaca {
 					$content = __('Your password has been updated!').' '.
 						__('Thanks for support to :website.', array(':website' => $this->_website)).
 						'<br /><br />'.
-						HTML::anchor(Route::url('login'), __('Continue Login'), array('class' => 'button'));
+						HTML::anchor(URL::site('login'), __('Continue Login'), array('class' => 'button'));
 				}
 				else
 				{
@@ -332,10 +337,12 @@ class Controller_Auth extends Controller_Alpaca {
 			$this->template->content = Alpaca::error_page($title, $content);
 			$content = __('Invalid validation code! Please confirm it correctly or had been actived.').
 				'<br /><br />'.
-				HTML::anchor(Route::url('changepassword', array('code' => $hash_code)),
-					__('Try again'), array('class' => 'button')).
+				HTML::anchor(Route::url('auth/actions', array(
+					'action' => 'changepassword',
+					'code' => $hash_code
+				)), __('Try again'), array('class' => 'button')).
 				__(' or ').
-				HTML::anchor(Route::url('login'), __('Try to login'), array('class' => 'button'));
+				HTML::anchor(URL::site('login'), __('Try to login'), array('class' => 'button'));
 		}
 
 		$this->header->title->set($title);
@@ -352,7 +359,7 @@ class Controller_Auth extends Controller_Alpaca {
 		$title = __('Account Verity');
 		$this->header->title->set($title);
 		$content = __('Congratulations! Your account passed the verification.').'<br /><br />'.
-			HTML::anchor(Route::url('login'), __('Continue Login'), array('class' => 'button'));
+			HTML::anchor(URL::site('login'), __('Continue Login'), array('class' => 'button'));
 		
 		$verity = ORM::factory('verity');
 		if (empty($code))
@@ -393,9 +400,11 @@ class Controller_Auth extends Controller_Alpaca {
 							->and_where('type', '=', 'verity')
 							->find();
 						if ($verity->loaded())
-						{						
-							$hash_code = $verity->code;
-							$verity_url = Route::url('verity', array('code' => $hash_code));
+						{
+							$verity_url = Route::url('auth/actions', array(
+								'action' => 'verity',
+								'code' => $verity->code
+							));
 							$email_content = '感谢您在'.$this->_website.
 								'注册的账户，于此同时，麻烦您一点时间，我们需要验证注册账户的真实性，'.
 								'需要您点击下面的链接完成验证过程：<br /><br />'.
@@ -410,9 +419,9 @@ class Controller_Auth extends Controller_Alpaca {
 										':email' => $email
 									)).
 									'<br /><br />'.
-									HTML::anchor(Route::url('verity'), __('Complete Verity'), array('class'=>'button')).
+									HTML::anchor(URL::site('verity'), __('Complete Verity'), array('class'=>'button')).
 									__(' or ').
-									HTML::anchor(Route::url('login'), __('Done! Continue Login'), array('class'=>'button')).
+									HTML::anchor(URL::site('login'), __('Done! Continue Login'), array('class'=>'button')).
 									'<br /><br />'.
 									__('Thanks for support to :website.', array(':website' => $this->_website));
 							}

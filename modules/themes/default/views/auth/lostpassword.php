@@ -1,7 +1,7 @@
 <div id="authform">
 	<h2>
 		<?php echo $title; ?>
-		<small><?php echo HTML::anchor(Route::url('login'), '('.__('Log in').')'); ?></small>
+		<small><?php echo HTML::anchor('login', '('.__('Log in').')'); ?></small>
 	</h2>
 	<form method="post">
 	<div id="authform-body">

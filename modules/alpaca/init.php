@@ -20,45 +20,14 @@ Kohana::modules($modules);
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
- */	
-Route::set('register', 'register')
+ */
+Route::set('auth/actions', '<action>(/<code>)', array(
+		'action' => '(?:register|login|logout|lostpassword|changepassword|verity)',
+		'code'   => '(\w|[-])+',
+	))
 	->defaults(array(
 		'controller'=> 'auth',
 		'action'    => 'register',
-	));
-
-Route::set('login', 'login')
-	->defaults(array(
-		'controller'=> 'auth',
-		'action'    => 'login',
-	));
-
-Route::set('logout', 'logout')
-	->defaults(array(
-		'controller'=> 'auth',
-		'action'    => 'logout',
-	));
-
-Route::set('lostpassword', 'lostpassword')
-	->defaults(array(
-		'controller'=> 'auth',
-		'action'    => 'lostpassword',
-	));
-
-Route::set('verity', 'verity(/<code>)', array(
-		'code'		=> '(\w|[-])+',
-	))
-	->defaults(array(
-		'controller'=> 'auth',
-		'action'    => 'verity',
-	));
-
-Route::set('changepassword', 'changepassword/<code>', array(
-		'code'		=> '(\w|[-])+',
-	))
-	->defaults(array(
-		'controller'=> 'auth',
-		'action'    => 'changepassword',
 	));
 
 Route::set('latest', 'latest')

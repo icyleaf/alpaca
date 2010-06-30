@@ -24,13 +24,12 @@
 	</form>
 	<?php else: ?>
 	<div class="tips" style="padding-left: 7px"><?php echo __('Post new reply after log in'); ?></div>
-	<form method="post" action="<?php echo Route::url('login'); ?>">
-	<input type="hidden" name="redir" value="<?php echo URL::site(Request::current()->uri); ?>" />
+	<form method="post" action="<?php echo URL::site('login'); ?>">
 	<div class="comments-body">
 	<table>
 		<tr>
 			<td class="label"><label><?php echo __('Email'); ?></label></td>
-			<td><input type="text" name="email" value="" tabindex="100" /></td>
+			<td><input type="text" name="username" value="" tabindex="100" /></td>
 		</tr>
 		<tr>
 			<td class="label"><label><?php echo __('Password'); ?></label></td>
