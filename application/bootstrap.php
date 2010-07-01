@@ -18,22 +18,25 @@ date_default_timezone_set('Asia/Shanghai');
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
 
+// Define server variables
+$server_addr = Arr::get($_SERVER, 'SERVER_ADDR', '127.0.0.1');
+$server_port = Arr::get($_SERVER, 'SERVER_PORT', 80);
+$server_name = Arr::get($_SERVER, 'SERVER_NAME');
+$app_base_url = 'http://'.$server_name;
+$app_base_url .= ($server_port != 80) ? ':'.$server_port : '';
+
 /**
  * Set the production status by the ip address.
  */
-define('IN_PRODUCTION', $_SERVER['SERVER_ADDR'] !== '127.0.0.1');
+define('IN_PRODUCTION', $server_addr !== '127.0.0.1');
 
 /**
  * Define application base url
  */
-if ($_SERVER['SERVER_PORT'] == 80)
-{
-	define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME']);
-}
-else
-{
-	define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT']);
-}
+define('BASE_URL', $app_base_url);
+
+// Clean up the configuration vars
+unset($server_addr, $server_port, $server_name, $app_base_url);
 
 //-- Configuration and initialization -----------------------------------------
 
@@ -78,12 +81,12 @@ Kohana::modules(array(
 	// Kohana Modules
 	'auth'			=> MODPATH.'auth', 			// Basic authentication
 	'database'		=> MODPATH.'database',		// Database access
-	'image'			=> MODPATH.'image',	// Image manipulation
+	'image'			=> MODPATH.'image',			// Image manipulation
 	'gravatar'		=> MODPATH.'gravatar',	 	// Gravatar
 	'orm'			=> MODPATH.'orm',	 		// KO3 Object Relationship Mapping
 	'pagination'	=> MODPATH.'pagination',	// Paging of results
 	'imailer'		=> MODPATH.'imailer',		// PHPMailer
-	'dbmanager'	=> MODPATH.'dbmanager',	// Database manager
+	'dbmanager'		=> MODPATH.'dbmanager',		// Database manager
 	));
 
 /**
