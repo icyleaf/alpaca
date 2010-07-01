@@ -108,10 +108,10 @@ try
 }
 catch(Exception $e)
 {
-//	if ( ! IN_PRODUCTION)
-//	{
-//		throw $e;
-//	}
+	if ( ! IN_PRODUCTION)
+	{
+		throw $e;
+	}
 
 	// Log the error
 	Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
