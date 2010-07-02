@@ -27,7 +27,7 @@ class Controller_Collection extends Controller_Alpaca {
 			{
 				if ( ! $collection->is_collected($topic_id, $user->id))
 				{
-					$this->_saved();
+					$this->_saved($collection, $user->id, $topic_id);
 
 					$result = 'CREATED';
 				}
@@ -54,7 +54,7 @@ class Controller_Collection extends Controller_Alpaca {
 			$collection = ORM::factory('collection');
 			if ( ! $collection->is_collected($topic_id, $user->id))
 			{
-				$this->_saved();
+				$this->_saved($collection, $user->id, $topic_id);
 
 				$result = '创建成功！';
 				$this->request->redirect(Alpaca_Topic::url($topic));

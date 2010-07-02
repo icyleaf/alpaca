@@ -74,12 +74,40 @@ class Model_Topic extends ORM {
 	 */
 	public function posted_topics_by_user($user_id, $limit = NULL, $cache = 120)
 	{
-		return $this->distinct('*')
-			->join('posts')
+		$this->distinct('*')
+			->join('posts', 'LEFT')
 			->on('posts.topic_id', '=', 'topics.id')
 			->where('posts.user_id', '=', $user_id)
 			->order_by('created', 'DESC')
 			->find_all();
+		
+		if ( ! empty($cache))
+		{
+			$this->cached($cache);
+		}
+
+		return $this->find_all();
+	}
+
+	/**
+	 * Get user collectioned topics
+	 *
+	 * @param int $user_id
+	 * @return object
+	 */
+	public function collectioned_topics_by_user($user_id, $limit = NULL, $cache = 120)
+	{
+		$this->join('collections')
+			->on('collections.topic_id', '=', 'topics.id')
+			->where('collections.user_id', '=', $user_id)
+			->order_by('collections.created', 'DESC');
+
+		if ( ! empty($cache))
+		{
+			$this->cached($cache);
+		}
+		
+		return $this->find_all();
 	}
 
 	/**

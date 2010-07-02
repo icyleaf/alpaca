@@ -186,35 +186,13 @@ class Controller_User extends Controller_Alpaca {
 	protected function collections(Model_User $user)
 	{
 		$title = __('Replies Topics by :user', array(':user' => $user->nickname));
-		$collections = ORM::factory('collection')
-			->where('user_id', '=', $user->id)
-			->find_all();
-
-		$topics = array();
-		if ($collections->count() > 0)
-		{
-			foreach ($collections as $collection)
-			{
-				$topic = $collection->topic;
-				if ($topic->loaded())
-				{
-					$topics[] = $topic;
-				}
-				else
-				{
-					/* TODO: Collected the deleted topic
-					 * 1. Store the topic title in collection table to render collection items
-					 * 2. Render 'deleted tips' on the missing topic
-					 */
-				}
-			}
-		}
+		$topics = ORM::factory('topic')->collectioned_topics_by_user($user->id);
 
 		$head = array(
 			'title' => $title,
 			'class' => 'hits',
 		);
-		
+
 		$this->header->title->set($title);
 		$this->header->title->append($this->config->title);
 		
