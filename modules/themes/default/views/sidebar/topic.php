@@ -43,7 +43,7 @@
 	<div class="block collection">
 	<?php 
 		echo HTML::anchor(Route::url('topic/collectors', array(
-			'topic_id' => $topic->id)),__('view who collected this!'));
+			'id' => $topic->id)),__('view who collected this!'));
 	?>
 	</div>
 </div>

@@ -31,14 +31,16 @@ class Controller_Forum extends Controller_Alpaca {
 		// Content
 		switch ($type)
 		{
-			case 'hits':
+			case 'hot':
 				$title = __('Top hit topics');
+				$type = 'hits';
 				break;
-			case 'collections':
+			case 'top':
 				$title = __('Top collection topics');
+				$type = 'collections';
 				break;
 			default:
-			case 'latest':
+			case 'new':
 				$title = __('Latest topics');
 				$type = 'touched';
 				break;
@@ -54,10 +56,10 @@ class Controller_Forum extends Controller_Alpaca {
 		$topic_sort = array();
 		if ( ! in_array($this->request->uri , array('', '/', 'latest')))
 		{
-			$topic_sort['latest'] = __('Latest');
+			$topic_sort['new'] = __('Latest');
 		}
-		$topic_sort['hits'] = __('Top hits');
-		$topic_sort['collections'] = __('Top collections');
+		$topic_sort['hot'] = __('Top hits');
+		$topic_sort['top'] = __('Top collections');
 
 		// broadcast
 		$broadcast = NULL;

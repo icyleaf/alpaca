@@ -7,7 +7,7 @@
 HTML::$windowed_urls = TRUE;
 
 /**
- * Onload theme
+ * Loading theme
  */
 $alpaca_modules = array(
 	'themes'	=> ALPPATH.'themes'.DIRECTORY_SEPARATOR.Kohana::config('alpaca.theme'),
@@ -30,58 +30,6 @@ Route::set('auth/actions', '<action>(/<code>)', array(
 		'action'    => 'register',
 	));
 
-Route::set('latest', 'latest')
-	->defaults(array(
-		'controller'=> 'forum',
-		'action'    => 'index',
-		'id'        => 'latest',
-	));
-
-Route::set('hits', 'hits')
-	->defaults(array(
-		'controller'=> 'forum',
-		'action'    => 'index',
-		'id'        => 'hits',
-	));
-
-Route::set('collections', 'collections')
-	->defaults(array(
-		'controller'=> 'forum',
-		'action'    => 'index',
-		'id'        => 'collections',
-	));
-
-Route::set('group/add', 'group/create')
-	->defaults(array(
-		'controller'=> 'group',
-		'action'	=> 'add',
-	));
-
-Route::set('group', 'group/<id>', array(
-		'id'		=> '(\w|[-])+',
-	))
-	->defaults(array(
-		'controller'=> 'group',
-		'action'    => 'view',
-	));
-
-Route::set('topic', '(group/<group_id>/)topic/<id>', array(
-		'group_id'	=> '\w+',
-		'id'		=> '\w+',
-	))
-	->defaults(array(
-		'controller'=> 'topic',
-		'action'    => 'view',
-	));
- 
-Route::set('post', 'post(/<action>(/<id>))', array(
-		'action'	=> '\w+',
-		'id'		=> '\d+',
-	))
-	->defaults(array(
-		'controller'=> 'post',
-	));
-
 Route::set('user/feed', 'user/<id>/feed(/<type>)', array(
 		'id'		=> '\w+',
 		'type'		=> '\w+',
@@ -100,11 +48,21 @@ Route::set('user', 'user/<id>(/<type>)', array(
 		'action'    => 'index',
 	));
 
-Route::set('group/action', 'group/<action>', array(
-		'action'	=> '(edit|delete)',
+Route::set('topic/views', '<id>', array(
+		'id' => '(?:new|hot|top)'
 	))
 	->defaults(array(
-		'controller'=> 'group',
+		'controller'=> 'forum',
+		'action'    => 'index',
+	));
+
+Route::set('topic', '(group/<group_id>/)topic/<id>', array(
+		'group_id'	=> '\w+',
+		'id'		=> '\w+',
+	))
+	->defaults(array(
+		'controller'=> 'topic',
+		'action'    => 'view',
 	));
 
 Route::set('topic/add', 'group/<id>/new_topic', array(
@@ -124,12 +82,41 @@ Route::set('topic/move', 'topic/move/<topic_id>(/<group_id>)', array(
 		'action'    => 'move',
 	));
 
-Route::set('topic/collectors', 'topic/<topic_id>/collectors', array(
-		'topic_id'	=> '\d+',
+Route::set('topic/collectors', 'topic/<id>/collectors', array(
+		'id'		=> '\d+',
 	))
 	->defaults(array(
 		'controller'=> 'topic',
 		'action'    => 'collectors',
+	));
+
+Route::set('post', 'post(/<action>(/<id>))', array(
+		'action'	=> '\w+',
+		'id'		=> '\d+',
+	))
+	->defaults(array(
+		'controller'=> 'post',
+	));
+
+Route::set('group/add', 'group/create')
+	->defaults(array(
+		'controller'=> 'group',
+		'action'	=> 'add',
+	));
+
+Route::set('group', 'group/<id>', array(
+		'id'		=> '(\w|[-])+',
+	))
+	->defaults(array(
+		'controller'=> 'group',
+		'action'    => 'view',
+	));
+
+Route::set('group/action', 'group/<action>', array(
+		'action'	=> '(edit|delete)',
+	))
+	->defaults(array(
+		'controller'=> 'group',
 	));
 
 // the default entry

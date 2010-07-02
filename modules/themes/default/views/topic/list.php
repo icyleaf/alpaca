@@ -38,7 +38,7 @@
 					<?php
 					$tips_1 = __(':number people collected this!', array(':number' => $topic->collections));
 					$tips_2 = __('view who collected this!');
-					$colletion_url = Route::url('topic/collectors', array('topic_id' => $topic->id));
+					$colletion_url = Route::url('topic/collectors', array('id' => $topic->id));
 					$style = 'empty_star';
 					$collection = 'false';
 					if ($user = $auth->get_user())
