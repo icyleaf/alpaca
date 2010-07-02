@@ -74,12 +74,11 @@ class Model_Topic extends ORM {
 	 */
 	public function posted_topics_by_user($user_id, $limit = NULL, $cache = 120)
 	{
-		$this->distinct('*')
-			->join('posts', 'LEFT')
+		$this->distinct('topics.id')
+			->join('posts')
 			->on('posts.topic_id', '=', 'topics.id')
 			->where('posts.user_id', '=', $user_id)
-			->order_by('created', 'DESC')
-			->find_all();
+			->order_by('posts.created', 'DESC');
 		
 		if ( ! empty($cache))
 		{
