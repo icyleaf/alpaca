@@ -77,7 +77,7 @@ class Controller_Topic extends Controller_Alpaca {
 
 			$topic_details = array(
 				'id'			=> $topic->id,
-				'title'			=> $topic->title,
+				'title'		=> $topic->title,
 				'user_avatar'	=> Alpaca_User::avatar($author, NULL, TRUE),
 				'author_link'	=> HTML::anchor(Alpaca_User::url('user', $author), $author->nickname),
 				'content'		=> Alpaca::format_html($topic->content),

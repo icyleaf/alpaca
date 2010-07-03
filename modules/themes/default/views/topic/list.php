@@ -16,24 +16,16 @@
 </h3>
 <?php endif ?>
 
-<?php if ($topics->count() > 0): ?>
+<?php if (count($topics) > 0): ?>
 <ul id="topic-list" class="list">
-<?php foreach ($topics as $topic):
-	$author = $topic->author;
-	$group = $topic->group;
-?>
+<?php foreach ($topics as $topic): ?>
 	<li class="clearfix topic_<?php echo $topic->id ?>">
-		<?php echo Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE);?>
+		<?php echo $topic->author->avatar; ?>
 		<div class="collection">
 			<div class="collection_inset">
-				<?php if ( ! isset($hide_group)):
-					echo HTML::anchor(Route::url('group', array(
-							'id' => Alpaca_Group::uri($group)
-						)),
-						$group->name,
-						array('class' => 'groups')
-						);
-				endif; ?>
+				<?php if ( ! isset($hide_group)): ?>
+				<?php echo HTML::anchor($topic->group->link, $topic->group->name, array('class' => 'groups')); ?>
+				<?php endif; ?>
 				<div class="collection_action">
 					<?php
 					$tips_1 = __(':number people collected this!', array(':number' => $topic->collections));
@@ -43,7 +35,7 @@
 					$collection = 'false';
 					if ($user = $auth->get_user())
 					{
-						if (ORM::factory('collection')->is_collected($topic->id, $user->id))
+						if ($topic->collected)
 						{
 							$style = 'star';
 						}
@@ -61,31 +53,30 @@
 						<strong><?php echo $tips_1; ?></strong>
 						<?php echo $tips_2; ?>
 					</div>
-					<?php
-					echo HTML::anchor(
-						$colletion_url,
-						HTML::image('media/images/sprite_screen.png', array(
-							'class' => $style,
-							'alt'=>'*'
-							)), array(
-							'id'    => $topic->id,
-							'class' => 'collection_link',
-							'rel'   => $collection
-							)
-						); ?>
+					<?php echo HTML::anchor(
+							$colletion_url,
+							HTML::image('media/images/sprite_screen.png', array(
+								'class' => $style,
+								'alt'=>'*'
+								)), array(
+								'id'    => $topic->id,
+								'class' => 'collection_link',
+								'rel'   => $collection
+								)
+							); ?>
 				</div>
 			</div>
 		</div>
 
 		<div class="topic_details">
-			<?php echo HTML::anchor(Alpaca_Topic::url($topic, $group), $topic->title, array('class' => 'subject'));?>
+			<?php echo HTML::anchor($topic->link, $topic->title, array('class' => 'subject'));?>
 			<div class="meta">
-				<?php echo HTML::anchor(Alpaca_User::url('user', $author), $author->nickname, array('class' => 'author')); ?>
+				<?php echo HTML::anchor($topic->author->link, $topic->author->nickname, array('class' => 'author')); ?>
 				<span class="divider">•</span>
-				<?php if ($topic->count > 1): ?>
-				<?php echo __(':number replies', array(':number' => $topic->count)) ?>
+				<?php if ($topic->comments > 1): ?>
+				<?php echo __(':number replies', array(':number' => $topic->comments)) ?>
 				<?php else: ?>
-				<?php echo __(':number reply', array(':number' => $topic->count)) ?>
+				<?php echo __(':number reply', array(':number' => $topic->comments)) ?>
 				<?php endif ?>
 				<span class="divider">•</span>
 				<?php if ($topic->hits > 1): ?>
@@ -100,7 +91,7 @@
 				<?php echo __(':number collection', array(':number' => $topic->collections)) ?>
 				<?php endif ?>
 				<span class="divider">•</span>
-				<?php echo Alpaca::time_ago($topic->updated); ?>
+				<?php echo $topic->updated; ?>
 			</div>
 		</div>
 	</li>

@@ -44,76 +44,18 @@ class Controller_Group extends Controller_Alpaca {
 			if ($group->level == 0)
 			{
 				// Categories
-				$title .= __('Category');
-				$this->template->content = View::factory('topic/list')
-					->bind('group', $group)
-					->bind('topics', $topics)
-					->bind('pagination', $pagination);
-
-				$children = $group->children->find_all();
-				$children_count = $children->count();
-				$children = $children->as_array();
-				$topics = ORM::factory('topic');
-				for ($i = 0; $i < $children_count; $i++)
-				{
-					if ($i == 0)
-					{
-						$topics->where('group_id', '=', $children[$i]->id);
-					}
-					else
-					{
-						$topics->or_where('group_id', '=', $children[$i]->id);
-					}
-				}
-
-				$pagination->setup(array(
-					'view'				=> 'pagination/digg',
-					'total_items' 		=> $topics->find_all()->count(),
-					'items_per_page'	=> $per_page,
-					));
-
-				$topics = $topics
-					->limit($pagination->items_per_page)
-					->offset($pagination->offset)
-					->order_by('sticky', 'DESC')
-					->order_by('touched', 'DESC')
-					->find_all();
+				$this->_list_category_topics();
 			}
 			else
 			{
 				// Groups
-				$title .= __('Group');
-				$this->template->content = View::factory('group/list/single')
-					->bind('group', $group)
-					->bind('list_topics', $list_topics);
-
-				$list_topics = View::factory('topic/list')
-					->bind('group', $group)
-					->bind('topics', $topics)
-					->set('hide_group', TRUE)
-					->bind('pagination', $pagination);
-
-				$pagination->setup(array(
-					'view'				=> 'pagination/digg',
-					'total_items' 		=> $group->count,
-					'items_per_page'	=> $per_page,
-					));
-
-				$topics = $group->topics
-					->limit($pagination->items_per_page)
-					->offset($pagination->offset)
-					->order_by('sticky', 'DESC')
-					->order_by('touched', 'DESC')
-					->find_all();
-
-				$this->template->sidebar = View::factory('sidebar/group')
-					->bind('group', $group);
+				$this->_list_group_topics();
 			}
 		}
 		else
 		{
 			$this->template->content = Alpaca::error_page($title, $content);
-				
+
 			$title = __('Ooops');
 			$content = __('Not found this group!');
 		}
@@ -296,6 +238,74 @@ class Controller_Group extends Controller_Alpaca {
 			}
 		}
 	}
-	
+
+	private function _list_group_topics()
+	{
+		$title .= __('Group');
+		$this->template->content = View::factory('group/list/single')
+			->bind('group', $group)
+			->bind('list_topics', $list_topics);
+
+		$list_topics = View::factory('topic/list')
+			->bind('group', $group)
+			->bind('topics', $topics)
+			->set('hide_group', TRUE)
+			->bind('pagination', $pagination);
+
+		$pagination->setup(array(
+			'view'				=> 'pagination/digg',
+			'total_items' 		=> $group->count,
+			'items_per_page'	=> $per_page,
+			));
+
+		$topics = $group->topics
+			->limit($pagination->items_per_page)
+			->offset($pagination->offset)
+			->order_by('sticky', 'DESC')
+			->order_by('touched', 'DESC')
+			->find_all();
+
+		$this->template->sidebar = View::factory('sidebar/group')
+			->bind('group', $group);
+	}
+
+	private function _list_category_topics()
+	{
+		$title .= __('Category');
+		$this->template->content = View::factory('topic/list')
+			->bind('group', $group)
+			->bind('topics', $topics)
+			->bind('pagination', $pagination);
+
+		$children = $group->children->find_all();
+		$children_count = $children->count();
+		$children = $children->as_array();
+		$topics = ORM::factory('topic');
+		for ($i = 0; $i < $children_count; $i++)
+		{
+			if ($i == 0)
+			{
+				$topics->where('group_id', '=', $children[$i]->id);
+			}
+			else
+			{
+				$topics->or_where('group_id', '=', $children[$i]->id);
+			}
+		}
+
+		$pagination->setup(array(
+			'view'				=> 'pagination/digg',
+			'total_items' 		=> $topics->find_all()->count(),
+			'items_per_page'	=> $per_page,
+			));
+
+		$topics = $topics
+			->limit($pagination->items_per_page)
+			->offset($pagination->offset)
+			->order_by('sticky', 'DESC')
+			->order_by('touched', 'DESC')
+			->find_all();
+	}
+
 }
 

@@ -26,7 +26,7 @@ class Controller_Forum extends Controller_Alpaca {
 	public function action_index($type = NULL)
 	{
 		$this->header->link->append(URL::site('feed'), __('RSS 2.0'));
-		
+
 		$topics = ORM::factory('topic');
 		// Content
 		switch ($type)
@@ -47,6 +47,50 @@ class Controller_Forum extends Controller_Alpaca {
 		}
 
 		$topics = $topics->get_topics($type, $this->config->topic['per_page']);
+		$topics_array = array();
+		if ($topics->count() > 0)
+		{
+			foreach ($topics as $i => $topic)
+			{
+				$author = $topic->author;
+				$author_array = array(
+					'id'		=> $author->id,
+					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
+					'nickname'	=> $author->nickname,
+					'link'		=> Alpaca_User::url('user', $author)
+				);
+				$author_array = (object) $author_array;
+
+				$group = $topic->group;
+				$group_array = array(
+					'id'		=> $group->id,
+					'avatar'	=> Alpaca_User::avatar($author),
+					'name'		=> $group->name,
+					'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
+				);
+				$group_array = (object) $group_array;
+
+				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
+				$topics_array[$i] = array(
+					'id'			=> $topic->id,
+					'title'		=> $topic->title,
+					'link'			=> Alpaca_Topic::url($topic, $group),
+					'author'		=> $author_array,
+					'group'		=> $group_array,
+					'collections'	=> $topic->collections,
+					'comments'		=> $topic->count,
+					'hits'			=> $topic->hits,
+					'collected'	=> $collected,
+					'content'		=> Alpaca::format_html($topic->content),
+					'created'		=> date($this->config->date_format, $topic->created),
+					'time_ago'		=> Alpaca::time_ago($topic->created),
+					'updated'		=> Alpaca::time_ago($topic->updated),
+				);
+
+				$topics_array[$i] = (object) $topics_array[$i];
+			}
+		}
+
 		$head = array(
 			'title' => $title,
 			'class' => $type,
@@ -69,9 +113,9 @@ class Controller_Forum extends Controller_Alpaca {
 		}
 
 		$this->template->content = View::factory('topic/list')
-			->set('head', $head)
-			->set('topic_sort', $topic_sort)
-			->set('topics', $topics);
+			->bind('head', $head)
+			->bind('topic_sort', $topic_sort)
+			->bind('topics', $topics_array);
 
 		// Sidebar
 		$this->template->sidebar = $broadcast.
