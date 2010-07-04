@@ -36,20 +36,16 @@ class Controller_Group extends Controller_Alpaca {
 		
 		if ($group->loaded())
 		{
-			// Pagination
-			$pagination = Pagination::factory();
-			$per_page = $this->config->topic['per_page'];
-
 			$title = Alpaca::beautify_str($group->name, FALSE, TRUE);
 			if ($group->level == 0)
 			{
 				// Categories
-				$this->_list_category_topics();
+				$this->_list_category_topics($group);
 			}
 			else
 			{
 				// Groups
-				$this->_list_group_topics();
+				$this->_list_group_topics($group);
 			}
 		}
 		else
@@ -60,7 +56,6 @@ class Controller_Group extends Controller_Alpaca {
 			$content = __('Not found this group!');
 		}
 
-		
 		$this->header->title->prepend($title);
 	}
 	
@@ -239,23 +234,24 @@ class Controller_Group extends Controller_Alpaca {
 		}
 	}
 
-	private function _list_group_topics()
+	private function _list_group_topics($group)
 	{
-		$title .= __('Group');
+		$title = __('Group');
 		$this->template->content = View::factory('group/list/single')
 			->bind('group', $group)
 			->bind('list_topics', $list_topics);
 
 		$list_topics = View::factory('topic/list')
 			->bind('group', $group)
-			->bind('topics', $topics)
+			->bind('topics', $topics_array)
 			->set('hide_group', TRUE)
 			->bind('pagination', $pagination);
 
-		$pagination->setup(array(
+		// Pagination
+		$pagination = Pagination::factory(array(
 			'view'				=> 'pagination/digg',
 			'total_items' 		=> $group->count,
-			'items_per_page'	=> $per_page,
+			'items_per_page'	=> $this->config->topic['per_page'],
 			));
 
 		$topics = $group->topics
@@ -265,13 +261,55 @@ class Controller_Group extends Controller_Alpaca {
 			->order_by('touched', 'DESC')
 			->find_all();
 
+		$group_array = array(
+			'id'		=> $group->id,
+			'name'		=> $group->name,
+			'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
+		);
+		$group_array = (object) $group_array;
+		
+		$topics_array = array();
+		if ($topics->count() > 0)
+		{
+			foreach ($topics as $i => $topic)
+			{
+				$author = $topic->author;
+				$author_array = array(
+					'id'		=> $author->id,
+					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
+					'nickname'	=> $author->nickname,
+					'link'		=> Alpaca_User::url('user', $author)
+				);
+				$author_array = (object) $author_array;
+
+				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
+				$topics_array[$i] = array(
+					'id'			=> $topic->id,
+					'title'		=> $topic->title,
+					'link'			=> Alpaca_Topic::url($topic, $group),
+					'author'		=> $author_array,
+					'group'		=> $group_array,
+					'collections'	=> $topic->collections,
+					'comments'		=> $topic->count,
+					'hits'			=> $topic->hits,
+					'collected'	=> $collected,
+					'content'		=> Alpaca::format_html($topic->content),
+					'created'		=> date($this->config->date_format, $topic->created),
+					'time_ago'		=> Alpaca::time_ago($topic->created),
+					'updated'		=> Alpaca::time_ago($topic->updated),
+				);
+
+				$topics_array[$i] = (object) $topics_array[$i];
+			}
+		}
+
 		$this->template->sidebar = View::factory('sidebar/group')
 			->bind('group', $group);
 	}
 
-	private function _list_category_topics()
+	private function _list_category_topics($group)
 	{
-		$title .= __('Category');
+		$title = __('Category');
 		$this->template->content = View::factory('topic/list')
 			->bind('group', $group)
 			->bind('topics', $topics)
@@ -293,10 +331,11 @@ class Controller_Group extends Controller_Alpaca {
 			}
 		}
 
-		$pagination->setup(array(
+		// Pagination
+		$pagination = Pagination::factory(array(
 			'view'				=> 'pagination/digg',
 			'total_items' 		=> $topics->find_all()->count(),
-			'items_per_page'	=> $per_page,
+			'items_per_page'	=> $this->config->topic['per_page'],
 			));
 
 		$topics = $topics

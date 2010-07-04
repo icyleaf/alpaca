@@ -64,7 +64,6 @@ class Controller_Forum extends Controller_Alpaca {
 				$group = $topic->group;
 				$group_array = array(
 					'id'		=> $group->id,
-					'avatar'	=> Alpaca_User::avatar($author),
 					'name'		=> $group->name,
 					'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
 				);
