@@ -204,8 +204,6 @@ class Controller_Auth extends Controller_Alpaca {
 			else
 			{
 				$errors = $data->errors('validate');
-
-				echo Kohana::debug($errors);
 			}
 		}
 	}
