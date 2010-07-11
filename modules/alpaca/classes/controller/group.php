@@ -69,7 +69,7 @@ class Controller_Group extends Controller_Alpaca {
 		
 		$title = __('Create Category/Group');
 		$this->header->title->prepend($title);
-		$this->template->content = View::factory('group/add')
+		$this->template->content = View::factory('group/create')
 			->bind('title', $title)
 			->set('groups', ORM::factory('group')->where('level', '=', 0)->find_all())
 			->bind('errors', $errors);
@@ -127,41 +127,45 @@ class Controller_Group extends Controller_Alpaca {
 			$group = ORM::factory('group')->where('uri', '=', $group_id)->find();
 		}
 		
-		if ( ! $group->loaded())
+		if ($group->loaded())
 		{
-			$this->request->status = 404;
-			$this->request->redirect('404');
-		}
-		
-		$auth_user = $this->auth->get_user();
-		if ($auth_user->has_role('admin'))
-		{
-			$this->template->content = View::factory('group/edit')
-				->bind('title', $title)
-				->bind('group', $group)
-				->bind('errors', $errors);
-			
-			$title = __('Edit ":group" Category/Group', array(':group' => $group->name));
-			if ($_POST)
+			$auth_user = $this->auth->get_user();
+			if ($auth_user->has_role('admin'))
 			{
-				$group->values($_POST);
-				if ($group->check())
+				$this->template->content = View::factory('group/edit')
+					->bind('title', $title)
+					->bind('group', $group)
+					->bind('errors', $errors);
+				
+				$title = __('Edit ":group" Category/Group', array(':group' => $group->name));
+				if ($_POST)
 				{
-					$group->save();
-	
-					$this->request->redirect(Route::url('group', array('id' => $group_id)));
-				}
-				else
-				{
-					$errors = $group->validate()->errors('validate');
+					$group->values($_POST);
+					if ($group->check())
+					{
+						$group->save();
+		
+						$this->request->redirect(Route::url('group', array('id' => Alpaca_Group::uri($group))));
+					}
+					else
+					{
+						$errors = $group->validate()->errors('validate');
+					}
 				}
 			}
+			else
+			{
+				$this->template->content = Alpaca::error_page($title, $content);
+			 	
+				$content = __('Not enough permission to perform this operation.');
+			}
 		}
-		else
+		else	
 		{
 			$this->template->content = Alpaca::error_page($title, $content);
-		 	
-			$content = __('Not enough permission to perform this operation.');
+
+			$title = __('Ooops');
+			$content = __('Not found this group!');
 		}
 	}
 	
