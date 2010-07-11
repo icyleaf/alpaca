@@ -62,7 +62,7 @@ class Controller_Group extends Controller_Alpaca {
 	/**
 	 * Create a new group
 	 */
-	public function action_add() 
+	public function action_create() 
 	{
 		// Check login status else redirect to login page
 		Alpaca::logged_in();

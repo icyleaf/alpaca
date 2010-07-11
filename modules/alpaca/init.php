@@ -81,20 +81,6 @@ Route::set('topic/collectors', 'topic/<id>/collectors', array(
 		'action'    => 'collectors',
 	));
 
-Route::set('post', 'post(/<action>(/<id>))', array(
-		'action'	=> '\w+',
-		'id'		=> '\d+',
-	))
-	->defaults(array(
-		'controller'=> 'post',
-	));
-
-Route::set('group/add', 'group/create')
-	->defaults(array(
-		'controller'=> 'group',
-		'action'	=> 'add',
-	));
-
 Route::set('group', 'group/<id>', array(
 		'id'		=> '(\w|[-])+',
 	))
