@@ -112,8 +112,7 @@
 			$user_link = $user->nickname;
 		}
 		
-		echo HTML::anchor(Alpaca_User::url('user/feed', $user),
-			__('Subscribe the latest updates @:user...', array(':user' => $user_link)));
+		echo HTML::anchor($user_feed_link, __('Subscribe the latest updates @:user...', array(':user' => $user_link)));
 	?>
 	</h4>
 </div>

@@ -30,15 +30,6 @@ Route::set('auth/actions', '<action>(/<code>)', array(
 		'action'    => 'register',
 	));
 
-Route::set('user/feed', 'user/<id>/feed(/<type>)', array(
-		'id'		=> '\w+',
-		'type'		=> '\w+',
-	))
-	->defaults(array(
-		'controller'=> 'feed',
-		'action'    => 'user',
-	));
-
 Route::set('user', 'user/<id>(/<type>)', array(
 		'id'		=> '\w+',
 		'type'		=> '\w+',
