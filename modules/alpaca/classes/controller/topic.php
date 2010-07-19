@@ -100,12 +100,12 @@ class Controller_Topic extends Controller_Alpaca {
 						$has_admin_role = $auth_user->has_role('admin');
 						if (($auth_user->id == $post->author->id) OR $has_admin_role)
 						{
-							$post_actions[] = HTML::anchor('topic/delete/' . $topic->id, __('Delete'), array(
+							$post_actions[] = HTML::anchor('topic/delete/' . $post->id, __('Delete'), array(
 								'class'	=> 'delete',
 								'title'	=> __('Delete Reply'),
 								'rel'	=> __('Do you really want to delete this reply?'),
 							));
-							$post_actions[] = HTML::anchor('post/edit/' . $topic->id, __('Edit'), array(
+							$post_actions[] = HTML::anchor('post/edit/' . $post->id, __('Edit'), array(
 								'class'	=> 'edit',
 								'title'	=> __('Edit Reply'),
 							));

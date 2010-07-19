@@ -60,24 +60,7 @@ class Controller_User extends Controller_Alpaca {
 	 */
 	protected function profile(Model_User $user)
 	{
-		$title = __('Subscribe the latest updates @:user...', array(
-			':user' => $user->nickname
-		));
-		$this->header->title->set($user->nickname);
-		$this->header->title->append($this->config->title);
-		// Insert the user rss link
-		$this->header->link->append(Alpaca_User::url('user/feed', $user), $title);
-		
-		$this->template->content = View::factory('user/profile')
-			->bind('user', $user)
-			->bind('user_profiles', $user_profiles)
-			->bind('topics', $topics)
-			->bind('replies', $replies)
-			->bind('groups', $groups)
-			->bind('collections_count', $collections_count)
-			->bind('following_count', $following_count)
-			->bind('follower_count', $follower_count);
-
+	    $user_feed_link = Alpaca_User::url('user', $user, 'feed');
 		$topics = $user->topics->order_by('created', 'DESC')->find_all();
 		$replies = ORM::factory('topic')->posted_topics_by_user($user->id);
 		$groups = $user->groups->order_by('created', 'DESC')->find_all();
@@ -105,10 +88,39 @@ class Controller_User extends Controller_Alpaca {
 				{
 					$value = Text::auto_link_urls($value);
 				}
+                
+                if ($key == 'qq')
+                {
+                    $key = strtoupper($key);
+                }
+                else
+                {
+                    $key = ucfirst($key);
+                }
 
-				$user_profiles[__(ucfirst($key))] = $value;
+				$user_profiles[__($key)] = $value;
 			}
 		}
+        
+        $title = __('Subscribe the latest updates @:user...', array(
+            ':user' => $user->nickname
+        ));
+        $this->header->title->set($user->nickname);
+        $this->header->title->append($this->config->title);
+        // Insert the user rss link
+        $this->header->link->append($user_feed_link, $title);
+        
+        $this->template->content = View::factory('user/profile')
+            ->bind('user', $user)
+            ->bind('user_profiles', $user_profiles)
+            ->bind('topics', $topics)
+            ->bind('replies', $replies)
+            ->bind('groups', $groups)
+            ->bind('collections_count', $collections_count)
+            ->bind('following_count', $following_count)
+            ->bind('follower_count', $follower_count)
+            ->bind('user_feed_link', $user_feed_link);
+        
 	}
 	
 	/**
@@ -225,5 +237,20 @@ class Controller_User extends Controller_Alpaca {
 		$this->template->content = 'Nothing';
 	}
 
+	/**
+	 * View user feed
+	 * 
+	 * @param Model_User $user
+	 * @return void
+	 * @use Controller_Feed
+	 */
+    protected function feed(Model_User $user)
+    {
+    	$this->auto_render = FALSE;
+        $controller_feed = new Controller_Feed($this->request);
+        $controller_feed->before();
+        $controller_feed->action_user($user->id);
+    }
+    
 }
 

@@ -5,13 +5,13 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_Feed extends Controller {
-	
-	private $_config = null;
+class Controller_Feed extends Controller_Alpaca {
 	
 	public function before()
 	{
-		$this->_config = Kohana::config('alpaca');
+		parent::before();
+		
+		$this->auto_render = FALSE;
 	}
 	
 	/**
@@ -20,7 +20,7 @@ class Controller_Feed extends Controller {
 	public function action_index()
 	{
 		$feed = array();
-		$feed_config = $this->_config->feed;
+		$feed_config = $this->config->feed;
 		$topics = ORM::factory('topic')->get_topics('', $feed_config['per_page'], 0, $feed_config['cache']);
 		if ($topics->count() > 0)
 		{
@@ -62,7 +62,7 @@ class Controller_Feed extends Controller {
 		if ($user->loaded())
 		{
 			$feed = array();
-			$feed_config = $this->_config->feed;
+			$feed_config = $this->config->feed;
 			$topics = $user->topics->get_topics_by_user($feed_config['per_page'], $feed_config['cache']);
 
 			if ($topics->count() > 0)
@@ -89,7 +89,7 @@ class Controller_Feed extends Controller {
 			}
 
 			$title = __('Latest updates @:user', array(':user' => $user_link));
-			$this->_render($title, $feed, Alpaca_User::url($user));
+			$this->_render($title, $feed, Alpaca_User::url('user', $user));
 		}
 	}
 	
@@ -105,7 +105,7 @@ class Controller_Feed extends Controller {
 	{
 		$link = empty($link) ? URL::base(FALSE) : $link;
 		$rss = Feed::create(array(
-				'title' => $title.' - '.$this->_config->title,
+				'title' => $title.' - '.$this->config->title,
 				'link'  => $link,
 			),
 			$feed

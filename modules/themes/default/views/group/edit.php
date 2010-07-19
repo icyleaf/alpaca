@@ -1,9 +1,11 @@
 <?php
-	$name = isset($_POST['name'])?$_POST['name']:$group->name;
-	$desc = isset($_POST['desc'])?$_POST['desc']:$group->desc;
+	$name = Arr::get($_POST, 'name', $group->name);
+	$uri = Arr::get($_POST, 'uri', $group->uri);
+	$desc = Arr::get($_POST, 'desc', $group->desc);
 	
-	$name_error = isset($errors['name'])?$errors['name']:'';
-	$desc_error = isset($errors['desc'])?$errors['desc']:'';
+	$name_error = Arr::get($errors, 'name');
+	$uri_error = Arr::get($errors, 'uri');
+	$desc_error = Arr::get($errors, 'desc');
 ?>
 <h3 class="hot"><?php echo $title; ?></h3>
 <form method="post">
@@ -13,6 +15,13 @@
 		<td>
 			<input id="name" name="name" type="text" tabindex="10" value="<?php echo $name; ?>" />
 			<?php echo $name_error; ?>
+		</td>
+	</tr>
+	<tr>
+		<td class="column"><label><?php echo __('URI'); ?>:</label></td>
+		<td>
+			<input id="name" name="uri" type="text" tabindex="10" value="<?php echo $uri; ?>" />
+			<?php echo $uri_error; ?>
 		</td>
 	</tr>
 	<tr>

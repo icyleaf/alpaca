@@ -30,15 +30,6 @@ Route::set('auth/actions', '<action>(/<code>)', array(
 		'action'    => 'register',
 	));
 
-Route::set('user/feed', 'user/<id>/feed(/<type>)', array(
-		'id'		=> '\w+',
-		'type'		=> '\w+',
-	))
-	->defaults(array(
-		'controller'=> 'feed',
-		'action'    => 'user',
-	));
-
 Route::set('user', 'user/<id>(/<type>)', array(
 		'id'		=> '\w+',
 		'type'		=> '\w+',
@@ -88,20 +79,6 @@ Route::set('topic/collectors', 'topic/<id>/collectors', array(
 	->defaults(array(
 		'controller'=> 'topic',
 		'action'    => 'collectors',
-	));
-
-Route::set('post', 'post(/<action>(/<id>))', array(
-		'action'	=> '\w+',
-		'id'		=> '\d+',
-	))
-	->defaults(array(
-		'controller'=> 'post',
-	));
-
-Route::set('group/add', 'group/create')
-	->defaults(array(
-		'controller'=> 'group',
-		'action'	=> 'add',
 	));
 
 Route::set('group', 'group/<id>', array(
