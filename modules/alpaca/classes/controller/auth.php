@@ -5,7 +5,7 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_Auth extends Controller_Alpaca {
+class Controller_Auth extends Controller_Template_Alpaca {
 	
 	// Validate rules
 	protected $_rules = array(

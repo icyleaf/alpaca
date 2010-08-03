@@ -7,7 +7,7 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_Search extends Controller_Alpaca {
+class Controller_Search extends Controller_Template_Alpaca {
 	
 	private $_rules = array
 	(

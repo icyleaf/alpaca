@@ -5,7 +5,7 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_Errors extends Controller_Alpaca {
+class Controller_Errors extends Controller_Template_Alpaca {
 	
 	/**
 	 * General normal error page

@@ -5,7 +5,7 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_Settings extends Controller_Alpaca {
+class Controller_Settings extends Controller_Template_Alpaca {
 	
 	private $user		= NULL;
 	private $links		= NULL;

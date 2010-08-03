@@ -5,7 +5,7 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_Alpaca extends Controller_Template {
+class Controller_Template_Alpaca extends Controller_Template_Twig {
 
 	public $template 	= 'template/forum';
 	public $header 		= NULL;
@@ -92,22 +92,23 @@ class Controller_Alpaca extends Controller_Template {
 				),
 			);
 		}
-
+		
+		$logo = HTML::anchor(URL::base(), HTML::image($this->config->logo), array(
+			'alt' => $this->config->title
+		));
+		$copyright = Alpaca::copyright($this->config->copyright_year);
 		
 		// Set global varibales in View
-		View::bind_global('config', $this->config);
-		View::bind_global('auth', $this->auth);
-
-		// Base Template
-		$this->template = View::factory($this->template)
-			->bind('menu', $menu)
-			->bind('auth_links', $auth_links)
-			->bind('header_body', $header_body)
-			->bind('footer_body', $footer_body);
+		Twig::bind_global('config', $this->config);
+		Twig::bind_global('auth', $this->auth);
 		
-		$header_body = View::factory('header')
-			->bind('header', $this->header);
-		$footer_body = View::factory('footer');
+		// Base Template
+		$this->template = Twig::factory($this->template)
+			->set('header', $this->header)
+			->set('menu', $menu)
+			->set('logo', $logo)
+			->set('auth_links', $auth_links)
+			->set('copyright', $copyright);
 	}
 
 	/**

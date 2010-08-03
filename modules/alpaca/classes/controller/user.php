@@ -5,7 +5,7 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_User extends Controller_Alpaca {
+class Controller_User extends Controller_Template_Alpaca {
 	
 	/**
 	 * Asign request to related action
