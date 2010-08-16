@@ -81,19 +81,19 @@ Route::set('topic/collectors', 'topic/<id>/collectors', array(
 		'action'    => 'collectors',
 	));
 
+Route::set('group/action', 'group/<action>', array(
+		'action'	=> '(create|edit|delete)',
+	))
+	->defaults(array(
+		'controller'=> 'group',
+	));
+
 Route::set('group', 'group/<id>', array(
 		'id'		=> '(\w|[-])+',
 	))
 	->defaults(array(
 		'controller'=> 'group',
 		'action'    => 'view',
-	));
-
-Route::set('group/action', 'group/<action>', array(
-		'action'	=> '(edit|delete)',
-	))
-	->defaults(array(
-		'controller'=> 'group',
 	));
 
 // the default entry
