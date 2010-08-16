@@ -141,9 +141,51 @@ class Controller_User extends Controller_Template_Alpaca {
 		$this->header->title->set($title);
 		$this->header->title->append($this->config->title);
 		
+		if ($topics->count() > 0)
+		{
+			foreach ($topics as $i => $topic)
+			{
+				$author = $topic->author;
+				$author_array = array(
+					'id'		=> $author->id,
+					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
+					'nickname'	=> $author->nickname,
+					'link'		=> Alpaca_User::url('user', $author)
+				);
+				$author_array = (object) $author_array;
+				
+				$group = $topic->group;
+				$group_array = array(
+					'id'		=> $group->id,
+					'name'		=> $group->name,
+					'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
+				);
+				$group_array = (object) $group_array;
+
+				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
+				$topics_array[$i] = array(
+					'id'			=> $topic->id,
+					'title'			=> $topic->title,
+					'link'			=> Alpaca_Topic::url($topic, $group),
+					'author'		=> $author_array,
+					'group'			=> $group_array,
+					'collections'	=> $topic->collections,
+					'comments'		=> $topic->count,
+					'hits'			=> $topic->hits,
+					'collected'		=> $collected,
+					'content'		=> Alpaca::format_html($topic->content),
+					'created'		=> date($this->config->date_format, $topic->created),
+					'time_ago'		=> Alpaca::time_ago($topic->created),
+					'updated'		=> Alpaca::time_ago($topic->updated),
+				);
+
+				$topics_array[$i] = (object) $topics_array[$i];
+			}
+		}
+		
 		$this->template->content = View::factory('topic/list')
 			->set('head', $head)
-			->set('topics', $topics);
+			->set('topics', $topics_array);
 		$this->template->sidebar = '';
 	}
 	
@@ -165,27 +207,51 @@ class Controller_User extends Controller_Template_Alpaca {
 		$this->header->title->set($title);
 		$this->header->title->append($this->config->title);
 		
+		if ($topics->count() > 0)
+		{
+			foreach ($topics as $i => $topic)
+			{
+				$author = $topic->author;
+				$author_array = array(
+					'id'		=> $author->id,
+					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
+					'nickname'	=> $author->nickname,
+					'link'		=> Alpaca_User::url('user', $author)
+				);
+				$author_array = (object) $author_array;
+				
+				$group = $topic->group;
+				$group_array = array(
+					'id'		=> $group->id,
+					'name'		=> $group->name,
+					'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
+				);
+				$group_array = (object) $group_array;
+
+				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
+				$topics_array[$i] = array(
+					'id'			=> $topic->id,
+					'title'			=> $topic->title,
+					'link'			=> Alpaca_Topic::url($topic, $group),
+					'author'		=> $author_array,
+					'group'			=> $group_array,
+					'collections'	=> $topic->collections,
+					'comments'		=> $topic->count,
+					'hits'			=> $topic->hits,
+					'collected'		=> $collected,
+					'content'		=> Alpaca::format_html($topic->content),
+					'created'		=> date($this->config->date_format, $topic->created),
+					'time_ago'		=> Alpaca::time_ago($topic->created),
+					'updated'		=> Alpaca::time_ago($topic->updated),
+				);
+
+				$topics_array[$i] = (object) $topics_array[$i];
+			}
+		}
+		
 		$this->template->content = View::factory('topic/list')
 			->set('head', $head)
-			->set('topics', $topics);
-		$this->template->sidebar = '';
-	}
-	
-	/**
-	 * View user created groups
-	 *
-	 * @param Model_User $user 
-	 * @return void
-	 */
-	protected function groups(Model_User $user)
-	{
-		$this->header->title->set(__(':user\'s Groups', array(':user' => $user->nickname)));
-		$this->header->title->append($this->config->title);
-		
-		$this->template->content = View::factory('group/list')
-			->set('groups', $user->groups->order_by('created', 'DESC')
-			->find_all());
-			
+			->set('topics', $topics_array);
 		$this->template->sidebar = '';
 	}
 	
@@ -208,9 +274,69 @@ class Controller_User extends Controller_Template_Alpaca {
 		$this->header->title->set($title);
 		$this->header->title->append($this->config->title);
 		
+		if ($topics->count() > 0)
+		{
+			foreach ($topics as $i => $topic)
+			{
+				$author = $topic->author;
+				$author_array = array(
+					'id'		=> $author->id,
+					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
+					'nickname'	=> $author->nickname,
+					'link'		=> Alpaca_User::url('user', $author)
+				);
+				$author_array = (object) $author_array;
+				
+				$group = $topic->group;
+				$group_array = array(
+					'id'		=> $group->id,
+					'name'		=> $group->name,
+					'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
+				);
+				$group_array = (object) $group_array;
+
+				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
+				$topics_array[$i] = array(
+					'id'			=> $topic->id,
+					'title'			=> $topic->title,
+					'link'			=> Alpaca_Topic::url($topic, $group),
+					'author'		=> $author_array,
+					'group'			=> $group_array,
+					'collections'	=> $topic->collections,
+					'comments'		=> $topic->count,
+					'hits'			=> $topic->hits,
+					'collected'		=> $collected,
+					'content'		=> Alpaca::format_html($topic->content),
+					'created'		=> date($this->config->date_format, $topic->created),
+					'time_ago'		=> Alpaca::time_ago($topic->created),
+					'updated'		=> Alpaca::time_ago($topic->updated),
+				);
+
+				$topics_array[$i] = (object) $topics_array[$i];
+			}
+		}
+		
 		$this->template->content = View::factory('topic/list')
 			->set('head', $head)
-			->set('topics', $topics);
+			->set('topics', $topics_array);
+			
+		$this->template->sidebar = '';
+	}
+	
+	/**
+	 * View user created groups
+	 *
+	 * @param Model_User $user 
+	 * @return void
+	 */
+	protected function groups(Model_User $user)
+	{
+		$this->header->title->set(__(':user\'s Groups', array(':user' => $user->nickname)));
+		$this->header->title->append($this->config->title);
+		
+		$this->template->content = View::factory('group/list')
+			->set('groups', $user->groups->order_by('created', 'DESC')
+			->find_all());
 			
 		$this->template->sidebar = '';
 	}
