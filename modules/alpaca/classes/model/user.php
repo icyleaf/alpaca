@@ -37,6 +37,12 @@ class Model_User extends Model_Auth_User {
 		),
 	);
 
+    // Auto-update columns for creation and updates
+	protected $_created_column = array(
+		'column' => 'created',
+		'format' => TRUE,
+	);
+
 	/**
 	 * Check user role by role name
 	 *
