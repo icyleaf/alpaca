@@ -334,9 +334,14 @@ h4 {
 }
 
 .topic-content {
-	line-height: 16px;
 	margin-left: 4px;
 	margin-bottom: 60px;
+}
+
+.topic-content,
+.post-content {
+    font-size: 1.2em;
+    line-height: 20px;
 }
 
 .topic-content img.tpi,
@@ -364,8 +369,11 @@ h4 {
 	background: transparent url(/media/images/quotes.gif) no-repeat scroll left top;
 	color: #666666;
 	margin: 5px;
-	padding: 3px 3px 15px 38px;
+    margin-left: 15px;
+	padding: 3px 3px 15px 40px;
 	font-style: normal;
+    font-size: 1em;
+    line-height: 20px;
 }
 
 .topic-content pre.code,
