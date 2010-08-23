@@ -33,9 +33,13 @@ class Controller_Topic extends Controller_Template_Alpaca {
 			}
 
 			$title = $topic->title;
-			// TODO: ONLY store once for per user
-			$topic->hits += 1;
-			$topic->save();
+            if ( ! Request::user_agent('robot'))
+            {
+                // TODO: ONLY store once for per user
+                // fliter robots/spider to increase hits count
+                $topic->hits += 1;
+                $topic->save();
+            }
 
 			// Pagiation
 			$pagination = Pagination::factory(array(
@@ -143,7 +147,6 @@ class Controller_Topic extends Controller_Template_Alpaca {
 			}
 
 			$redirect = $this->request->uri;
-
 			$this->template->content = View::factory('topic/view')
 				->bind('topic', $topic_details)
 				->bind('topic_actions', $topic_actions)
