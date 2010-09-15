@@ -10,14 +10,14 @@ $alpaca = 'modules';
  *
  * @see  http://docs.kohanaphp.com/install#application
  */
-$application = 'application';
+$application = 'core/application';
 
 /**
  * The directory in which your modules are located.
  *
  * @see  http://docs.kohanaphp.com/install#modules
  */
-$modules = 'kohana/modules';
+$modules = 'core/modules';
 
 /**
  * The directory in which the Kohana resources are located. The system
