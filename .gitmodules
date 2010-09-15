@@ -1,0 +1,21 @@
+[submodule "core/system"]
+	path = core/system
+	url = http://github.com/kohana/core.git
+[submodule "core/modules/database"]
+	path = core/modules/database
+	url = http://github.com/kohana/database.git
+[submodule "core/modules/orm"]
+	path = core/modules/orm
+	url = http://github.com/kohana/orm.git
+[submodule "core/modules/pagination"]
+	path = core/modules/pagination
+	url = http://github.com/kohana/pagination.git
+[submodule "core/modules/auth"]
+	path = core/modules/auth
+	url = http://github.com/icyleaf/auth.git
+[submodule "core/modules/gravatar"]
+	path = core/modules/gravatar
+	url = http://github.com/samsoir/kohana-gravatar.git
+[submodule "core/modules/twig"]
+	path = core/modules/twig
+	url = http://github.com/jonathangeiger/kohana-twig.git
