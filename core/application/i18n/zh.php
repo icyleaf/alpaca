@@ -131,8 +131,8 @@ return array
 	'forum memebers'			=> '社区用户',
 	'random memeber'			=> '随机用户',
 	'random memebers'			=> '随机用户',
-	'new memeber'				=> '最新加入用户',
-	'new memebers'				=> '最新加入用户',
+	'new member'				=> '最新加入用户',
+	'new members'				=> '最新加入用户',
 	
 	/**
 	 * User public profile
