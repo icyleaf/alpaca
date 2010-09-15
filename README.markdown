@@ -21,8 +21,6 @@ Using your console, to get it from git execute the following command in the root
 
 And watch the git magic...
 
-Of course you can always download the code from the [github project](http://github.com/icyleaf/alpaca) as an archive.
-
 Step 2: Initial Structure
 
 Next, add whatever submodules alpaca need, they must be initialized and update:

@@ -81,7 +81,7 @@ Kohana::modules(array(
 	'pagination'	=> MODPATH.'pagination',	// Paging of results
 	'image'			=> MODPATH.'image',			// Image manipulation
 	'gravatar'		=> MODPATH.'gravatar',	 	// Gravatar
-//	'twig'			=> MODPATH.'twig',			// Twig Tempalte Engine
+	'twig'			=> MODPATH.'twig',			// Twig Tempalte Engine
 	));
 
 /**

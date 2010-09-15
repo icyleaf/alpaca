@@ -8,7 +8,7 @@ $config = array
 	'project'		=>	array
 	(
 		'name'			=> 'Alpaca',
-		'version'		=> '0.3.3',
+		'version'		=> '0.4',
 		'codename'		=> 'whelp',
 		'author'		=> 'icyleaf',
 		'url'			=> 'http://kohana.cn',
@@ -20,7 +20,7 @@ $config = array
 	'execution_time'=> TRUE,
 	
 	// Display throw exception informations and debug information at bottom of page
-	'debug'			=> FALSE,
+	'debug'			=> TRUE,
 	
 	// Website Maintenance
 	'maintenance'	=> FALSE,
@@ -31,7 +31,7 @@ $config = array
 	'logo'			=> 'media/images/kohana.png',
 	'date_format'	=> __('Y-m-d H:i:s'),
 	'language'		=> 'zh-cn',
-	'theme'			=> 'default',
+	'theme'			=> 'twig',
 		
 	// Control repeat post topic. (ONLY post once if it just the same content.)
 	// set 'FALSE' means it is't allow repeat post.

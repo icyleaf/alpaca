@@ -33,7 +33,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 			$user_name = $this->user->nickname;
 		}
 		$title = __('My profile', array(':user' => $user_name));
-		$this->header->title->prepend($title);
+		$this->head->title->prepend($title);
 		$this->template->content = View::factory('settings/general')
 			->bind('title', $title)
 			->bind('links', $this->links)

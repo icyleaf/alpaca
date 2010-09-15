@@ -105,10 +105,10 @@ class Controller_User extends Controller_Template_Alpaca {
         $title = __('Subscribe the latest updates @:user...', array(
             ':user' => $user->nickname
         ));
-        $this->header->title->set($user->nickname);
-        $this->header->title->append($this->config->title);
+        $this->head->title->set($user->nickname);
+        $this->head->title->append($this->config->title);
         // Insert the user rss link
-        $this->header->link->append($user_feed_link, $title);
+        $this->head->link->append($user_feed_link, $title);
         
         $this->template->content = View::factory('user/profile')
             ->bind('user', $user)
@@ -138,8 +138,8 @@ class Controller_User extends Controller_Template_Alpaca {
 			'class' => 'hits',
 		);
 		
-		$this->header->title->set($title);
-		$this->header->title->append($this->config->title);
+		$this->head->title->set($title);
+		$this->head->title->append($this->config->title);
 		
 		if ($topics->count() > 0)
 		{
@@ -204,8 +204,8 @@ class Controller_User extends Controller_Template_Alpaca {
 			'class' => 'hits',
 		);
 
-		$this->header->title->set($title);
-		$this->header->title->append($this->config->title);
+		$this->head->title->set($title);
+		$this->head->title->append($this->config->title);
 		
 		if ($topics->count() > 0)
 		{
@@ -271,8 +271,8 @@ class Controller_User extends Controller_Template_Alpaca {
 			'class' => 'hits',
 		);
 
-		$this->header->title->set($title);
-		$this->header->title->append($this->config->title);
+		$this->head->title->set($title);
+		$this->head->title->append($this->config->title);
 		
 		if ($topics->count() > 0)
 		{
@@ -331,8 +331,8 @@ class Controller_User extends Controller_Template_Alpaca {
 	 */
 	protected function groups(Model_User $user)
 	{
-		$this->header->title->set(__(':user\'s Groups', array(':user' => $user->nickname)));
-		$this->header->title->append($this->config->title);
+		$this->head->title->set(__(':user\'s Groups', array(':user' => $user->nickname)));
+		$this->head->title->append($this->config->title);
 		
 		$this->template->content = View::factory('group/list')
 			->set('groups', $user->groups->order_by('created', 'DESC')

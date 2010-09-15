@@ -2,7 +2,7 @@
 /**
  * Open link with new window only external links (modified Kohana HTML class)
  * 
- * @location: alpaca/classes/html.php
+ * @location: application/classes/html.php
  */
 HTML::$windowed_urls = TRUE;
 
@@ -97,7 +97,7 @@ Route::set('group', 'group/<id>', array(
 	));
 
 // the default entry
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+Route::set('forum', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'forum',
 		'action'     => 'index',

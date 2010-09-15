@@ -12,7 +12,7 @@ class Controller_Group extends Controller_Template_Alpaca {
 		parent::before();
 		
 		// add auto resize to textarea
-		$this->header->title->set($this->config->title);
+		$this->head->title->set($this->config->title);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ class Controller_Group extends Controller_Template_Alpaca {
 			$content = __('Not found this group!');
 		}
 
-		$this->header->title->prepend($title);
+		$this->head->title->prepend($title);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ class Controller_Group extends Controller_Template_Alpaca {
 		Alpaca::logged_in();
 		
 		$title = __('Create Category/Group');
-		$this->header->title->prepend($title);
+		$this->head->title->prepend($title);
 		$this->template->content = View::factory('group/create')
 			->bind('title', $title)
 			->set('groups', ORM::factory('group')->where('level', '=', 0)->find_all())

@@ -5,10 +5,10 @@
  * @package controller
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
-class Controller_Template_Alpaca extends Controller_Template {
+class Controller_Template_Alpaca extends Controller_Template_Twig {
 
 	public $template 	= 'template/forum';
-	public $header 		= NULL;
+	public $head 		= NULL;
 	public $auth 		= NULL;
 	public $session 	= NULL;
 	public $config 		= NULL;
@@ -17,6 +17,93 @@ class Controller_Template_Alpaca extends Controller_Template {
 	 * Alpaca Init
 	 */
 	public function before()
+	{
+		// Instance classes
+		$this->auth = Auth::instance();
+		$this->session = Session::instance();
+		$this->config = Kohana::config('alpaca');
+		$this->head = Head::instance();
+
+		// I18n
+		$this->_i18n($this->config);
+		
+		// Title
+		$this->head->title->set($this->config->title);
+		$this->head->title->append($this->config->desc);
+		// Css
+		$this->head->css->append_file('media/css/screen.css', '0.9', 'all');
+		$this->head->css->append_file('media/css/layout.css', 'date');
+		// Javascript
+		$this->head->javascript->append_file('media/js/jquery-1.4.2.min.js');
+		$this->head->javascript->append_file('media/js/jquery/ittabs.js');
+		$this->head->javascript->append_file('media/js/alpaca.js', '0.1');
+		$this->head->javascript->append_file('media/js/common.js');
+		$this->head->javascript->append_script('var BASH_URL = "'.URL::base(FALSE).'";');
+		// Links
+		$this->head->link->append('favicon.ico', '', 'icon', 'image/x-icon');
+		// Check remember me 
+		$this->auth->auto_login();
+
+		if ($auth_user = $this->auth->get_user())
+		{
+			$user_nav = array(
+				'user'     => array(
+					'link'      => Alpaca_User::url('user', $auth_user),
+					'title'     => $auth_user->nickname,
+				),
+				'settings' => array(
+					'link'      => 'settings',
+					'title'     => __('Settings'),
+				),
+				'logout' => array(
+					'title' => __('Log out'),
+				),
+			);
+		}
+		else
+		{
+			$user_nav = array(
+				'register'      => array(
+					'link'      => Route::get('auth/actions', array('actions' => 'register')),
+					'title'     => __('Sign up'),
+					'attr'      => array(
+						'style'     => 'color: #7F2D20'
+					)
+				),
+				'login' => array(
+					'link'      => Route::get('auth/actions', array('action' => 'login')),
+					'title'     => __('Log in'),
+				),
+				'logout' => array(
+					'title' => __('Log out'),
+				),
+			);
+		}
+
+		$logo = HTML::anchor(URL::base(), HTML::image($this->config->logo), array('alt' => $this->config->title));
+		$copyrights = Alpaca::copyright(Kohana::config('alpaca.copyright_year'));
+		$powered_by = HTML::anchor($this->config->project['url'], $this->config->project['name']);
+		if ($this->config->debug)
+		{
+			$debug = View::factory('profiler/stats');
+		}
+
+		// Set global varibales in View
+		Twig::bind_global('config', $this->config);
+		Twig::bind_global('auth', $this->auth);
+
+		// Base Template
+		$this->template = Twig::factory($this->template)
+			->set('header', $this->head)
+			->set('logo', $logo)
+			->set('user_nav', $user_nav)
+			->set('menu', $this->general_menu())
+			->set('copyrights', $copyrights)
+			->set('powered_by', $powered_by)
+			->bind('debug', $debug);
+	}
+
+	protected function _i18n($config)
 	{
 		if (isset($_GET['lang']))
 		{
@@ -36,77 +123,7 @@ class Controller_Template_Alpaca extends Controller_Template {
 		}
 
 		// Set the translation language
-		I18n::$lang = Cookie::get('alpaca_language', Kohana::config('alpaca')->language);
-		
-		// Instance classes
-		$this->auth = Auth::instance();
-		$this->session = Session::instance();
-		$this->config = Kohana::config('alpaca');
-		$this->header = Head::instance();
-		// Title
-		$this->header->title->set($this->config->title);
-		$this->header->title->append($this->config->desc);
-		// Css
-		$this->header->css->append_file('media/css/screen.css', '0.9', 'all');
-		$this->header->css->append_file('media/css/layout.css', 'date');
-		// Javascript
-		$this->header->javascript->append_file('media/js/jquery-1.4.2.min.js');
-		$this->header->javascript->append_file('media/js/jquery/ittabs.js');
-		$this->header->javascript->append_file('media/js/alpaca.js', '0.1');
-		$this->header->javascript->append_file('media/js/common.js');
-		$this->header->javascript->append_script('var BASH_URL = "'.URL::base(FALSE).'";');
-		// Links
-		$this->header->link->append('favicon.ico', '', 'icon', 'image/x-icon');
-		// Menu
-		$menu = $this->general_menu();
-		// Check remember me 
-		$this->auth->auto_login();
-
-		if ($auth_user = $this->auth->get_user())
-		{
-			$user_link = Alpaca_User::url('user', $auth_user);
-			$auth_links = array
-			(
-				$user_link => array(
-					'title' => $auth_user->nickname,
-					'attr' => array('class' => 'user')
-				),
-				'settings' => array(
-					'title' => __('Settings')
-				),
-				'logout' => array(
-					'title' => __('Log out')
-				),
-			);
-		}
-		else
-		{
-			$auth_links = array
-			(
-				'register' => array(
-					'title' => __('Sign up'),
-					'attr' => array('style' => 'color: #7F2D20')
-				),
-				'login' => array(
-					'title' => __('Log in')
-				),
-			);
-		}
-
-		// Set global varibales in View
-		View::bind_global('config', $this->config);
-		View::bind_global('auth', $this->auth);
-
-		// Base Template
-		$this->template = View::factory($this->template)
-			->set('menu', $menu)
-			->set('auth_links', $auth_links)
-			->bind('header_body', $header_body)
-			->bind('footer_body', $footer_body);
-		
-		$header_body = View::factory('header')
-			->bind('header', $this->header);
-		$footer_body = View::factory('footer');
+		I18n::$lang = Cookie::get('alpaca_language', $config->language);
 	}
 
 	/**
@@ -122,8 +139,8 @@ class Controller_Template_Alpaca extends Controller_Template {
 			->find_all();
 		
 		// dropdown style layout
-		$this->header->css->append_file('media/css/dropdown/dropdown.css');
-		$this->header->css->append_file('media/css/dropdown/themes/flickr.com/default.ultimate.css');
+		$this->head->css->append_file('media/css/dropdown/dropdown.css');
+		$this->head->css->append_file('media/css/dropdown/themes/flickr.com/default.ultimate.css');
 		
 		$menu = Menu::factory()
 			->add(URL::base(), __('Home'));

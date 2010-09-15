@@ -148,8 +148,8 @@ class Controller_Auth extends Controller_Template_Alpaca {
 			}
 		}
 		
-		$this->header->title->set($title);
-		$this->header->javascript->append_script('alpaca.anti_spam("random", "nospam");');
+		$this->head->title->set($title);
+		$this->head->javascript->append_script('alpaca.anti_spam("random", "nospam");');
 	}
 	
 	/**
@@ -158,7 +158,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 	public function action_login()
 	{
 		$title = __('Log in').Alpaca::beautify_str($this->config->title, TRUE);
-		$this->header->title->set($title);
+		$this->head->title->set($title);
 		$this->template->content = View::factory('auth/login')
 			->bind('redir', $redirect)
 			->bind('title', $title)
@@ -216,7 +216,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 		$this->auth->logout();
 		
 		$title = __('Welcome back!');
-		$this->header->title->set($title);
+		$this->head->title->set($title);
 		$this->template->content = View::factory('auth/logout')
 			->bind('title', $title);
 	}
@@ -232,7 +232,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 			->bind('errors', $errors);
 			
 		$title = __('Reset Password');
-		$this->header->title->set($title);
+		$this->head->title->set($title);
 		if ($_POST)
 		{
 			$user = ORM::factory('user');
@@ -342,7 +342,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 				HTML::anchor(URL::site('login'), __('Try to login'), array('class' => 'button'));
 		}
 
-		$this->header->title->set($title);
+		$this->head->title->set($title);
 	}
 	
 	/**
@@ -354,7 +354,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 	public function action_verity($code = NULL)
 	{
 		$title = __('Account Verity');
-		$this->header->title->set($title);
+		$this->head->title->set($title);
 		$content = __('Congratulations! Your account passed the verification.').'<br /><br />'.
 			HTML::anchor(URL::site('login'), __('Continue Login'), array('class' => 'button'));
 		

@@ -25,7 +25,7 @@ class Controller_Forum extends Controller_Template_Alpaca {
 	 */
 	public function action_index($type = NULL)
 	{
-		$this->header->link->append(URL::site('feed'), __('RSS 2.0'));
+		$this->head->link->append(URL::site('feed'), __('RSS 2.0'));
 
 		$topics = ORM::factory('topic');
 		// Content
@@ -111,15 +111,15 @@ class Controller_Forum extends Controller_Template_Alpaca {
 			$broadcast = '<div id="broadcast">'.$this->config->broadcast.'</div>';
 		}
 
-		$this->template->content = View::factory('topic/list')
+		$this->template->content = Twig::factory('topic/list')
 			->bind('head', $head)
 			->bind('topic_sort', $topic_sort)
 			->bind('topics', $topics_array);
 
 		// Sidebar
 		$this->template->sidebar = $broadcast.
-			View::factory('sidebar/about').
-			View::factory('sidebar/members');
+			Twig::factory('sidebar/about').
+			Twig::factory('sidebar/members');
 	}
 	
 	/**

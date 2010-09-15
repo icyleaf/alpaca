@@ -23,7 +23,7 @@ class Controller_Errors extends Controller_Template_Alpaca {
 		$code = 404;
 		$title = __('No Found the page');
 		$this->request->status = $code;
-		$this->header->title->prepend($title);
+		$this->head->title->prepend($title);
 		$this->template->content = View::factory('errors/404')
 			->set('title', $title)
 			->bind('code', $code);

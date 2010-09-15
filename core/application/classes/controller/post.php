@@ -15,8 +15,8 @@ class Controller_Post extends Controller_Template_Alpaca {
 		Alpaca::logged_in();
 		
 		// add auto resize to textarea
-		$this->header->javascript->append_file('media/js/jquery/autoresize.js', '1.04');
-		$this->header->title->set($this->config->title);
+		$this->head->javascript->append_file('media/js/jquery/autoresize.js', '1.04');
+		$this->head->title->set($this->config->title);
 	}
 	
 	/**
@@ -110,7 +110,7 @@ class Controller_Post extends Controller_Template_Alpaca {
 			$content = __('Not found this reply!');
 		}
 		
-		$this->header->title->prepend($title);
+		$this->head->title->prepend($title);
 	}
 	
 	/**
@@ -152,7 +152,7 @@ class Controller_Post extends Controller_Template_Alpaca {
 			$content = __('Not found this reply!');
 		}
 		
-		$this->header->title->prepend($title);
+		$this->head->title->prepend($title);
 	}
 	
 }

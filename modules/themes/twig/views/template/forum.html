@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8" lang="utf-8">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{{header}}
+</head>
+<body>
+<div id="wrap">
+	<div id="header">
+		<div class="block">
+			{% for item in user_nav %}
+			{% html.anchor item.link, item.title, item.attr %}
+			{% endfor %}
+
+			<!--<?php $auth_menu = array();-->
+			<!--foreach ($auth_links as $link => $item)-->
+			<!--{-->
+				<!--$attr = isset($item['attr'])?$item['attr']:array();-->
+				<!--if (empty($link))-->
+				<!--{-->
+					<!--$auth_menu[] = $item['title'];-->
+				<!--}-->
+				<!--elseif (preg_match('/^<(\w+)>$/i', $link, $match))-->
+				<!--{-->
+					<!--$auth_menu[] = '<'.$match[1].HTML::attributes($attr).'>'.-->
+						<!--$item['title'].'</'.$match[1].'>';-->
+				<!--}-->
+				<!--else-->
+				<!--{-->
+					<!--$auth_menu[] = HTML::anchor($link, $item['title'], $attr);-->
+				<!--}-->
+			<!--} ?>-->
+			<div class="auth">{{auth_menu}}</div>
+			<div class="search">
+			<form action="/search">
+				<input type="text" name="q" id="header_search_query" value="{{'Search Topic'|translate}}"/><input type="submit" value="{{'Go'|translate}}" />
+			</form>
+			</div>
+		</div>
+
+		<div class="logo">{{logo|safe}}</div><!-- /logo -->
+		<div class="clear"></div>
+
+		<div id="cpanel">
+			{{menu|safe}}
+			<div class="clear"></div>
+		</div><!-- /cpanel -->
+	</div><!-- /header -->
+
+	<div id="container">
+		<!--[if lt IE 7]>
+		<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;margin-bottom: 20px;'>
+		<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/></a></div>
+		<div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+		  <div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
+		  <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+			<div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>
+			<div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>
+		  </div>
+		  <div style='width: 75px; float: left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/></a></div>
+		  <div style='width: 75px; float: left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/></a></div>
+		  <div style='width: 73px; float: left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/></a></div>
+		  <div style='float: left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/></a></div>
+		</div>
+		</div>
+		<![endif]-->
+
+		{% if sidebar %}
+		<?php if (isset($sidebar)): ?>
+	 	<div id="sidebar">{{sidebar}}</div><!-- /sidebar -->
+		<div id="content" class="right_column">
+		{% else %}
+		<div id="content">
+		{% endif %}
+			{% if sidebar %}
+			{{content}}
+			{% endif %}
+		</div><!-- /content -->
+
+		<div class="clear"></div>
+	</div><!-- /container -->
+
+	<div id="footer">
+		<div class="left">
+			{{copyrights|safe}}
+		</div>
+		<div id="right">
+			{% if config.execution_time %}
+			{{'Rendered in {execution_time}'|translate}}.
+			{% endif %}
+			{{'Powered by %s'|format(powered_by)|translate}}
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+{% if debug %}
+<div id="kohana-profiler">{{debuge|safe}}</div>
+{% endif %}
+
+{% if config.ga_account_id %}
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("{{config.ga_account_id}}");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+{% endif %}
+</body>
+</html>
