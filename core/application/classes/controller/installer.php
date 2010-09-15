@@ -9,6 +9,15 @@
  */
 class Controller_Installer extends Controller {
 
+	public function action_test()
+	{
+		$email = 'icyleaf.cn@gmail.com';
+
+		$gravatar = Gravatar::instance($email);
+		echo Kohana::debug($gravatar);
+		echo $gravatar->render();
+	}
+
 	/**
 	 * Installer Entry
 	 */

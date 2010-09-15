@@ -66,7 +66,6 @@ class Alpaca_User {
 		}
 		
 		$image = Gravatar::instance($user->email, $gravatar_config);
-		
 		if (is_array($attr))
 		{
 			$image = HTML::image($image, $attr);

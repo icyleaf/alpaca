@@ -10,12 +10,12 @@
 [submodule "core/modules/pagination"]
 	path = core/modules/pagination
 	url = http://github.com/kohana/pagination.git
-[submodule "core/modules/auth"]
-	path = core/modules/auth
-	url = http://github.com/icyleaf/auth.git
 [submodule "core/modules/twig"]
 	path = core/modules/twig
 	url = http://github.com/jonathangeiger/kohana-twig.git
 [submodule "core/modules/gravatar"]
 	path = core/modules/gravatar
 	url = http://github.com/icyleaf/gravatar.git
+[submodule "core/modules/auth"]
+	path = core/modules/auth
+	url = http://github.com/icyleaf/auth.git

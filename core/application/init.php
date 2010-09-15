@@ -97,14 +97,10 @@ Route::set('group', 'group/<id>', array(
 	));
 
 // the default entry
-Route::set('forum', '(/<controller>(/<action>(/<id>)))', array(
-		'controller'=> '\w+',
-		'action'	=> '\w+',
-		'id'		=> '\d+',
-	))
+Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'controller'=> 'forum',
-		'action'    => 'index',
+		'controller' => 'forum',
+		'action'     => 'index',
 	));
 
 // the media files

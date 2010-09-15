@@ -75,29 +75,20 @@ Kohana::$config->attach(new Kohana_Config_File);
  * Enable Kohana modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	// Alpaca Core Module
-	'alpaca'		=> ALPPATH.'alpaca',		// Alpaca Forum System
-	
-	// Kohana Modules
 	'auth'			=> MODPATH.'auth', 			// Basic authentication
 	'database'		=> MODPATH.'database',		// Database access
-	'image'			=> MODPATH.'image',			// Image manipulation
-	'gravatar'		=> MODPATH.'gravatar',	 	// Gravatar
 	'orm'			=> MODPATH.'orm',	 		// KO3 Object Relationship Mapping
 	'pagination'	=> MODPATH.'pagination',	// Paging of results
-	'imailer'		=> MODPATH.'imailer',		// PHPMailer
-	'dbmanager'		=> MODPATH.'dbmanager',		// Database manager
+	'image'			=> MODPATH.'image',			// Image manipulation
+	'gravatar'		=> MODPATH.'gravatar',	 	// Gravatar
+//	'twig'			=> MODPATH.'twig',			// Twig Tempalte Engine
 	));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-Route::set('default', '(<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'controller' => 'home',
-		'action'     => 'index',
-	));
+require_once APPPATH.'init.php';
 
 /**
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].

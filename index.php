@@ -5,6 +5,11 @@
 $alpaca = 'modules';
 
 /**
+ * The directory in which the core directory files are located.
+ */
+$core = 'core';
+
+/**
  * The directory in which your application specific resources are located.
  * The application directory must contain the config/kohana.php file.
  *
@@ -25,7 +30,7 @@ $modules = 'core/modules';
  *
  * @see  http://docs.kohanaphp.com/install#system
  */
-$system = 'kohana/system';
+$system = 'core/system';
 
 /**
  * The default extension of resource files. If you change this, all resources
@@ -60,7 +65,11 @@ define('DOCROOT', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
 // Make the alpaca relative to the docroot
 if ( ! is_dir($alpaca) AND is_dir(DOCROOT.$alpaca))
 	$alpaca = DOCROOT.$alpaca;
-	
+
+// Make the core relative to the docroot
+if ( ! is_dir($core) AND is_dir(DOCROOT.$core))
+	$core = DOCROOT.$core;
+
 // Make the application relative to the docroot
 if ( ! is_dir($application) AND is_dir(DOCROOT.$application))
 	$application = DOCROOT.$application;
@@ -75,12 +84,13 @@ if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
 
 // Define the absolute paths for configured directories
 define('ALPPATH', realpath($alpaca).DIRECTORY_SEPARATOR);
+define('COREPATH', realpath($core).DIRECTORY_SEPARATOR);
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
 
 // Clean up the configuration vars
-unset($alpaca, $application, $modules, $system);
+unset($alpaca, $core, $application, $modules, $system);
 
 if (file_exists('install'.EXT))
 {
@@ -106,4 +116,4 @@ else
 }
 
 // Bootstrap the application
-require APPPATH.'bootstrap'.EXT;
+require COREPATH.'bootstrap'.EXT;
