@@ -8,28 +8,11 @@
 <div id="wrap">
 	<div id="header">
 		<div class="block">
-			{% for item in user_nav %}
+			<div class="user_nav">
+			{% for id,item in user_nav %}
 			{% html.anchor item.link, item.title, item.attr %}
 			{% endfor %}
-
-			<!--<?php $auth_menu = array();-->
-			<!--foreach ($auth_links as $link => $item)-->
-			<!--{-->
-				<!--$attr = isset($item['attr'])?$item['attr']:array();-->
-				<!--if (empty($link))-->
-				<!--{-->
-					<!--$auth_menu[] = $item['title'];-->
-				<!--}-->
-				<!--elseif (preg_match('/^<(\w+)>$/i', $link, $match))-->
-				<!--{-->
-					<!--$auth_menu[] = '<'.$match[1].HTML::attributes($attr).'>'.-->
-						<!--$item['title'].'</'.$match[1].'>';-->
-				<!--}-->
-				<!--else-->
-				<!--{-->
-					<!--$auth_menu[] = HTML::anchor($link, $item['title'], $attr);-->
-				<!--}-->
-			<!--} ?>-->
+			</div>
 			<div class="auth">{{auth_menu}}</div>
 			<div class="search">
 			<form action="/search">
@@ -72,9 +55,7 @@
 		{% else %}
 		<div id="content">
 		{% endif %}
-			{% if sidebar %}
 			{{content}}
-			{% endif %}
 		</div><!-- /content -->
 
 		<div class="clear"></div>

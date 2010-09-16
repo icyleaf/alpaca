@@ -72,14 +72,14 @@ class Controller_Forum extends Controller_Template_Alpaca {
 				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
 				$topics_array[$i] = array(
 					'id'			=> $topic->id,
-					'title'		=> $topic->title,
+					'title'			=> $topic->title,
 					'link'			=> Alpaca_Topic::url($topic, $group),
 					'author'		=> $author_array,
-					'group'		=> $group_array,
+					'group'			=> $group_array,
 					'collections'	=> $topic->collections,
 					'comments'		=> $topic->count,
 					'hits'			=> $topic->hits,
-					'collected'	=> $collected,
+					'collected'		=> $collected,
 					'content'		=> Alpaca::format_html($topic->content),
 					'created'		=> date($this->config->date_format, $topic->created),
 					'time_ago'		=> Alpaca::time_ago($topic->created),

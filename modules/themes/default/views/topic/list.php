@@ -26,45 +26,6 @@
 				<?php if ( ! isset($hide_group)): ?>
 				<?php echo HTML::anchor($topic->group->link, $topic->group->name, array('class' => 'groups')); ?>
 				<?php endif; ?>
-				<div class="collection_action">
-					<?php
-					$tips_1 = __(':number people collected this!', array(':number' => $topic->collections));
-					$tips_2 = __('view who collected this!');
-					$colletion_url = Route::url('topic/collectors', array('id' => $topic->id));
-					$style = 'empty_star';
-					$collection = 'false';
-					if ($user = $auth->get_user())
-					{
-						if ($topic->collected)
-						{
-							$style = 'star';
-						}
-						else
-						{
-							$collection = 'true';
-							$colletion_url = URL::site('collection/topic/'.$topic->id);
-							$tips_2 = __('Click :image to add your collection! ', array(
-								':image' => HTML::image('media/images/mini_star.png', array('alt'=>'*'))
-								));
-						}
-					}
-					?>
-					<div class="collection_tips hidden">
-						<strong><?php echo $tips_1; ?></strong>
-						<?php echo $tips_2; ?>
-					</div>
-					<?php echo HTML::anchor(
-							$colletion_url,
-							HTML::image('media/images/sprite_screen.png', array(
-								'class' => $style,
-								'alt'=>'*'
-								)), array(
-								'id'    => $topic->id,
-								'class' => 'collection_link',
-								'rel'   => $collection
-								)
-							); ?>
-				</div>
 			</div>
 		</div>
 

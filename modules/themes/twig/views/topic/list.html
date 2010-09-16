@@ -1,0 +1,66 @@
+{% if head %}
+<h3 id="topic-title" class="{{head.class}}">
+	{% if topic_sort %}
+	<ul class="right">
+	{% for id in topic_sort %}
+		<li>{# html.anchor id.key id #}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	<div class="left">{{head.title}}</div>
+	<div class="clear"></div>
+</h3>
+{% endif %}
+
+{% if topics|length > 0 %}
+<ul id="topic-list" class="list">
+{% for topic in topics %}
+	<li class="clearfix topic_{{topic.id}}">
+		{{topic.author.avatar|safe}}
+		<div class="collection">
+			<div class="collection_inset">
+				{% if hide_group == false %}
+				<a href="{{topic.group.link}}">{{topic.group.name}}</a>
+				{% endif %}
+				<div class="collection_action">
+					<a href="1111" class="collection_link">{% html.image 'media/images/sprite_screen.png' %}</a>
+				</div>
+			</div>
+		</div>
+		<div class="topic_details">
+			<a href="{{topic.link}}" class="subject">{{topic.title}}</a>
+			<div class="meta">
+				<a href="{{topic.author.link}}" class="author">{{topic.author.nickname}}</a>
+				<span class="divider">•</span>
+				{% if topic.comments > 1 %}
+				{{'%s replies'|translate|format(topic.comments)}}
+				{% else %}
+				{{'%s reply'|translate|format(topic.comments)}}
+				{% endif %}
+				<span class="divider">•</span>
+				{% if topic.hits > 1 %}
+				{{'%s hits'|translate|format(topic.comments)}}
+				{% else %}
+				{{'%s hit'|translate|format(topic.comments)}}
+				{% endif %}
+				<span class="divider">•</span>
+				{% if topic.collections > 1 %}
+				{{'%s collections'|translate|format(topic.comments)}}
+				{% else %}
+				{{'%s collection'|translate|format(topic.comments)}}
+				{% endif %}
+				<span class="divider">•</span>
+				{{topic.updated}}
+			</div>
+		</div>
+	</li>
+{% endfor %}
+</ul>
+{% elseif group %}
+	{{'Nothing here, :post.'}}
+	<!--':post' => HTML::anchor(Route::url('topic/add', array('id' => $group->id)), __('post a new topic'))-->
+{% else %}
+<ul class="list">{{'Nothing here'|translate}}</ul>
+{% endif %}
+
+{{pagination.render}}

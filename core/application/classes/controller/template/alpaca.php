@@ -26,7 +26,6 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 
 		// I18n
 		$this->_i18n($this->config);
-		
 		// Title
 		$this->head->title->set($this->config->title);
 		$this->head->title->append($this->config->desc);
@@ -56,7 +55,8 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 					'title'     => __('Settings'),
 				),
 				'logout' => array(
-					'title' => __('Log out'),
+					'link'      => Route::url('auth/actions', array('action' => 'logout')),
+					'title'     => __('Log out'),
 				),
 			);
 		}
@@ -64,18 +64,15 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 		{
 			$user_nav = array(
 				'register'      => array(
-					'link'      => Route::get('auth/actions', array('actions' => 'register')),
+					'link'      => Route::url('auth/actions', array('actions' => 'register')),
 					'title'     => __('Sign up'),
 					'attr'      => array(
 						'style'     => 'color: #7F2D20'
 					)
 				),
 				'login' => array(
-					'link'      => Route::get('auth/actions', array('action' => 'login')),
+					'link'      => Route::url('auth/actions', array('action' => 'login')),
 					'title'     => __('Log in'),
-				),
-				'logout' => array(
-					'title' => __('Log out'),
 				),
 			);
 		}
@@ -103,19 +100,17 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 			->bind('debug', $debug);
 	}
 
-	protected function _i18n($config)
+	protected function _i18n($config, $expire = Date::YEAR)
 	{
-		if (isset($_GET['lang']))
+		if ($lang = Arr::get($_GET, 'lang'))
 		{
-			$lang = $_GET['lang'];
-
 			// Load the accepted language list
 			$translations = array_keys(Kohana::message('alpaca', 'translations'));
 
 			if (in_array($lang, $translations))
 			{
 				// Set the language cookie
-				Cookie::set('alpaca_language', $lang, Date::YEAR);
+				Cookie::set('alpaca_language', $lang, $expire);
 			}
 
 			// Reload the page

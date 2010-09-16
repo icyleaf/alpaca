@@ -37,12 +37,12 @@ return array
 	/**
 	 * Topic
 	 */
-	':number reply'			=> ':number 回复',
-	':number replies'			=> ':number 回复',
-	':number hit'				=> ':number 点击',
-	':number hits'			=> ':number 点击',
-	':number collection'		=> ':number 收藏',
-	':number collections'	=> ':number 收藏',
+	'%s reply'				=> '%s 回复',
+	'%s replies'			=> '%s 回复',
+	'%s hit'				=> '%s 点击',
+	'%s hits'				=> '%s 点击',
+	'%s collection'			=> '%s 收藏',
+	'%s collections'		=> '%s 收藏',
 	'Title'					=> '标题',
 	'Post it'					=> '发布',
 	'Undo'						=> '撤销',
@@ -70,6 +70,7 @@ return array
 	'Post new reply after log in' => '在回复之前你需要先进行登录',
 	'Enable Sogou Cloud IME'=> '启用搜狗云输入法',
 	':number people collected this!' => ':number 位用户收藏了此话题',
+	'%s people collected this!' => '%s 位用户收藏了此话题',
 	'Click :image to add your collection! ' => '点击 :image 加为收藏',
 	'you already collected this!' => '您已经收藏了此话题',
 	'view who collected this!' => '谁收藏了此话题',
