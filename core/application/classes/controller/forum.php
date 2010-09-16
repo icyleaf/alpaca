@@ -46,57 +46,15 @@ class Controller_Forum extends Controller_Template_Alpaca {
 				break;
 		}
 
-		$topics = $topics->get_topics($type, $this->config->topic['per_page']);
-		$topics_array = array();
-		if ($topics->count() > 0)
-		{
-			foreach ($topics as $i => $topic)
-			{
-				$author = $topic->author;
-				$author_array = array(
-					'id'		=> $author->id,
-					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
-					'nickname'	=> $author->nickname,
-					'link'		=> Alpaca_User::url('user', $author)
-				);
-				$author_array = (object) $author_array;
+		$topics_array = $topics->get_topics($type, $this->config->topic['per_page']);
+		$topics_array = $topics->format_topic_array($topics_array);
 
-				$group = $topic->group;
-				$group_array = array(
-					'id'		=> $group->id,
-					'name'		=> $group->name,
-					'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
-				);
-				$group_array = (object) $group_array;
-
-				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
-				$topics_array[$i] = array(
-					'id'			=> $topic->id,
-					'title'			=> $topic->title,
-					'link'			=> Alpaca_Topic::url($topic, $group),
-					'author'		=> $author_array,
-					'group'			=> $group_array,
-					'collections'	=> $topic->collections,
-					'comments'		=> $topic->count,
-					'hits'			=> $topic->hits,
-					'collected'		=> $collected,
-					'content'		=> Alpaca::format_html($topic->content),
-					'created'		=> date($this->config->date_format, $topic->created),
-					'time_ago'		=> Alpaca::time_ago($topic->created),
-					'updated'		=> Alpaca::time_ago($topic->updated),
-				);
-
-				$topics_array[$i] = (object) $topics_array[$i];
-			}
-		}
-
-		$head = array(
+		$topic_header = array(
 			'title' => $title,
 			'class' => $type,
 		);
 
 		// hide 'touched' anchor on index page
-		$topic_sort = array();
 		if ( ! in_array($this->request->uri , array('', '/', 'latest')))
 		{
 			$topic_sort['new'] = __('Latest');
@@ -104,22 +62,42 @@ class Controller_Forum extends Controller_Template_Alpaca {
 		$topic_sort['hot'] = __('Top hits');
 		$topic_sort['top'] = __('Top collections');
 
-		// broadcast
-		$broadcast = NULL;
-		if ( ! empty($this->config->broadcast))
-		{
-			$broadcast = '<div id="broadcast">'.$this->config->broadcast.'</div>';
-		}
-
 		$this->template->content = Twig::factory('topic/list')
-			->bind('head', $head)
+			->bind('topic_header', $topic_header)
 			->bind('topic_sort', $topic_sort)
 			->bind('topics', $topics_array);
 
+		// broadcast
+		$broadcast_content = $this->config->broadcast;
+		$broadcast = Twig::factory('sidebar/broadcast')
+			->bind('broadcast', $broadcast_content);
+
+		// about
+		$about_content = $this->config->about;
+		$about = Twig::factory('sidebar/about')
+			->set('stats', $this->_generate_stats())
+			->bind('about', $about_content);
+
+		// members
+		$members = Twig::factory('sidebar/members')
+			->set('random_members', Alpaca_User::random())
+			->set('new_members', Alpaca_User::new_members());
+
 		// Sidebar
-		$this->template->sidebar = $broadcast.
-			Twig::factory('sidebar/about').
-			Twig::factory('sidebar/members');
+		$this->template->sidebar = $broadcast.$about.$members;
+	}
+
+	protected function _generate_stats()
+	{
+		$topics_cout = ORM::factory('topic')->find_all()->count();
+		$users_cout = ORM::factory('user')->find_all()->count();
+		$groups_cout = ORM::factory('group')->where('level', '=', 1)->find_all()->count();
+
+		return array(
+			'topics'   => $topics_cout,
+			'users'    => $users_cout,
+			'groups'   => $groups_cout,
+		);
 	}
 	
 	/**

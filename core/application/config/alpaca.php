@@ -55,6 +55,9 @@ $config = array
 	// temp broadcast 
 	'broadcast'		=> NULL,
 
+	// About in sidebar
+	'about'			=> 'Kohana 中文是对纯 PHP5 框架 Kohana 的中文推广而建立的交流平台。它是一款基于MVC 模式开发，完全社区驱动，具有高安全性，轻量级代码，迅捷开发，轻松上手的特性！',
+
 	// Google Analytics
 	'ga_account_id'	=> '',
 	

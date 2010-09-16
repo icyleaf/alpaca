@@ -50,12 +50,12 @@
 
 		{% if sidebar %}
 		<?php if (isset($sidebar)): ?>
-	 	<div id="sidebar">{{sidebar}}</div><!-- /sidebar -->
+	 	<div id="sidebar">{{sidebar|safe}}</div><!-- /sidebar -->
 		<div id="content" class="right_column">
 		{% else %}
 		<div id="content">
 		{% endif %}
-			{{content}}
+			{{content|safe}}
 		</div><!-- /content -->
 
 		<div class="clear"></div>

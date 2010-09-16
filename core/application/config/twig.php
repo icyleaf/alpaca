@@ -23,7 +23,7 @@ return array
 			'trim_blocks'         => FALSE,
 			'charset'             => 'utf-8',
 			'base_template_class' => 'Twig_Template',
-			'cache'               => ALPPATH.'cache/twig',
+			'cache'               => DOCROOT.'cache/twig',
 			'auto_reload'         => TRUE,
 			/**
 			 * Allow customization of the Twig Syntax.

@@ -1,13 +1,13 @@
-{% if head %}
-<h3 id="topic-title" class="{{head.class}}">
+{% if topic_header %}
+<h3 id="topic-title" class="{{topic_header.class}}">
 	{% if topic_sort %}
 	<ul class="right">
-	{% for id in topic_sort %}
-		<li>{# html.anchor id.key id #}</li>
+	{% for key,value in topic_sort %}
+		<li>{% html.anchor key, value %}</li>
 	{% endfor %}
 	</ul>
 	{% endif %}
-	<div class="left">{{head.title}}</div>
+	<div class="left">{{topic_header.title}}</div>
 	<div class="clear"></div>
 </h3>
 {% endif %}
@@ -20,17 +20,14 @@
 		<div class="collection">
 			<div class="collection_inset">
 				{% if hide_group == false %}
-				<a href="{{topic.group.link}}">{{topic.group.name}}</a>
+				{% html.anchor topic.group.link, topic.group.name %}
 				{% endif %}
-				<div class="collection_action">
-					<a href="1111" class="collection_link">{% html.image 'media/images/sprite_screen.png' %}</a>
-				</div>
 			</div>
 		</div>
 		<div class="topic_details">
-			<a href="{{topic.link}}" class="subject">{{topic.title}}</a>
+			{% html.anchor topic.link, topic.title, ['class':'subject'] %}
 			<div class="meta">
-				<a href="{{topic.author.link}}" class="author">{{topic.author.nickname}}</a>
+				{% html.anchor topic.author.link, topic.author.nickname, ['class':'author'] %}
 				<span class="divider">•</span>
 				{% if topic.comments > 1 %}
 				{{'%s replies'|translate|format(topic.comments)}}

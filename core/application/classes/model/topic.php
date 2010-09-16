@@ -58,6 +58,60 @@ class Model_Topic extends ORM {
 		return $this->find_all();
 	}
 
+	/**
+	 * Convert model to array for template
+	 *
+	 * @param  $topics
+	 * @return array
+	 */
+	public function format_topic_array($topics)
+	{
+		$topics_array = array();
+		if ($topics->count() > 0)
+		{
+			foreach ($topics as $i => $topic)
+			{
+				$author = $topic->author;
+				$author_array = array(
+					'id'		=> $author->id,
+					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
+					'nickname'	=> $author->nickname,
+					'link'		=> Alpaca_User::url('user', $author)
+				);
+				$author_array = (object) $author_array;
+
+				$group = $topic->group;
+				$group_array = array(
+					'id'		=> $group->id,
+					'name'		=> $group->name,
+					'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
+				);
+				$group_array = (object) $group_array;
+
+				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
+				$topics_array[$i] = array(
+					'id'			=> $topic->id,
+					'title'			=> $topic->title,
+					'link'			=> Alpaca_Topic::url($topic, $group),
+					'author'		=> $author_array,
+					'group'			=> $group_array,
+					'collections'	=> $topic->collections,
+					'comments'		=> $topic->count,
+					'hits'			=> $topic->hits,
+					'collected'		=> $collected,
+					'content'		=> Alpaca::format_html($topic->content),
+					'created'		=> date(Kohana::config('alpaca')->date_format, $topic->created),
+					'time_ago'		=> Alpaca::time_ago($topic->created),
+					'updated'		=> Alpaca::time_ago($topic->updated),
+				);
+
+				$topics_array[$i] = (object) $topics_array[$i];
+			}
+		}
+
+		return $topics_array;
+	}
+
 	public function get_topics_by_user($limit = NULL, $cache = 120)
 	{
 		return $this->limit($limit)

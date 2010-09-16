@@ -10,4 +10,4 @@
 			<?php echo Alpaca_User::new_members(); ?>
 		</div>
 	</div>
-</div>
+</div>a
