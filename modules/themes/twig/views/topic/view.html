@@ -11,7 +11,9 @@
 
 <div class="topic" id="topic-{{topic.id}}">
 	<h2>
-		<a href="javascript:void(0)">{% html.image 'media/images/star_empty.png' %}</a>
+		<a href="{{collect_topic_url}}">
+			{% html.image 'media/images/star_empty.png' %}
+		</a>
 		{{topic.title}}
 	</h2>
 

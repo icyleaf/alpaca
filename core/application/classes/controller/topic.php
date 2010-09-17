@@ -88,6 +88,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 
 			$group_link = Route::url('group', array('id' => $topic->group));
 			$collection_link = Route::url('topic/collectors', array('id' => $topic->id));
+			$collect_topic_url = URl::site('collection/topic/'.$topic->id);
 			$redirect = $this->request->uri;
 
 			$topic_posts = Twig::factory('post/list')
@@ -104,6 +105,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 			$this->template->content = Twig::factory('topic/view')
 				->bind('topic', $topic_details)
 				->bind('topic_actions', $topic_actions)
+				->set('collect_topic_url', $collect_topic_url)
 				->bind('post_count', $all_post_count)
 				->bind('topic_posts', $topic_posts)
 				->bind('write_post', $write_post);

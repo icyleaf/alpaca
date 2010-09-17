@@ -50,21 +50,15 @@ class Controller_Collection extends Controller_Template_Alpaca {
 			
 			$result = 'FALSE';
 			$user = $this->auth->get_user();
-				
+
+			$topic = ORM::factory('topic', $topic_id);
 			$collection = ORM::factory('collection');
 			if ( ! $collection->is_collected($topic_id, $user->id))
 			{
 				$this->_saved($collection, $user->id, $topic_id);
+			}
 
-				$result = '创建成功！';
-				$this->request->redirect(Alpaca_Topic::url($topic));
-			}
-			else
-			{
-				$result = '已经创建';
-			}
-			
-			$this->request->response = $result;
+			$this->request->redirect(Alpaca_Topic::url($topic));
 		}
 	}
 
