@@ -1,0 +1,31 @@
+<div id="authform">
+	<h2>
+		{{title}}
+		<small>{% html.anchor 'login', '(%s)'|format('Log in'|translate) %}</small>
+	</h2>
+	<form method="post">
+	<div id="authform-body">
+		<p>
+			<label>{{'Your Email'|translate}}:</label><br />
+			<input id="email" name="email" type="text" tabindex="10" value="{{email}}" />
+			<br /><span class="error">{{errors.email}}</span>
+		</p>
+		<p>
+			<label>{{'New Password'|translate}}:</label><br />
+			<input id="password" name="password" type="password" tabindex="20" />
+			<br /><span class="error">{{errors.password}}</span>
+		</p>
+		<p>
+			<label>{{'Pick a nickname'|translate}}:</label><br />
+			<input id="nickname" name="nickname" type="text" tabindex="40" value="{{nickname}}" />
+			<br /><span class="error">{{errors.nickname}}</span>
+		</p>
+		<p class="submit">
+			<input id="random" name="random" type="hidden" value="{{random}}" />
+			<input id="nospam" name="nospam" type="hidden" value="0" />
+			<input class="button" id="submit" type="submit" tabindex="100" value="{{'Quick Register'|translate}}" />
+		</p>
+		<div class="clear"></div>
+	</div>
+	</form>
+</div>

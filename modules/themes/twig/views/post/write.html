@@ -1,6 +1,6 @@
 <div class="comments" id="reply">
 	<h3>{{'Post new reply'|translate}}</h3>
-	{% if auth.get_user.logged_in %}
+	{% if auth.logged_in %}
 	<div class="tips" style="padding-left: 7px">{{'Wanna say something?'|translate}}</div>
 	<form method="post" action="<?php echo Route::url('forum', array('controller' => 'post', 'action' => 'add')); ?>">
 	<input type="hidden" name="topic_id" value="{{topic.id}}" />
@@ -8,9 +8,9 @@
 	<div class="comments-body">
 		<textarea class="content" name="content" rows="5"></textarea>
 		<div class="comments-tools">
-			<a href="#">{{'Formatting help'|translate}}</a>
+			<a href="write.html#">{{'Formatting help'|translate}}</a>
 			{{' or '|translate}}
-			<a href="#">{{'Preview'|translate}}</a>
+			<a href="write.html#">{{'Preview'|translate}}</a>
 		</div>
 	</div>
 	<div class="comments-actions txt_right">

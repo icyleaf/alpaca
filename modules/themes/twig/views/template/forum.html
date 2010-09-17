@@ -8,12 +8,11 @@
 <div id="wrap">
 	<div id="header">
 		<div class="block">
-			<div class="user_nav">
+			<div class="auth">
 			{% for id,item in user_nav %}
-			{% html.anchor item.link, item.title, item.attr %}
+				{% html.anchor item.link, item.title, item.attr %}
 			{% endfor %}
 			</div>
-			<div class="auth">{{auth_menu}}</div>
 			<div class="search">
 			<form action="/search">
 				<input type="text" name="q" id="header_search_query" value="{{'Search Topic'|translate}}"/><input type="submit" value="{{'Go'|translate}}" />

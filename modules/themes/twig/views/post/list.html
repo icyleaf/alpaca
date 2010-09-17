@@ -4,7 +4,7 @@
 		{% if post.actions %}
 		<ul class="actions right">
 			{% for item in post.actions %}
-				<li>{{item}}</li>
+				<li>{{item|safe}}</li>
 			{% endfor %}
 		</ul>
 		{% endif %}

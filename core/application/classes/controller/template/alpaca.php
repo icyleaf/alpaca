@@ -49,6 +49,9 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 				'user'     => array(
 					'link'      => Alpaca_User::url('user', $auth_user),
 					'title'     => $auth_user->nickname,
+					'attr'      => array(
+						'class'     => 'user'
+					)
 				),
 				'settings' => array(
 					'link'      => 'settings',

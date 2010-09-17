@@ -37,9 +37,16 @@ class Controller_Auth extends Controller_Template_Alpaca {
 	 */
 	public function action_register()
 	{
+		$email = Arr::get($_POST, 'email');
+		$nickname = Arr::get($_POST, 'nickname');
+		$random = time();
+
 		$title = __('Register');
-		$this->template->content = View::factory('auth/register')
+		$this->template->content = Twig::factory('auth/register')
 			->bind('title', $title)
+			->bind('email', $email)
+			->bind('nickname', $nickname)
+			->bind('random', $random)
 			->bind('errors', $errors);
 		
 		if ($_POST)
@@ -159,7 +166,10 @@ class Controller_Auth extends Controller_Template_Alpaca {
 	{
 		$title = __('Log in').Alpaca::beautify_str($this->config->title, TRUE);
 		$this->head->title->set($title);
-		$this->template->content = View::factory('auth/login')
+
+		$username = Arr::get($_POST, 'username');
+		$this->template->content = Twig::factory('auth/login')
+			->set('username', $username)
 			->bind('redir', $redirect)
 			->bind('title', $title)
 			->bind('errors', $errors);
@@ -217,7 +227,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 		
 		$title = __('Welcome back!');
 		$this->head->title->set($title);
-		$this->template->content = View::factory('auth/logout')
+		$this->template->content = Twig::factory('auth/logout')
 			->bind('title', $title);
 	}
 	
