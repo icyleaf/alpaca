@@ -1,0 +1,41 @@
+{% if topic_actions|length > 0 %}
+<div class="admin-panel">
+	<h4>{{'Topic actions'|translate}}</h4>
+	<ul class="actions">
+	{% for item in topic_actions %}
+		<li>{{item}}</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endif %}
+
+<div class="topic" id="topic-{{topic.id}}">
+	<h2>
+		<?php //TODO: echo HTML::image('media/images/star_empty.png'); ?>
+		{{topic.title}}
+	</h2>
+
+	<div class="owner">
+		<div class="details">
+			<span class="avatar">{{topic.user_avatar|safe}}</span>
+			<span class="author">{{topic.author_link|safe}}</span>
+			<span class="date">{{topic.created}}</span>
+			<div class="clear"></div>
+		</div>
+		<div class="topic-content">{{topic.content|safe}}</div>
+	</div>
+</div><!-- /topic -->
+
+<div class="options line txt_right">
+	<a href="javascript:window.scrollTo(0,0);">{{'Top Back'|translate}}</a>
+	 |
+	<a href="#reply">{{'Reply Topic'|translate}}</a>
+</div><!-- /options -->
+
+<!-- topic's replies -->
+{{topic_posts}}
+<!-- /topic's replies -->
+
+<!-- reply form -->
+{{write_post}}
+<!-- /reply form -->

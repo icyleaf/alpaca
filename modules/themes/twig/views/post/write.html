@@ -1,0 +1,60 @@
+<div class="comments" id="reply">
+	<h3>{{'Post new reply'|translate}}</h3>
+	{% if auth.get_user.logged_in %}
+	<div class="tips" style="padding-left: 7px">{{'Wanna say something?'|translate}}</div>
+	<form method="post" action="<?php echo Route::url('forum', array('controller' => 'post', 'action' => 'add')); ?>">
+	<input type="hidden" name="topic_id" value="{{topic.id}}" />
+	<input type="hidden" name="user_id" value="{{author.id}}" />
+	<div class="comments-body">
+		<textarea class="content" name="content" rows="5"></textarea>
+		<div class="comments-tools">
+			<a href="#">{{'Formatting help'|translate}}</a>
+			{{' or '|translate}}
+			<a href="#">{{'Preview'|translate}}</a>
+		</div>
+	</div>
+	<div class="comments-actions txt_right">
+		<input id="enable_sogou" type="checkbox" tabindex="90" value="true"/>
+		<span class="tips">{{'Enable Sogou Cloud IME'|translate}}</span>
+		<input type="submit" value="{{'Reply it'|translate}}" />
+	</div>
+	</form>
+	{% else %}
+	<div class="tips" style="padding-left: 7px">{{'Post new reply after log in'|translate}}</div>
+	<form method="post" action="login">
+	<div class="comments-body">
+	<table>
+		<tr>
+			<td class="label"><label>{{'Login or Email'|translate}}</label></td>
+			<td><input type="text" name="username" value="" tabindex="100" /></td>
+		</tr>
+		<tr>
+			<td class="label"><label>{{'Password'|translate}}</label></td>
+			<td><input type="password" name="password" value=""  tabindex="101" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="checkbox" tabindex="102" value="true" name="remember"/>
+				<span class="tips">{{'Remember me'|translate}}</span>
+				({% html.anchor 'lostpassword', 'Lost Password'|translate %})
+			</td>
+		</tr>
+	</table>
+	</div>
+	<div class="comments-actions txt_right">
+		<input type="hidden" name="redir" value="{{redir}}" />
+		<input type="submit" tabindex="103"  value="{{'Log in'|translate}}" />
+	</div>
+	</form>
+	{% endif %}
+</div>
+
+<div class="options">
+	<div class="txt_right">
+		{% html.anchor '', 'Home Back'|translate %}
+		 |
+		{% html.anchor group_link, topic.group.name %}
+		 |
+		<a href="javascript:window.scrollTo(0,0);">{{'Top Back'|translate}}</a>
+	</div>
+</div>

@@ -146,27 +146,37 @@ class Controller_Topic extends Controller_Template_Alpaca {
 				}
 			}
 
+			$group_link = Route::url('group', array('id' => $topic->group));
+			$collection_link = Route::url('topic/collectors', array('id' => $topic->id));
 			$redirect = $this->request->uri;
-			$this->template->content = View::factory('topic/view')
+
+			$topic_posts = Twig::factory('post/list')
+				->bind('post_count', $all_post_count)
+				->bind('topic', $topic)
+				->bind('posts', $post_details)
+				->bind('pagination', $pagination);
+
+			$write_post = Twig::factory('post/write')
+				->set('group_link', $group_link)
+				->bind('redir', $redirect)
+				->bind('topic', $topic);
+
+			$this->template->content = Twig::factory('topic/view')
 				->bind('topic', $topic_details)
 				->bind('topic_actions', $topic_actions)
 				->bind('post_count', $all_post_count)
 				->bind('topic_posts', $topic_posts)
 				->bind('write_post', $write_post);
 
-			$topic_posts = View::factory('post/list')
-				->bind('post_count', $all_post_count)
-				->bind('topic', $topic)
-				->bind('posts', $post_details)
-				->bind('pagination', $pagination);
 
-			$write_post = View::factory('post/write')
-				->bind('redir', $redirect)
-				->bind('topic', $topic);
 
-			$this->template->sidebar = View::factory('sidebar/topic')
+			$recent_topic_list = Alpaca_Group::get_topics($topic->group->id);
+			$this->template->sidebar = Twig::factory('sidebar/topic')
 				->bind('title', $title)
-				->set('topic', $topic);
+				->set('topic', $topic)
+				->set('recent_topic_list', $recent_topic_list)
+				->set('group_link', $group_link)
+				->set('collection_link', $collection_link);
 		}
 		else
 		{

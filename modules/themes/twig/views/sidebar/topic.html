@@ -1,0 +1,41 @@
+<div class="widget">
+	<div class="block group">
+		{% html.anchor group_link, '返回%s小组'|translate|format(topic.group.name) %}
+	</div>
+</div>
+<div class="widget">
+	<h3>{{'话题信息'|translate}}</h3>
+	<div class="hightlight center">
+		{{'本话题发起于 %s'|translate|format(topic.created)|timesince}}
+	</div>
+	<div class="stats">
+	<table>
+		<tbody>
+			<tr>
+				<th>{{'统计'|translate}}</th>
+				<th class="txt_right">{{'共计'|translate}}</th>
+			</tr>
+			<tr>
+				<td>{{'浏览数量'|translate}}</td>
+				<td class="txt_right">{{topic.hits}}</td>
+			</tr>
+			<tr>
+				<td>{{'回复数量'|translate}}</td>
+				<td class="txt_right">{{topic.count}}</td>
+			</tr>
+			<tr>
+				<td>{{'收藏数量'|translate}}</td>
+				<td class="txt_right">{{topic.collections}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+
+{{recent_topic_list|safe}}
+
+<div class="widget">
+	<div class="block collection">
+		{% html.anchor collection_link, 'view who collected this!'|translate %}
+	</div>
+</div>
