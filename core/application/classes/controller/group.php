@@ -257,7 +257,6 @@ class Controller_Group extends Controller_Template_Alpaca {
 			->find_all();
 		$topics_array = $group->topics->topics_list_array($topics);
 		$new_topic_link = Route::url('topic/add', array('id' => Alpaca_Group::uri($group)));
-		$post_new_topic_link = HTML::anchor($new_topic_link, __('post a new topic'));
 
 		$list_topics = Twig::factory('topic/list')
 			->set('post_new_topic', $new_topic_link)
@@ -266,7 +265,6 @@ class Controller_Group extends Controller_Template_Alpaca {
 			->bind('pagination', $pagination);
 
 		$this->template->content = Twig::factory('group/list')
-			->set('post_new_topic_link', $post_new_topic_link)
 			->set('group', $group)
 			->bind('list_topics', $list_topics);
 

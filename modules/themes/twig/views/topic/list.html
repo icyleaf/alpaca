@@ -55,10 +55,10 @@
 	</li>
 {% endfor %}
 </ul>
-{% elseif group %}
-	{{'Nothing here, %s'|translate|format(post_new_topic_link)|safe}}
 {% else %}
-<ul class="list">{{'Nothing here'|translate}}</ul>
+<p>
+	{{'Nothing here, Post an new topic now!'|translate}}
+</p>
 {% endif %}
 
 {{pagination.render|safe}}

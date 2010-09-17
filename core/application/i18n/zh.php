@@ -67,7 +67,7 @@ return array
 	'Move ":title" topic' => '移动 ":title" 话题',
 	'Delete ":title" topic' => '删除 ":title" 话题',
 	'Reply Topic' => '回复主题',
-	'Nothing here, %s' => '本小组还没有创建话题，有什么想说的，%s和大家一起分享与讨论。',
+	'Nothing here, Post an new topic now!' => '本小组还没有创建话题，有什么想说的，创建新话题和大家一起分享与讨论。',
 	'post a new topic' => '发布一个新话题',
 	'Move to other group' => '移动话题到其他小组',
 	'Delete this topic include all the replies' => '删除本话题及所有的回复',
