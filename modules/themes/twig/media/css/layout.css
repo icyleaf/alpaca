@@ -38,7 +38,7 @@ h4 {
 #header {
 	margin-top: 3px;
 	display: block;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 
 #header .block {
@@ -296,6 +296,13 @@ h4 {
 	background-position: -13px 0;
 }
 
+#content h2.group-name {
+	background: #FDF1CE;
+	border-top: 1px solid #F4E1A8;
+	border-bottom: 1px solid #F6E9C4;
+	padding-left: 5px;
+}
+
 /****  TOPIC  ****/
 .topic {
 	width: 640px;
@@ -340,7 +347,7 @@ h4 {
 
 .topic-content,
 .post-content {
-    font-size: 1.2em;
+    font-size: 1.1em;
     line-height: 20px;
 }
 
@@ -638,7 +645,7 @@ h4 {
 	border-top: 1px solid #CACACA;
 	border-bottom: 1px solid #CACACA;
 	color: #666666;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 
 .widget a:hover {
@@ -665,7 +672,7 @@ h4 {
 }
 
 .widget .center {text-align: center}
-.widget .block {padding: 5px}
+.widget .block {padding: 5px 5px 3px 5px}
 .widget .hightlight {
 	font-weight: bold;
 	font-size: 1.2em;
@@ -678,20 +685,27 @@ h4 {
 	padding-left: 18px;
 }
 
-.widget .group, .widget .new_topic {
+.widget .group,
+.widget .new_topic {
 	font-size: 1.2em;
 }
 
-.widget .group a, .widget .new_topic a {
-	padding-left: 22px;
+.widget .group a,
+.widget .new_topic a {
+	padding-left: 20px;
 }
 
-.widget .group a:hover, .widget .new_topic a:hover {
+.widget .group a:hover,
+.widget .new_topic a:hover {
 	color: #15212E;
 }
 
 .widget .group a {background: url(/media/images/icons/16x16/next.png) no-repeat 0 0;}
-.widget .new_topic a {background: url(/media/images/icons/16x16/add.png) no-repeat 0 0;}
+.widget .new_topic a {
+	background: url(/media/images/icons/16x16/add.png) no-repeat 0 0;
+	/*padding-left: 5px;*/
+	margin-left: 5px;
+}
 .widget .stats {
 	padding: 0 3px;
 }

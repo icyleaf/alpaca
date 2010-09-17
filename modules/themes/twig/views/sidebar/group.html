@@ -1,0 +1,26 @@
+<div class="widget">
+	<h3>{{group.name}}</h3>
+	<div class="content">
+		{% if group.desc %}
+		{{group.desc|auto_p}}
+		{% endif %}
+	</div>
+	<div class="stats">
+	<table>
+		<tbody>
+			<tr>
+				<th>{{'统计'}}</th>
+				<th class="txt_right">{{'共计'}}</th>
+			</tr>
+			<tr>
+				<td>{{'创建时间'}}</td>
+				<td class="txt_right">{{group.created|date('Y-m-d')}}</td>
+			</tr>
+			<tr>
+				<td>{{'话题数量'}}</td>
+				<td class="txt_right">{{topic_total}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

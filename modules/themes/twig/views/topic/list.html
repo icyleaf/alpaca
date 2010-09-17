@@ -17,13 +17,15 @@
 {% for topic in topics %}
 	<li class="clearfix topic_{{topic.id}}">
 		{{topic.author.avatar|safe}}
+
+		{% if group == false %}
 		<div class="collection">
 			<div class="collection_inset">
-				{% if hide_group == false %}
 				{% html.anchor topic.group.link, topic.group.name %}
-				{% endif %}
 			</div>
 		</div>
+		{% endif %}
+
 		<div class="topic_details">
 			{% html.anchor topic.link, topic.title, ['class':'subject'] %}
 			<div class="meta">
@@ -54,10 +56,9 @@
 {% endfor %}
 </ul>
 {% elseif group %}
-	{{'Nothing here, :post.'}}
-	<!--':post' => HTML::anchor(Route::url('topic/add', array('id' => $group->id)), __('post a new topic'))-->
+	{{'Nothing here, %s'|translate|format(post_new_topic_link)|safe}}
 {% else %}
 <ul class="list">{{'Nothing here'|translate}}</ul>
 {% endif %}
 
-{{pagination.render}}
+{{pagination.render|safe}}

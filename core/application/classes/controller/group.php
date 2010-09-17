@@ -241,15 +241,6 @@ class Controller_Group extends Controller_Template_Alpaca {
 	private function _list_group_topics($group)
 	{
 		$title = __('Group');
-		$this->template->content = View::factory('group/list/single')
-			->bind('group', $group)
-			->bind('list_topics', $list_topics);
-
-		$list_topics = View::factory('topic/list')
-			->bind('group', $group)
-			->bind('topics', $topics_array)
-			->set('hide_group', TRUE)
-			->bind('pagination', $pagination);
 
 		// Pagination
 		$pagination = Pagination::factory(array(
@@ -264,51 +255,24 @@ class Controller_Group extends Controller_Template_Alpaca {
 			->order_by('sticky', 'DESC')
 			->order_by('touched', 'DESC')
 			->find_all();
+		$topics_array = $group->topics->topics_list_array($topics);
+		$new_topic_link = Route::url('topic/add', array('id' => Alpaca_Group::uri($group)));
+		$post_new_topic_link = HTML::anchor($new_topic_link, __('post a new topic'));
 
-		$group_array = array(
-			'id'		=> $group->id,
-			'name'		=> $group->name,
-			'link'		=> Route::url('group', array('id' => Alpaca_Group::uri($group))),
-		);
-		$group_array = (object) $group_array;
-		
-		$topics_array = array();
-		if ($topics->count() > 0)
-		{
-			foreach ($topics as $i => $topic)
-			{
-				$author = $topic->author;
-				$author_array = array(
-					'id'		=> $author->id,
-					'avatar'	=> Alpaca_User::avatar($author, array('size' => 30), array('class' => 'avatar'), TRUE),
-					'nickname'	=> $author->nickname,
-					'link'		=> Alpaca_User::url('user', $author)
-				);
-				$author_array = (object) $author_array;
+		$list_topics = Twig::factory('topic/list')
+			->set('post_new_topic_link', $post_new_topic_link)
+			->bind('group', $group)
+			->bind('topics', $topics_array)
+			->bind('pagination', $pagination);
 
-				$collected = ORM::factory('collection')->is_collected($topic->id, $author->id);
-				$topics_array[$i] = array(
-					'id'			=> $topic->id,
-					'title'		=> $topic->title,
-					'link'			=> Alpaca_Topic::url($topic, $group),
-					'author'		=> $author_array,
-					'group'		=> $group_array,
-					'collections'	=> $topic->collections,
-					'comments'		=> $topic->count,
-					'hits'			=> $topic->hits,
-					'collected'	=> $collected,
-					'content'		=> Alpaca::format_html($topic->content),
-					'created'		=> date($this->config->date_format, $topic->created),
-					'time_ago'		=> Alpaca::time_ago($topic->created),
-					'updated'		=> Alpaca::time_ago($topic->updated),
-				);
+		$this->template->content = Twig::factory('group/list')
+			->set('post_new_topic_link', $post_new_topic_link)
+			->set('group', $group)
+			->bind('list_topics', $list_topics);
 
-				$topics_array[$i] = (object) $topics_array[$i];
-			}
-		}
-
-		$this->template->sidebar = View::factory('sidebar/group')
-			->bind('group', $group);
+		$this->template->sidebar = Twig::factory('sidebar/group')
+			->set('group', $group)
+			->set('topic_total', $group->topics->find_all()->count());
 	}
 
 	private function _list_category_topics($group)

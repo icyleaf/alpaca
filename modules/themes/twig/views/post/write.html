@@ -21,7 +21,7 @@
 	</form>
 	{% else %}
 	<div class="tips" style="padding-left: 7px">{{'Post new reply after log in'|translate}}</div>
-	<form method="post" action="login">
+	<form method="post" action="{% url 'auth/actions', ['action':'login'] %}">
 	<div class="comments-body">
 	<table>
 		<tr>
