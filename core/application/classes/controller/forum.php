@@ -47,7 +47,7 @@ class Controller_Forum extends Controller_Template_Alpaca {
 		}
 
 		$topics_array = $topics->get_topics($type, $this->config->topic['per_page']);
-		$topics_array = $topics->format_topic_array($topics_array);
+		$topics_array = $topics->topics_list_array($topics_array);
 
 		$topic_header = array(
 			'title' => $title,

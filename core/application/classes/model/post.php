@@ -64,6 +64,65 @@ class Model_Post extends ORM {
 		
 		return $this->find_all();
 	}
+
+	public function post_list_array($topic, $posts, $auth_user)
+	{
+		$post_details = array();
+		if ($posts->count() > 0)
+		{
+			foreach ($posts as $key => $post)
+			{
+				$post_actions = array();
+				if ($auth_user)
+				{
+					$has_admin_role = $auth_user->has_role('admin');
+					if (($auth_user->id == $post->author->id) OR $has_admin_role)
+					{
+						$post_actions[] = HTML::anchor('post/delete/' . $post->id, __('Delete'), array(
+							'class'	=> 'delete',
+							'title'	=> __('Delete Reply'),
+							'rel'	=> __('Do you really want to delete this reply?'),
+						));
+						$post_actions[] = HTML::anchor('post/edit/' . $post->id, __('Edit'), array(
+							'class'	=> 'edit',
+							'title'	=> __('Edit Reply'),
+						));
+					}
+				}
+
+				$avatar_config = array
+				(
+					'default'	=> URL::site('media/images/user-default-small.jpg'),
+					'size'		=> 30
+				);
+
+				$post_avatar = Alpaca_User::avatar($post->author, $avatar_config, array(
+					'id' => 'avatar-'.$post->id,
+					'class' => 'avatar',
+					TRUE
+				));
+
+				$post_author = HTML::anchor(Alpaca_User::url('user', $post->author), $post->author->nickname);
+
+				$post_role = ($topic->author->id == $post->author->id) ? 'owner' : 'poster';
+				$post_details[$key] = array(
+					'id'		=> $post->id,
+					'role'		=> $post_role,
+					'actions'	=> $post_actions,
+					'author'	=> $post_author,
+					'avatar'	=> $post_avatar,
+					'content'	=> Alpaca::format_html($post->content),
+					'created'	=> date(Kohana::config('alpaca')->date_format, $post->created),
+					'time_ago'	=> Alpaca::time_ago($post->created),
+				);
+
+				$post_details[$key] = (object)$post_details[$key];
+			}
+		}
+
+		return $post_details;
+	}
+
 	
 	/**
 	 * Search posts

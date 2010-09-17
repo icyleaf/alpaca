@@ -1,10 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-		"http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% for post in posts %}
+<div id="post-{{post.id}}" class="post">
+	<div class="meta {{post.role}}">
+		{% if post.actions %}
+		<ul class="actions right">
+			{% for item in post.actions %}
+				<li>{{item}}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
 
-</body>
-</html>
+		<ul id="details-{{post.id}}" class="details left">
+			<li class="author">{{post.avatar|safe}}{{post.author|safe}}</li>
+			<li class="date">
+				{% html.anchor '#post-%s'|format(post.id), post.time_ago, ['name':'post-%s'|format(post.id),'title':post.created] %}
+			</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+
+	<div class="post-content">{{post.content|safe}}</div>
+</div>
+{% endfor %}
+
+{% if pagination %}
+{{pagination.render|safe}}
+{% endif %}

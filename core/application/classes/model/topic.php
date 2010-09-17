@@ -64,7 +64,7 @@ class Model_Topic extends ORM {
 	 * @param  $topics
 	 * @return array
 	 */
-	public function format_topic_array($topics)
+	public function topics_list_array($topics)
 	{
 		$topics_array = array();
 		if ($topics->count() > 0)
@@ -110,6 +110,19 @@ class Model_Topic extends ORM {
 		}
 
 		return $topics_array;
+	}
+
+	public function topic_detail_array($topic)
+	{
+		$author = $topic->author;
+		return array(
+			'id'			=> $topic->id,
+			'title'		    => $topic->title,
+			'user_avatar'	=> Alpaca_User::avatar($author, NULL, TRUE),
+			'author_link'	=> HTML::anchor(Alpaca_User::url('user', $author), $author->nickname),
+			'content'		=> Alpaca::format_html($topic->content),
+			'created'		=> date(Kohana::config('alpaca')->date_format, $topic->created),
+		);
 	}
 
 	public function get_topics_by_user($limit = NULL, $cache = 120)

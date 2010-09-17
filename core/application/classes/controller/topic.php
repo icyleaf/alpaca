@@ -33,13 +33,13 @@ class Controller_Topic extends Controller_Template_Alpaca {
 			}
 
 			$title = $topic->title;
-            if ( ! Request::user_agent('robot'))
-            {
-                // TODO: ONLY store once for per user
-                // fliter robots/spider to increase hits count
-                $topic->hits += 1;
-                $topic->save();
-            }
+			if (!Request::user_agent('robot'))
+			{
+				// TODO: ONLY store once for per user
+				// fliter robots/spider to increase hits count
+				$topic->hits += 1;
+				$topic->save();
+			}
 
 			// Pagiation
 			$pagination = Pagination::factory(array(
@@ -79,72 +79,12 @@ class Controller_Topic extends Controller_Template_Alpaca {
 				}
 			}
 
-			$topic_details = array(
-				'id'			=> $topic->id,
-				'title'		=> $topic->title,
-				'user_avatar'	=> Alpaca_User::avatar($author, NULL, TRUE),
-				'author_link'	=> HTML::anchor(Alpaca_User::url('user', $author), $author->nickname),
-				'content'		=> Alpaca::format_html($topic->content),
-				'created'		=> date($this->config->date_format, $topic->created),
-			);
-			$topic_details = (object) $topic_details;
+			$topic_details = $topic->topic_detail_array($topic);
 
 			/** Post **/
 			$posts = $topic->posts->get_posts(FALSE, $pagination->items_per_page, $pagination->offset);
+			$post_details = $topic->posts->post_list_array($topic, $posts, $auth_user);
 			$all_post_count = $topic->posts->find_all()->count();
-
-			if ($posts->count() > 0)
-			{
-				$post_details = array();
-				foreach ($posts as $key => $post)
-				{
-					$post_actions = array();
-					if ($auth_user)
-					{
-						$has_admin_role = $auth_user->has_role('admin');
-						if (($auth_user->id == $post->author->id) OR $has_admin_role)
-						{
-							$post_actions[] = HTML::anchor('post/delete/' . $post->id, __('Delete'), array(
-								'class'	=> 'delete',
-								'title'	=> __('Delete Reply'),
-								'rel'	=> __('Do you really want to delete this reply?'),
-							));
-							$post_actions[] = HTML::anchor('post/edit/' . $post->id, __('Edit'), array(
-								'class'	=> 'edit',
-								'title'	=> __('Edit Reply'),
-							));
-						}
-					}
-
-					$avatar_config = array
-					(
-						'default'	=> URL::site('media/images/user-default-small.jpg'),
-						'size'		=> 30
-					);
-
-					$post_avatar = Alpaca_User::avatar($post->author, $avatar_config, array(
-						'id' => 'avatar-'.$post->id,
-						'class' => 'avatar',
-						TRUE
-					));
-
-					$post_author = HTML::anchor(Alpaca_User::url('user', $post->author), $post->author->nickname);
-
-					$post_role = ($topic->author->id == $post->author->id) ? 'owner' : 'poster';
-					$post_details[$key] = array(
-						'id'		=> $post->id,
-						'role'		=> $post_role,
-						'actions'	=> $post_actions,
-						'author'	=> $post_author,
-						'avatar'	=> $post_avatar,
-						'content'	=> Alpaca::format_html($post->content),
-						'created'	=> date($this->config->date_format, $post->created),
-						'time_ago'	=> Alpaca::time_ago($post->created),
-					);
-
-					$post_details[$key] = (object)$post_details[$key];
-				}
-			}
 
 			$group_link = Route::url('group', array('id' => $topic->group));
 			$collection_link = Route::url('topic/collectors', array('id' => $topic->id));
@@ -168,8 +108,6 @@ class Controller_Topic extends Controller_Template_Alpaca {
 				->bind('topic_posts', $topic_posts)
 				->bind('write_post', $write_post);
 
-
-
 			$recent_topic_list = Alpaca_Group::get_topics($topic->group->id);
 			$this->template->sidebar = Twig::factory('sidebar/topic')
 				->bind('title', $title)
@@ -180,10 +118,10 @@ class Controller_Topic extends Controller_Template_Alpaca {
 		}
 		else
 		{
-			$this->template->content = Alpaca::error_page($title, $content);
-				
 			$title = __('Ooops');
 			$content = __('Not found this topic!');
+			
+			$this->template->content = Alpaca::error_page($title, $content);
 		}
 		
 		$this->head->title->prepend($title);
@@ -217,15 +155,6 @@ class Controller_Topic extends Controller_Template_Alpaca {
 			$author = $this->auth->get_user();
 			if ($group->level == 1)
 			{
-				$this->template->content = View::factory('topic/add_edit')
-					->set('title', $title)
-					->set('author', $author)
-					->set('topic_title', '')
-					->set('topic_content', '')
-					->set('submit', __('Post it'))
-					->bind('group', $group)
-					->bind('errors', $errors);
-
 				if ($_POST)
 				{
 					if ( ! $this->config->topic_repeat)
@@ -262,6 +191,16 @@ class Controller_Topic extends Controller_Template_Alpaca {
 						echo Kohana::debug($errors);
 					}
 				}
+
+				$this->template->content = View::factory('topic/add_edit')
+					->set('title', $title)
+					->set('author', $author)
+					->set('topic_title', '')
+					->set('topic_content', '')
+					->set('submit', __('Post it'))
+					->bind('group', $group)
+					->bind('errors', $errors);
+
 				// TODO: Change the sidebar
 				$sidebar = '<div style="margin-bottom:10px">'.
 					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
