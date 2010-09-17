@@ -54,13 +54,11 @@ class Controller_Forum extends Controller_Template_Alpaca {
 			'class' => $type,
 		);
 
-		// hide 'touched' anchor on index page
-		if ( ! in_array($this->request->uri , array('', '/', 'latest')))
-		{
-			$topic_sort['new'] = __('Latest');
-		}
-		$topic_sort['hot'] = __('Top hits');
-		$topic_sort['top'] = __('Top collections');
+		$topic_sort = array(
+			'new'   => __('Latest'),
+			'hot'   => __('Top hits'),
+			'top'   => __('Top collections'),
+		);
 
 		$this->template->content = Twig::factory('topic/list')
 			->bind('topic_header', $topic_header)
