@@ -270,9 +270,10 @@ class Controller_Group extends Controller_Template_Alpaca {
 			->set('group', $group)
 			->bind('list_topics', $list_topics);
 
+		$group_topic_total = $group->topics->cached(60)->find_all()->count();
 		$this->template->sidebar = Twig::factory('sidebar/group')
 			->set('group', $group)
-			->set('topic_total', $group->topics->find_all()->count());
+			->set('topic_total', $group_topic_total);
 	}
 
 	private function _list_category_topics($group)
