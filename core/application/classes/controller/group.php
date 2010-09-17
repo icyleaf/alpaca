@@ -260,7 +260,7 @@ class Controller_Group extends Controller_Template_Alpaca {
 		$post_new_topic_link = HTML::anchor($new_topic_link, __('post a new topic'));
 
 		$list_topics = Twig::factory('topic/list')
-			->set('post_new_topic_link', $post_new_topic_link)
+			->set('post_new_topic', $new_topic_link)
 			->bind('group', $group)
 			->bind('topics', $topics_array)
 			->bind('pagination', $pagination);

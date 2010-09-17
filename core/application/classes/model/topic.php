@@ -122,6 +122,7 @@ class Model_Topic extends ORM {
 			'author_link'	=> HTML::anchor(Alpaca_User::url('user', $author), $author->nickname),
 			'content'		=> Alpaca::format_html($topic->content),
 			'created'		=> date(Kohana::config('alpaca')->date_format, $topic->created),
+			'time_ago'		=> Alpaca::time_ago($topic->created),
 		);
 	}
 
