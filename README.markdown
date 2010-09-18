@@ -6,10 +6,10 @@ A swift, lightweight forum system (development)
 
 ## Requirements
 
-* PHP 5.2+
-* Mysql 5.0+
+* [PHP](http://php.net) 5.2.8+
+* [Mysql](http://mysql.com) 5.0+
 * [Kohana](http://github.com/kohana/kohana)
-* Kohana Modules: [Database](http://github.com/kohana/database), [ORM](http://github.com/kohana/orm), [Auth](http://github.com/icyleaf/alpaca/tree/master/modules/auth/), [Pagination](http://github.com/kohana/pagination), [Gravatar](http://github.com/icyleaf/gravatar/) and [Twig](http://github.com/jonathangeiger/kohana-twig/). (**they all include Alpaca**)
+* Kohana Modules: [Database](http://github.com/kohana/database), [ORM](http://github.com/kohana/orm), [Auth](http://github.com/icyleaf/alpaca/tree/master/modules/auth/), [Pagination](http://github.com/kohana/pagination), [Gravatar](http://github.com/icyleaf/gravatar/) and [Twig](http://github.com/jonathangeiger/kohana-twig/).
 
 ## Installation
 
