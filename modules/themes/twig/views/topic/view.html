@@ -2,8 +2,8 @@
 <div class="admin-panel">
 	<h4>{{'Topic actions'|translate}}</h4>
 	<ul class="actions">
-	{% for item in topic_actions %}
-		<li>{{item|safe}}</li>
+	{% for id,item in topic_actions %}
+		<li>{% html.anchor item.link, item.title, item.attr %}</li>
 	{% endfor %}
 	</ul>
 </div>

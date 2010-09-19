@@ -63,13 +63,14 @@ return array
 	'Undo' => '撤销',
 	'Start a new topic' => '发布新话题',
 	'Edit Topic' => '编辑话题',
+	'Delete Topic' => '删除话题',
+	'Move Topic' => '移动话题',
 	'Edit ":title" topic' => '编辑 ":title" 话题',
 	'Move ":title" topic' => '移动 ":title" 话题',
 	'Delete ":title" topic' => '删除 ":title" 话题',
 	'Reply Topic' => '回复主题',
 	'Nothing here, Post an new topic now!' => '本小组还没有创建话题，有什么想说的，创建新话题和大家一起分享与讨论。',
 	'post a new topic' => '发布一个新话题',
-	'Move to other group' => '移动话题到其他小组',
 	'Delete this topic include all the replies' => '删除本话题及所有的回复',
 	'[NOT UNDO] Do you really want to delete this topic include all the replies?' => '[无法恢复] 确定要删除本话题及所有的回复吗？',
 	'Post new reply' => '发表讨论',
@@ -87,7 +88,6 @@ return array
 	'you already collected this!' => '您已经收藏了此话题',
 	'view who collected this!' => '谁收藏了此话题',
 	'Who collected ":title" topic' => '收藏 ":title" 的用户',
-	'Posted on %s ago' => '%s前',
 
 	/**
 	 * Auth

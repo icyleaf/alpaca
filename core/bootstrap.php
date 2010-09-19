@@ -111,7 +111,7 @@ catch(Exception $e)
 	Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
 
 	// Request 404 page
-	$request = Request::factory('errors/404')->execute();
+	$request = Request::factory('errors')->execute();
 }
 
 if ($request->send_headers()->response)
