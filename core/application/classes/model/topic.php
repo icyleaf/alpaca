@@ -177,6 +177,24 @@ class Model_Topic extends ORM {
 		return $this->find_all();
 	}
 
+	public function user_topic_total($user_id = NULL)
+	{
+		return $this->count_all();
+	}
+
+	public function user_reply_topic_total($user_id, $limit = NULL, $cache = 120)
+	{
+		return $this->posted_topics_by_user($user_id, $limit, $cache)->count();
+	}
+
+	public function user_collected_topic_total($user_id, $limit = NULL, $cache = 120)
+	{
+		return ORM::factory('collection')
+			->where('user_id', '=', $user_id)
+			->cached($cache)
+			->count_all();
+	}
+
 	/**
 	 * Search topics
 	 * 

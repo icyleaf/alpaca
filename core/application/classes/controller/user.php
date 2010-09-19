@@ -6,12 +6,12 @@
  * @author icyleaf <icyleaf.cn@gmail.com>
  */
 class Controller_User extends Controller_Template_Alpaca {
-	
+
 	/**
 	 * Asign request to related action
 	 *
-	 * @param mixed $user_id 
-	 * @param string $type 
+	 * @param mixed $user_id
+	 * @param string $type
 	 * @return void
 	 */
 	public function action_index($user_id, $type = NULL)
@@ -35,7 +35,7 @@ class Controller_User extends Controller_Template_Alpaca {
 				get_class_methods(get_parent_class($this)),
 				array('action_index', 'action_view')
 			);
-			
+
 			$type = trim(strtolower($type));
 			if (array_keys($methods, $type))
 			{
@@ -51,24 +51,21 @@ class Controller_User extends Controller_Template_Alpaca {
 			$this->template->content = __('Not found the user, please spell check the username.');
 		}
 	}
-	
+
 	/**
 	 * View user's profile
 	 *
-	 * @param Model_User $user_id 
+	 * @param Model_User $user_id
 	 * @return void
 	 */
 	protected function profile(Model_User $user)
 	{
-	    $user_feed_link = Alpaca_User::url('user', $user, 'feed');
-		$topics = $user->topics->order_by('created', 'DESC')->find_all();
-		$replies = ORM::factory('topic')->posted_topics_by_user($user->id);
-		$groups = $user->groups->order_by('created', 'DESC')->find_all();
-		$collections_count = ORM::factory('collection')->where('user_id', '=', $user->id)->find_all()->count();
-		$following_count = 0;
-		$follower_count = 0;
+		$user_feed_link = Alpaca_User::url('user', $user, 'feed');
 
-		$user_profiles = array();
+		$user_array = $user->as_array();
+		$user_array['avatar'] = Alpaca_User::avatar($user, NULL, array('class' => 'avatar'));
+		$user_array['feed_link'] = $user_feed_link;
+		$user_array['profiles'] = array();
 		foreach ($user->as_array() as $key => $value)
 		{
 			// NEVER display the key below in public page
@@ -77,7 +74,7 @@ class Controller_User extends Controller_Template_Alpaca {
 				'hits', 'logins', 'last_login', 'last_ua'
 			);
 
-			if ( ! empty($value) AND  ! in_array($key, $hidden))
+			if ( ! empty($value) AND ! in_array($key, $hidden))
 			{
 				if ($key == 'created')
 				{
@@ -88,45 +85,55 @@ class Controller_User extends Controller_Template_Alpaca {
 				{
 					$value = Text::auto_link_urls($value);
 				}
-                
-                if ($key == 'qq')
-                {
-                    $key = strtoupper($key);
-                }
-                else
-                {
-                    $key = ucfirst($key);
-                }
 
-				$user_profiles[__($key)] = $value;
+				if ($key == 'qq')
+				{
+					$key = strtoupper($key);
+				}
+				else
+				{
+					$key = ucfirst($key);
+				}
+
+				$user_array['profiles'][__($key)] = $value;
 			}
 		}
-        
-        $title = __('Subscribe the latest updates @:user...', array(
-            ':user' => $user->nickname
-        ));
-        $this->head->title->set($user->nickname);
-        $this->head->title->append($this->config->title);
-        // Insert the user rss link
-        $this->head->link->append($user_feed_link, $title);
-        
-        $this->template->content = View::factory('user/profile')
-            ->bind('user', $user)
-            ->bind('user_profiles', $user_profiles)
-            ->bind('topics', $topics)
-            ->bind('replies', $replies)
-            ->bind('groups', $groups)
-            ->bind('collections_count', $collections_count)
-            ->bind('following_count', $following_count)
-            ->bind('follower_count', $follower_count)
-            ->bind('user_feed_link', $user_feed_link);
-        
+
+		$topic = ORM::factory('topic');
+		$user_array['stats'] = array(
+			array(
+				'title' => __('Topics'),
+				'total' => $user->topics->user_topic_total(),
+				'link'  => Alpaca_User::url('user', $user, 'topics'),
+			),
+			array(
+				'title' => __('Replies'),
+				'total' => $topic->user_reply_topic_total($user->id),
+				'link'  => Alpaca_User::url('user', $user, 'posts'),
+			),
+			array(
+				'title' => __('Collections'),
+				'total' => $topic->user_collected_topic_total($user->id),
+				'link'  => Alpaca_User::url('user', $user, 'collections'),
+			),
+		);
+
+		$title = __('Subscribe the latest updates @:user...', array(
+			':user' => $user->nickname
+		));
+		$this->head->title->set($user->nickname);
+		$this->head->title->append($this->config->title);
+		// Insert the user rss link
+		$this->head->link->append($user_feed_link, $title);
+
+		$this->template->content = Twig::factory('user/profile')
+			->set('user', $user_array);
 	}
-	
+
 	/**
 	 * View user posted topics
 	 *
-	 * @param Model_User $user 
+	 * @param Model_User $user
 	 * @return void
 	 */
 	protected function topics(Model_User $user)
@@ -137,10 +144,10 @@ class Controller_User extends Controller_Template_Alpaca {
 			'title' => $title,
 			'class' => 'hits',
 		);
-		
+
 		$this->head->title->set($title);
 		$this->head->title->append($this->config->title);
-		
+
 		if ($topics->count() > 0)
 		{
 			foreach ($topics as $i => $topic)
@@ -153,7 +160,7 @@ class Controller_User extends Controller_Template_Alpaca {
 					'link'		=> Alpaca_User::url('user', $author)
 				);
 				$author_array = (object) $author_array;
-				
+
 				$group = $topic->group;
 				$group_array = array(
 					'id'		=> $group->id,
@@ -182,17 +189,17 @@ class Controller_User extends Controller_Template_Alpaca {
 				$topics_array[$i] = (object) $topics_array[$i];
 			}
 		}
-		
+
 		$this->template->content = View::factory('topic/list')
 			->set('head', $head)
 			->set('topics', $topics_array);
 		$this->template->sidebar = '';
 	}
-	
+
 	/**
 	 * View user commented topics
 	 *
-	 * @param Model_User $user 
+	 * @param Model_User $user
 	 * @return void
 	 */
 	protected function posts(Model_User $user)
@@ -206,7 +213,7 @@ class Controller_User extends Controller_Template_Alpaca {
 
 		$this->head->title->set($title);
 		$this->head->title->append($this->config->title);
-		
+
 		if ($topics->count() > 0)
 		{
 			foreach ($topics as $i => $topic)
@@ -219,7 +226,7 @@ class Controller_User extends Controller_Template_Alpaca {
 					'link'		=> Alpaca_User::url('user', $author)
 				);
 				$author_array = (object) $author_array;
-				
+
 				$group = $topic->group;
 				$group_array = array(
 					'id'		=> $group->id,
@@ -248,17 +255,17 @@ class Controller_User extends Controller_Template_Alpaca {
 				$topics_array[$i] = (object) $topics_array[$i];
 			}
 		}
-		
+
 		$this->template->content = View::factory('topic/list')
 			->set('head', $head)
 			->set('topics', $topics_array);
 		$this->template->sidebar = '';
 	}
-	
+
 	/**
 	 * View user collection's topics
 	 *
-	 * @param Model_User $user 
+	 * @param Model_User $user
 	 * @return void
 	 */
 	protected function collections(Model_User $user)
@@ -273,7 +280,7 @@ class Controller_User extends Controller_Template_Alpaca {
 
 		$this->head->title->set($title);
 		$this->head->title->append($this->config->title);
-		
+
 		if ($topics->count() > 0)
 		{
 			foreach ($topics as $i => $topic)
@@ -286,7 +293,7 @@ class Controller_User extends Controller_Template_Alpaca {
 					'link'		=> Alpaca_User::url('user', $author)
 				);
 				$author_array = (object) $author_array;
-				
+
 				$group = $topic->group;
 				$group_array = array(
 					'id'		=> $group->id,
@@ -315,47 +322,47 @@ class Controller_User extends Controller_Template_Alpaca {
 				$topics_array[$i] = (object) $topics_array[$i];
 			}
 		}
-		
+
 		$this->template->content = View::factory('topic/list')
 			->set('head', $head)
 			->set('topics', $topics_array);
-			
+
 		$this->template->sidebar = '';
 	}
-	
+
 	/**
 	 * View user created groups
 	 *
-	 * @param Model_User $user 
+	 * @param Model_User $user
 	 * @return void
 	 */
 	protected function groups(Model_User $user)
 	{
 		$this->head->title->set(__(':user\'s Groups', array(':user' => $user->nickname)));
 		$this->head->title->append($this->config->title);
-		
+
 		$this->template->content = View::factory('group/list')
 			->set('groups', $user->groups->order_by('created', 'DESC')
 			->find_all());
-			
+
 		$this->template->sidebar = '';
 	}
-	
+
 	/**
 	 * View user is following people
 	 *
-	 * @param Model_User $user 
+	 * @param Model_User $user
 	 * @return void
 	 */
 	protected function followings(Model_User $user)
 	{
 		$this->template->content = 'Nothing';
 	}
-	
+
 	/**
 	 * View user followed people
 	 *
-	 * @param Model_User $user 
+	 * @param Model_User $user
 	 * @return void
 	 */
 	protected function followers(Model_User $user)
@@ -365,7 +372,7 @@ class Controller_User extends Controller_Template_Alpaca {
 
 	/**
 	 * View user feed
-	 * 
+	 *
 	 * @param Model_User $user
 	 * @return void
 	 * @use Controller_Feed
@@ -377,6 +384,6 @@ class Controller_User extends Controller_Template_Alpaca {
         $controller_feed->before();
         $controller_feed->action_user($user->id);
     }
-    
+
 }
 

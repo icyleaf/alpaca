@@ -153,9 +153,9 @@ return array
 	 */
 	'Message' => '站内信',
 	'Follow' => '关注此人',
-	'Topics' => '发布的话题',
-	'Replies' => '评论的话题',
-	'Collections' => '收藏的话题',
+	'Topics' => '发布话题',
+	'Replies' => '评论话题',
+	'Collections' => '收藏话题',
 	'Posted Topics by :user' => ':user发布的话题',
 	'Replies Topics by :user' => ':user评论的话题',
 	'Collections Topics by :user' => ':user收藏的话题',
@@ -163,7 +163,7 @@ return array
 	'Followings' => '关注人数',
 	'Friends' => '好友人数',
 	':user\'s Groups' => ':user的小组',
-	'Subscribe the latest updates @:user...' => '订阅:user的最新动态...',
+	'Subscribe the latest updates @%s...' => '订阅 %s 的最新动态...',
 	'Registered at :created. Last signed in at :last. :logins logins.' => ':user注册于 :created，最后一次登录是:last，共计登录 :logins 次。',
 
 	/**

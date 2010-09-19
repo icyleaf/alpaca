@@ -902,7 +902,6 @@ ul.novice li small {
 
 #profile .statistics .sides {
 	padding: 0 12px;
-	border-right: 1px solid #EEEEEE;
 }
 
 #profile .statistics .last {
@@ -910,15 +909,17 @@ ul.novice li small {
 }
 
 #profile .statistics .sides .header {
-	color: #555555;
-	font-size: 1.2em;
+	color: #AAAAAA;
+	font-size: 1em;
+	margin-left: 2px;
 }
 
 #profile .statistics .sides .count{
 	color: #444444;
-	font-size: 210%;
+	font-size: 2.5em;
 	font-weight: bold;
 	cursor: pointer;
+	line-height: 30px;
 }
 
 #profile .statistics .sides a .count:hover,
