@@ -921,11 +921,14 @@ ul.novice li small {
 	cursor: pointer;
 	line-height: 30px;
 }
-
-#profile .statistics .sides a .count:hover,
-#profile .statistics .sides .count:hover {
-	color: #990000;
+#profile .statistics .sides a:hover {
 	text-decoration: none;
+}
+
+#profile .statistics .sides a:hover .count,
+#profile .statistics .sides a:hover .header
+{
+	color: #4183C4;
 }
 
 #profile .user-record {
