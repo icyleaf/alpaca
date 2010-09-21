@@ -49,33 +49,39 @@ class Controller_Topic extends Controller_Template_Alpaca {
 				));
 
 			/** Topic **/
-			$auth_user = $this->auth->get_user();
 			$author = $topic->author;
-			if ($auth_user)
+			if ($auth_user = $this->auth->get_user())
 			{
-				$topic_actions = array();
 				$has_admin_role = $auth_user->has_role('admin');
+
+				$topic_actions = array();
 				if (($auth_user->id == $author->id) OR $has_admin_role)
 				{
-					// Topic Edit Anchor
-					$topic_actions[] = HTML::anchor('topic/edit/' . $topic->id, __('Edit'), array(
-						'class' => 'edit',
-						'title' => __('Edit Topic'),
-					));
-					// Topic Delete Anchor
-					$topic_actions[] = HTML::anchor('topic/delete/' . $topic->id, __('Delete'), array(
-						'class' => 'delete',
-						'title' => __('Delete this topic include all the replies'),
-						'rel' => __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
-					));
+					$topic_actions = array(
+						'edit-topic'    => array(
+							'link'  => 'topic/edit/' . $topic->id,
+							'title' => __('Edit Topic'),
+							'attr'  => array(
+								'class' => 'edit',
+							),
+						),
+						'delete-topic'    => array(
+							'link'  => 'topic/delete/' . $topic->id,
+							'title' => __('Delete Topic'),
+							'attr'  => array(
+								'class' => 'delete',
+								'rel'   => __('[NOT UNDO] Do you really want to delete this topic include all the replies?'),
+							),
+						),
+					);
 				}
 				// ONLY Admin can MOVE topic
 				if ($has_admin_role)
 				{
-					// Topic Move Anchor
-					$topic_actions[] = HTML::anchor('topic/move/' . $topic->id, __('Move'), array(
-						'title' => __('Move to other group')
-					));
+					$topic_actions['move-topic'] = array(
+						'link'  => 'topic/move/' . $topic->id,
+						'title' => __('Move Topic'),
+					);
 				}
 			}
 

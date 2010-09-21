@@ -62,4 +62,3 @@ Open `core/application/config/alpaca.php` and make whatever your need to change,
 Now Browse to `yourdomain.com` and you should see the **Home Page**.
 
 > By default, the first registered user has Administrator privilege.
-

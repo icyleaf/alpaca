@@ -2,9 +2,9 @@
 	<h3>{{'Post new reply'|translate}}</h3>
 	{% if auth.logged_in %}
 	<div class="tips" style="padding-left: 7px">{{'Wanna say something?'|translate}}</div>
-	<form method="post" action="<?php echo Route::url('forum', array('controller' => 'post', 'action' => 'add')); ?>">
+	<form method="post" action="{% url 'forum', ['controller':'post', 'action':'create', 'id':topic.id] %}">
 	<input type="hidden" name="topic_id" value="{{topic.id}}" />
-	<input type="hidden" name="user_id" value="{{author.id}}" />
+	<input type="hidden" name="user_id" value="{{topic.author.id}}" />
 	<div class="comments-body">
 		<textarea class="content" name="content" rows="5"></textarea>
 		<div class="comments-tools">

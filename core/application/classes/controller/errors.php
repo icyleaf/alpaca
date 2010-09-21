@@ -8,26 +8,21 @@
 class Controller_Errors extends Controller_Template_Alpaca {
 	
 	/**
-	 * General normal error page
+	 * Error page
 	 */
 	public function action_index()
 	{
-		$this->template->content = View::factory('errors/general');
-	}
-	
-	/**
-	 * Display 404 error page
-	 */
-	public function action_404()
-	{
 		$code = 404;
 		$title = __('No Found the page');
+		$content = NULL;
+
 		$this->request->status = $code;
 		$this->head->title->prepend($title);
-		$this->template->content = View::factory('errors/404')
+		$this->template->content = Twig::factory('template/errors')
 			->set('title', $title)
-			->bind('code', $code);
+			->bind('code', $code)
+			->bind('content', $content);
 	}
-	
+
 }
 

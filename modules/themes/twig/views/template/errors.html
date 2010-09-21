@@ -1,0 +1,22 @@
+<div id="errors">
+	<h2>
+		{% if code %}
+		<span>{{code}}</span>
+		{% endif %}
+		{{title}}
+	</h2>
+	<div>
+		{% if code == 404 %}
+		<h3>{{'The page you have requested has flown the coop.'|translate}}</h3>
+		<h5>{{'Perhaps you are here because:'|translate}}</h5>
+		<ul>
+			<li>{{'The page has moved'|translate}}</li>
+			<li>{{'The page no longer exists'|translate}}</li>
+			<li>{{'You were looking for your puppy and got lost'|translate}}</li>
+			<li>{{'You like 404 page'|translate}}</li>
+		</ul>
+		{% else %}
+		{{content}}
+		{% endif %}
+	</div>
+</div>

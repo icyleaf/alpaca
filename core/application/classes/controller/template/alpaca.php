@@ -174,7 +174,7 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 		{
 			$language->add(URL::site($this->request->uri.'?lang='.$key), $value);
 		}
-		$menu->add('', '<span class="dir">'.__('Switch Language').'</span>', $language);
+		$menu->add('', '<span class="dir">'.'Language'.'</span>', $language);
 
 		$config = array
 		(

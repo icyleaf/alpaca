@@ -22,13 +22,12 @@ class Controller_Post extends Controller_Template_Alpaca {
 	/**
 	 * Created a new post
 	 */
-	public function action_add() 
+	public function action_create() 
 	{
 		$this->auto_render = FALSE;
-		if ($_POST AND empty($_POST['email']) AND empty($_POST['website']))
+		if ($_POST)
 		{	
 			// Create the new post
-			unset($_POST['email'], $_POST['website']);
 			$post = ORM::factory('post')->values($_POST);
 			
 			if ($post->check())
