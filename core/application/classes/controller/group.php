@@ -68,11 +68,6 @@ class Controller_Group extends Controller_Template_Alpaca {
 		Alpaca::logged_in();
 		
 		$title = __('Create Category/Group');
-		$this->head->title->prepend($title);
-		$this->template->content = View::factory('group/create')
-			->bind('title', $title)
-			->set('groups', ORM::factory('group')->where('level', '=', 0)->find_all())
-			->bind('errors', $errors);
 
 		$auth_user = $this->auth->get_user();
 		if ($auth_user->has_role('admin'))
@@ -98,6 +93,12 @@ class Controller_Group extends Controller_Template_Alpaca {
 					$errors =$group->validate()->errors('validate');
 				}
 			}
+
+			$this->head->title->prepend($title);
+			$this->template->content = View::factory('group/create')
+				->bind('title', $title)
+				->set('groups', ORM::factory('group')->where('level', '=', 0)->find_all())
+				->bind('errors', $errors);
 		}
 		else
 		{
@@ -155,9 +156,8 @@ class Controller_Group extends Controller_Template_Alpaca {
 			}
 			else
 			{
-				$this->template->content = Alpaca::error_page($title, $content);
-			 	
 				$content = __('Not enough permission to perform this operation.');
+				$this->template->content = Alpaca::error_page($title, $content);
 			}
 		}
 		else	
@@ -259,13 +259,13 @@ class Controller_Group extends Controller_Template_Alpaca {
 		$new_topic_link = Route::url('topic/add', array('id' => Alpaca_Group::uri($group)));
 
 		$list_topics = Twig::factory('topic/list')
-			->set('post_new_topic', $new_topic_link)
 			->bind('group', $group)
 			->bind('topics', $topics_array)
 			->bind('pagination', $pagination);
 
 		$this->template->content = Twig::factory('group/list')
 			->set('group', $group)
+			->set('post_new_topic', $new_topic_link)
 			->bind('list_topics', $list_topics);
 
 		$group_topic_total = $group->topics->cached(60)->find_all()->count();

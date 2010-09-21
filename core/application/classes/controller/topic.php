@@ -145,39 +145,21 @@ class Controller_Topic extends Controller_Template_Alpaca {
 	{
 		// Check login status else redirect to login page
 		Alpaca::logged_in();
-		
-		if (is_numeric($group_id))
-		{
-			$group = ORM::factory('group', $group_id);
-		}
-		else
-		{
-			$group = ORM::factory('group')->where('uri', '=', $group_id)->find();
-		}
-		
-		$this->template->content = Alpaca::error_page($title, $content);
-					
+
 		$title = __('Start a new topic');
+//		$this->template->content = Alpaca::error_page($title, $content);
+
+		$group = ORM::factory('group')->get_group($group_id);
 		if ($group->loaded())
 		{
 			$author = $this->auth->get_user();
 			if ($group->level == 1)
 			{
+				$topic = ORM::factory('topic');
 				if ($_POST)
 				{
-					if ( ! $this->config->topic_repeat)
-					{
-						// Check the topic if it exist in database
-						$topic = ORM::factory('topic')->find_topic(array(
-							'user_id'	=> $author->id,
-							'content'	=> Arr::get($_POST, 'content'),
-						));
-
-						if ($topic->loaded())
-						{
-							$this->request->redirect(Alpaca_Topic::url($topic));
-						}
-					}
+					// redirect to the topic if topic repeat
+					$this->_check_topic_repeat($topic, TRUE);
 
 					// Create the new topic
 					$_POST['group_id'] = $group->id;
@@ -196,17 +178,17 @@ class Controller_Topic extends Controller_Template_Alpaca {
 					else
 					{
 						$errors = $topic->validate()->errors('validate');
-						echo Kohana::debug($errors);
 					}
 				}
 
-				$this->template->content = View::factory('topic/add_edit')
+				$author_avatar = Alpaca_User::avatar($author, NULL, TRUE, TRUE);
+				$author = $author->as_array();
+				$author['avatar'] = $author_avatar;
+				
+				$this->template->content = Twig::factory('topic/create')
 					->set('title', $title)
 					->set('author', $author)
-					->set('topic_title', '')
-					->set('topic_content', '')
-					->set('submit', __('Post it'))
-					->bind('group', $group)
+					->set('topic', $_POST)
 					->bind('errors', $errors);
 
 				// TODO: Change the sidebar
@@ -215,8 +197,11 @@ class Controller_Topic extends Controller_Template_Alpaca {
 						Alpaca_Group::image($group, TRUE)).'</div>'.
 					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
 						'返回'.$group->name.'小组');
-				
-				$this->template->sidebar = $sidebar;
+
+				$group_link = Route::url('group', array('id' => $group));
+				$this->template->sidebar = Twig::factory('sidebar/create_topic')
+					->set('group', $group)
+					->set('group_link', $group_link);
 			}
 			else
 			{
@@ -421,6 +406,19 @@ class Controller_Topic extends Controller_Template_Alpaca {
 		
 		$this->head->title->prepend($title);
 	}
-	
+
+	private function _check_topic_repeat($topic, $redirect = FALSE)
+	{
+		if ( ! $this->config->topic_repeat)
+		{
+			// Check the topic if it exist in database
+			$author = $this->auth->get_user();
+			$content = Arr::get($_POST, 'content');
+			if ($topic->topic_repeat($author->id, $content))
+			{
+				$this->request->redirect(Alpaca_Topic::url($topic));
+			}
+		}
+	}
 }
 

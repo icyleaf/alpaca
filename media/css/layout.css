@@ -446,6 +446,7 @@ h4 {
 	border: 1px solid #B2D8F9;
 	-moz-box-shadow: 0px 0px 5px #B2D8F9;
 	-webkit-box-shadow: 0px 0px 5px #B2D8F9;
+	outline: none;
 }
 
 .table .error {

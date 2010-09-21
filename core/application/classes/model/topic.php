@@ -195,6 +195,14 @@ class Model_Topic extends ORM {
 			->count_all();
 	}
 
+	public function topic_repeat($user_id, $content)
+	{
+		return $this->where('user_id', '=', $user_id)
+			->where('content', '=', $content)
+			->find()
+			->loaded();
+	}
+
 	/**
 	 * Search topics
 	 * 
@@ -285,26 +293,6 @@ class Model_Topic extends ORM {
 		}
 
 		return $this->find_all();
-	}
-
-	public function find_topic(Array $data)
-	{
-		$first_where = (count($data) > 0) ? TRUE : FALSE;
-		
-		foreach ($data as $key => $value)
-		{
-			if ($first_where)
-			{
-				$this->where($key, '=', $value);
-				$first_where = FALSE;
-			}
-			else
-			{
-				$this->and_where($key, '=', $value);
-			}
-		}
-
-		return $this->find();
 	}
 	
 	public function values($values)

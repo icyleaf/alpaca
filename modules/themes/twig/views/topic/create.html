@@ -1,0 +1,30 @@
+<h1>{{title}}</h1>
+<form method="post">
+<table class="table">
+	<tr>
+		<td>
+			{{'Title'|translate}}: <span class="error">{{errors.title}}</span><br />
+			<input type="text" name="title" id="title" tabindex="10" value="{{topic.title}}" />
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			{{'Content'|translate}}: <span class="error">{{errors.content}}</span><br />
+			<textarea name="content" class="content" cols="55" tabindex="20" rows="40">{{topic.content}}</textarea>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<span class="right">
+				<label class="tips">
+					<input id="enable_sogou" type="checkbox" tabindex="90" value="true"/>
+					{{'Enable Sogou Cloud IME'|translate}}
+				</label>
+				<input type="submit" class="button" tabindex="30" value="{{'Post it'|translate}}" />
+			</span>
+		</td>
+	</tr>
+</table>
+</form>
