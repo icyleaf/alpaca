@@ -59,6 +59,7 @@ return array
 	'%s collection' => '%s 收藏',
 	'%s collections' => '%s 收藏',
 	'Title' => '标题',
+	'Content' => '内容',
 	'Post it' => '发布',
 	'Undo' => '撤销',
 	'Start a new topic' => '发布新话题',

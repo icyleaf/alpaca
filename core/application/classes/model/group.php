@@ -45,6 +45,23 @@ class Model_Group extends ORM {
 			->order_by('hits', 'DESC')
 			->find_all();
 	}
+
+	public function get_group($group_id)
+	{
+		return $this->where($this->unique_key($group_id), '=', $group_id)
+			->find();
+	}
+
+	/**
+	 * Allows a model use both id and uri as unique identifiers
+	 *
+	 * @param   string  unique value
+	 * @return  string  field name
+	 */
+	public function unique_key($value)
+	{
+		return is_numeric($value) ? $this->pk() : 'uri';
+	}
 	
 	public function values($values)
 	{
