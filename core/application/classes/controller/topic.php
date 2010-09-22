@@ -375,25 +375,24 @@ class Controller_Topic extends Controller_Template_Alpaca {
 		if ($topic->loaded())
 		{
 			$title = __('Who collected ":title" topic', array(':title' => $topic->title));
-			$this->template->content = View::factory('user/list')
-				->bind('title', $title)
-				->bind('collections', $collections);
-				
-			$this->template->sidebar = View::factory('sidebar/topic_detail')
-				->bind('topic', $topic);
-				
-			$collections = ORM::factory('collection')
-				->where('topic_id', '=', $topic_id)
-				->find_all();
+
+			$collectors = ORM::factory('collection')->get_collectors($topic->id);
+			$this->template->content = Twig::factory('user/list')
+				->set('title', $title)
+				->set('collectors', $collectors);
+
+			$group_link = Route::url('group', array('id' => $topic->group));
+			$this->template->sidebar = Twig::factory('sidebar/return_group')
+				->set('group', $topic->group)
+				->set('group_link', $group_link);
 		}
 		else
 		{
-			$this->template->content = Alpaca::error_page($title, $content);
-			
 			$title = __('Ooops');
 			$content = __('Not found this topic!');
+			$this->template->content = Alpaca::error_page($title, $content);
 		}
-		
+
 		$this->head->title->prepend($title);
 	}
 

@@ -27,6 +27,29 @@ class Model_Collection extends ORM {
 		),
 	);
 
+	public function get_collectors($topic_id)
+	{
+		$collections = $this->where('topic_id', '=', $topic_id)
+			->find_all();
+
+		if ($collections->count() > 0 )
+		{
+			$user_array = array();
+			foreach ($collections as $i => $collection)
+			{
+				$user = $collection->user;
+				$user_array[$i] = $user->as_array();
+				$user_array[$i]['avatar'] = Alpaca_User::avatar($user, array('size' => 48), array('class' => 'avatar'), TRUE);
+				$user_array[$i]['nickname'] = (strlen($user->nickname) > 24) ? substr($user->nickname, 0, 24).'...' : $user->nickname;
+				$user_array[$i]['link'] = Alpaca_User::url('user', $user);
+			}
+
+			return $user_array;
+		}
+
+		return FALSE;
+	}
+
 	/**
 	 * Check the topic if collected by user
 	 *

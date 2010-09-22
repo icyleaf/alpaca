@@ -1,0 +1,13 @@
+{% if title %}
+<h2>{{title}}</h2>
+{% endif %}
+
+<ul class="list_users">
+{% for collector in collectors %}
+	<li class="user_item">
+		<div>{{collector.avatar|safe}}</div>
+		{% html.anchor collector.link, collector.nickname, ['title':user.nickname] %}
+	</li>
+{% endfor %}
+</ul>
+<div class="clear"></div>
