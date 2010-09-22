@@ -78,25 +78,21 @@ class Controller_Post extends Controller_Template_Alpaca {
 			
 		if ($post->loaded())
 		{
-			$title = __("Edit Reply");
+			$title = __('Edit Reply');
 			
 			$auth_user = $this->auth->get_user();
 			if (($auth_user->id == $post->author->id) OR $auth_user->has_role('admin'))
 			{
-				$this->template->content = View::factory('post/edit')
+				$topic_link = Alpaca_Topic::url($post->topic);
+				$this->template->content = Twig::factory('post/edit')
 					->bind('errors', $errors)
-					->bind('post', $post);
+					->set('post', $post)
+					->set('topic_link', $topic_link);
 				
-				$group = $post->topic->group;
-				//TODO: Change the sidebar
-				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
-						Alpaca_Group::image($group, TRUE)).
-					'</div>'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
-					'返回'.$group->name.'小组');
-			
-				$this->template->sidebar = $sidebar;
+				$group_link = Route::url('group', array('id' => $post->topic->group));
+				$this->template->sidebar = Twig::factory('sidebar/return_group')
+					->set('group', $post->topic->group)
+					->set('group_link', $group_link);
 			}
 			else
 			{

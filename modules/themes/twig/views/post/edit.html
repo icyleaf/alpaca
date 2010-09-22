@@ -1,0 +1,24 @@
+<h1>{{'Edit Reply'|translate}}</h1>
+
+<form method="post">
+<table class="table">
+	<tr>
+		<td>
+			<textarea name="content" class="content" cols="55" rows="40">{{post.content}}</textarea>
+			<span class="error">{{errors.content}}</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class="right">
+				<input id="enable_sogou" type="checkbox" tabindex="90" value="true"/>
+				<span class="tips">{{'Enable Sogou Cloud IME'|translate}}</span>
+				<input class="button_submit" type="submit" value="{{'Save'|translate}}" />
+			</span>
+			<span class="left">
+				{% html.anchor topic_link, 'Cancel'|translate, ['class':'button'] %}
+			</span>
+		</td>
+	</tr>
+</table>
+</form>

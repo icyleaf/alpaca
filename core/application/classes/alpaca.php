@@ -232,27 +232,26 @@ class Alpaca {
 	 */
 	public static function time_ago($date)
 	{
-		if (empty($date))
+		$timesince = FALSE;
+		if ( ! empty($date))
 		{
-			return '[X]'.__(' ago');
+			$ago = date('U') - $date;
+			$periods = array(__('second'), __('minute'), __('hour'), __('day'), __('week'), __('month'), __('year'), __('ten year'));
+			$lengths = array('60', '60', '24', '7', '4.35', '12', '10');
+			for ($j = 0; $ago >= $lengths[$j]; $j++)
+			{
+				$ago /= $lengths[$j];
+			}
+			$ago = round($ago);
+
+			if ($ago != 1)
+			{
+				$periods[$j].= __('s');
+			}
+			$timesince = $ago.' '.$periods[$j].__(' ago');
 		}
-		
-		$ago = date('U') - $date;
-		$periods = array(__('second'), __('minute'), __('hour'), __('day'), __('week'), __('month'), __('year'), __('ten year'));
-		$lengths = array('60', '60', '24', '7', '4.35', '12', '10');
-		for ($j = 0; $ago >= $lengths[$j]; $j++)
-		{
-			$ago /= $lengths[$j];
-		}
-		$ago = round($ago);
-		
-		if ($ago != 1) 
-		{
-			$periods[$j].= __('s');
-		}
-		$output = $ago.' '.$periods[$j].__(' ago');
-		
-		return $output;
+
+		return $timesince;
 	}
 	
 	/**
@@ -465,7 +464,7 @@ class Alpaca {
 	 */
 	public static function error_page(&$title, &$content)
 	{
-		return View::factory('template/general')
+		return Twig::factory('template/errors')
 			->bind('title', $title)
 			->bind('content', $content);
 	}

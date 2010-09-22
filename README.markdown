@@ -29,7 +29,7 @@ Next, add whatever submodules alpaca need, they must be initialized and update:
 
 That's all there is to it.
 
-Step 3: Configuration of Database
+Step 3: Cownfiguration of Database
 
 Edit `application/config/database.php` with the correct information.
 

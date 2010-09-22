@@ -22,7 +22,10 @@
 					<input id="enable_sogou" type="checkbox" tabindex="90" value="true"/>
 					{{'Enable Sogou Cloud IME'|translate}}
 				</label>
-				<input type="submit" class="button" tabindex="30" value="{{'Post it'|translate}}" />
+				<input type="submit" class="button_submit" tabindex="30" value="{{submit_text}}" />
+			</span>
+			<span class="left">
+				{% html.anchor group_link, 'Cancel'|translate, ['class':'button'] %}
 			</span>
 		</td>
 	</tr>

@@ -147,7 +147,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 		Alpaca::logged_in();
 
 		$title = __('Start a new topic');
-//		$this->template->content = Alpaca::error_page($title, $content);
+		$this->template->content = Alpaca::error_page($title, $content);
 
 		$group = ORM::factory('group')->get_group($group_id);
 		if ($group->loaded())
@@ -184,22 +184,18 @@ class Controller_Topic extends Controller_Template_Alpaca {
 				$author_avatar = Alpaca_User::avatar($author, NULL, TRUE, TRUE);
 				$author = $author->as_array();
 				$author['avatar'] = $author_avatar;
-				
+				$submit_text = __('Post it!');
+				$group_link = Route::url('group', array('id' => $group));
+
 				$this->template->content = Twig::factory('topic/create')
 					->set('title', $title)
 					->set('author', $author)
 					->set('topic', $_POST)
+					->set('submit_text', $submit_text)
+					->set('group_link', $group_link)
 					->bind('errors', $errors);
 
-				// TODO: Change the sidebar
-				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
-						Alpaca_Group::image($group, TRUE)).'</div>'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
-						'返回'.$group->name.'小组');
-
-				$group_link = Route::url('group', array('id' => $group));
-				$this->template->sidebar = Twig::factory('sidebar/create_topic')
+				$this->template->sidebar = Twig::factory('sidebar/return_group')
 					->set('group', $group)
 					->set('group_link', $group_link);
 			}
@@ -254,24 +250,18 @@ class Controller_Topic extends Controller_Template_Alpaca {
 			$auth_user = $this->auth->get_user();
 			if (($auth_user->id == $topic->author->id) OR $auth_user->has_role('admin'))
 			{
-				$this->template->content = View::factory('topic/add_edit')
+				$group_link = Route::url('group', array('id' => $topic->group));
+				$submit_text = __('Update');
+				$this->template->content = Twig::factory('topic/create')
 					->set('title', $title)
-					->set('author', $topic->author)
-					->set('topic_title', $topic->title)
-					->set('topic_content', $topic->content)
-					->set('submit', __('Update'))
-					->bind('group', $group)
+					->set('topic', $topic)
+					->set('group_link', $group_link)
+					->set('submit_text', $submit_text)
 					->bind('errors', $errors);
-					
-				$group = $topic->group;
-				// TODO: change the sidebar
-				$sidebar = '<div style="margin-bottom:10px">'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
-						Alpaca_Group::image($group, TRUE)).'</div>'.
-					HTML::anchor(Route::url('group', array('id' => Alpaca_Group::uri($group))),
-					'返回'.$group->name.'小组');
-			
-				$this->template->sidebar = $sidebar;
+
+				$this->template->sidebar = Twig::factory('sidebar/return_group')
+					->set('group', $topic->group)
+					->set('group_link', $group_link);
 			}
 			else
 			{
