@@ -56,12 +56,12 @@ Route::set('topic', '(group/<group_id>/)topic/<id>', array(
 		'action'    => 'view',
 	));
 
-Route::set('topic/add', 'group/<id>/new_topic', array(
+Route::set('topic/create', 'group/<id>/new_topic', array(
 		'id'		=> '(\w|[-])+',
 	))
 	->defaults(array(
 		'controller'=> 'topic',
-		'action'    => 'add',
+		'action'    => 'create',
 	));
 
 Route::set('topic/move', 'topic/move/<topic_id>(/<group_id>)', array(

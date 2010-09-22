@@ -141,7 +141,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 	 * @param int $group_id 
 	 * @return void
 	 */
-	public function action_add($group_id) 
+	public function action_create($group_id) 
 	{
 		// Check login status else redirect to login page
 		Alpaca::logged_in();
@@ -184,7 +184,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 				$author_avatar = Alpaca_User::avatar($author, NULL, TRUE, TRUE);
 				$author = $author->as_array();
 				$author['avatar'] = $author_avatar;
-				$submit_text = __('Post it!');
+				$submit_text = __('Post it');
 				$group_link = Route::url('group', array('id' => $group));
 
 				$this->template->content = Twig::factory('topic/create')

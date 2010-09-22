@@ -444,7 +444,11 @@ class Alpaca {
 			$request= Request::current();
 			if (empty($redirect_url))
 			{
-				$redirect_url = Route::url('login').URL::query(array(
+				$redirect_url = Route::url('auth/actions', array(
+					'action' => 'login'
+				));
+
+				$redirect_url .= URL::query(array(
 					'redir' => $request->uri
 				));
 			}

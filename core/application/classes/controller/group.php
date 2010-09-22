@@ -256,7 +256,7 @@ class Controller_Group extends Controller_Template_Alpaca {
 			->order_by('touched', 'DESC')
 			->find_all();
 		$topics_array = $group->topics->topics_list_array($topics);
-		$new_topic_link = Route::url('topic/add', array('id' => Alpaca_Group::uri($group)));
+		$new_topic_link = Route::url('topic/create', array('id' => Alpaca_Group::uri($group)));
 
 		$list_topics = Twig::factory('topic/list')
 			->bind('group', $group)
