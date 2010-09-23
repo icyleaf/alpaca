@@ -1,0 +1,26 @@
+<div class="widget">
+	<div class="content">
+		<label>{{'Privacy'|translate}}</label>
+		<p>
+			{{'Keep in mind that we will never display your email address to the public. It will only be used to notify you of updates.'|translate}}
+		</p>
+
+		<label>{{'Notifications'|translate}}</label>
+		<p>
+			{% set notification_link %}
+			{% html.anchor 'settings/notification', 'Notifications'|translate %}
+			{% endset %}
+			{{'Want to be notified of issues as they come in? Check the %s section.'|translate|format(notification_link)}}
+		</p>
+
+		<label>{{'View your public profile'|translate}}</label>
+		<p>
+			{% set user_profile_link %}
+			{% html.anchor user.link, 'Click here'|translate %}
+			{% endset %}
+			{{'%s to view your public profile.'|translate|format(user_profile_link)}}
+		</p>
+	</div>
+</div>
+
+{{view}}

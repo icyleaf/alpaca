@@ -1,0 +1,25 @@
+<h2 class="settings-title left">{{title}}</h2>
+
+{% if status %}
+<div id="tips" class="{{status.type}}">
+	{{status.content}}
+	<span class="right"><a href="javascript:void(0);" class="close_tips">{{'Close'|translate}}</a></span>
+</div>
+{% endif %}
+
+<ul class="settings-menu right">
+{% for id,item in setting_nav %}
+	{% if item.attr %}
+	<li  class="{{item.attr.class}}">{{item.title}}</li>
+	{% else %}
+	<li>{% html.anchor item.link, item.title %}</li>
+	{% endif %}
+{% endfor %}
+</ul>
+<div class="clear"></div>
+
+<div class="settings-content">
+<form method="POST">
+	{{body}}
+</form>
+</div>

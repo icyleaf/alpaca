@@ -188,14 +188,14 @@ return array
 	'My profile' => ':user的设置',
 	'Privacy' => '隐私保密',
 	'Click here' => '点击这里',
-	':click_here to view your public profile.' => ':click_here查看你的个人页面',
+	'%s to view your public profile.' => '%s查看你的个人页面',
 
 	'View your public profile' => '查看你的个人页面',
 	'Successful! Your profile has been updated!' => '个人资料更新完毕！',
 	'Successful! Your password has been update!' => '密码更新完毕！',
 	':count errors prohibited this user from being saved.' => '个人资料填写出现 :count 处问题，请修正后再做更新！',
 	'Keep in mind that we will never display your email address to the public. It will only be used to notify you of updates.' => '您的账户信息绝对保密，我们不会对外公开你的邮箱地址。它仅仅用于邮件通知。',
-	'Want to be notified of issues as they come in? Check the :notifications section.' => '假若你得到通过邮箱得到你需要的信息提醒，请到:notifications设置相关选项。',
+	'Want to be notified of issues as they come in? Check the %s section.' => '假若你得到通过邮箱得到你需要的信息提醒，请到%s设置相关选项。',
 
 
 	/**

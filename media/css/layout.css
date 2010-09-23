@@ -985,10 +985,16 @@ ul.novice li small {
 }
 
 /**** SETTINGS ****/
+#content h2content.settings-title {
+	margin-bottom: 0;
+	font-size: 1.4em;
+	padding-left: 3px;
+}
+
 ul.settings-menu {
 	margin: 0;
 	padding: 0;
-	height: 26px;
+	/*height: 40px;*/
 }
 
 ul.settings-menu li {

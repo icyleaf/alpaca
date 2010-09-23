@@ -23,31 +23,54 @@ class Controller_Settings extends Controller_Template_Alpaca {
 
 		// Check login status else redirect to login page
 		Alpaca::logged_in();
-		
+
+		$user_name = $this->user->nickname;
 		if (I18n::$lang == 'zh-cn')
 		{
 			$user_name = Alpaca::beautify_str($this->user->nickname, FALSE, TRUE);
 		}
-		else
+
+		$this->links = array(
+			'settings'  => array(
+				'link'      => 'settings',
+				'title'     => __('About yourself'),
+			),
+			'changepassword'  => array(
+				'link'      => 'settings/changepassword',
+				'title'     => __('About yourself'),
+			),
+			'notifications'  => array(
+				'link'      => 'settings/notifications',
+				'title'     => __('Notifications'),
+			),
+		);
+
+		foreach ($this->links as $i => $item)
 		{
-			$user_name = $this->user->nickname;
+			if ($item['link'] == $this->request->uri)
+			{
+				$this->links[$i]['attr'] = array(
+					'class' => 'current'
+				);
+				break;
+			}
 		}
+
 		$title = __('My profile', array(':user' => $user_name));
 		$this->head->title->prepend($title);
-		$this->template->content = View::factory('settings/general')
+		
+		$this->template->content = Twig::factory('template/settings')
 			->bind('title', $title)
-			->bind('links', $this->links)
+			->bind('setting_nav', $this->links)
 			->bind('status', $this->status);
-			
-		$this->template->sidebar = View::factory('sidebar/settings');
 
-		$this->links = array
-		(
-			'settings'						=> __('About yourself'),
-			'settings/changepassword'	=> __('Change Password'),
-			'settings/notifications'		=> __('Notifications'),
-			//'settings/destroy'			=> __('Destroy Account'),
-		);
+		$user = $this->auth->get_user();
+		$user_profile_link = Alpaca_User::url('user', $user);
+		$user = $user->as_array();
+		$user['link'] = $user_profile_link;
+
+		$this->template->sidebar = Twig::factory('sidebar/settings')
+			->set('user', $user);
 	}
 	
 	/**
@@ -55,13 +78,6 @@ class Controller_Settings extends Controller_Template_Alpaca {
 	 */
 	public function action_index()
 	{
-		$this->template->content->body = View::factory('settings/profile')
-			->bind('user', $this->user)
-			->bind('errors', $errors);
-		
-		$this->template->sidebar->view = View::factory('sidebar/settings/profile')
-			->bind('user', $this->user);
-		
 		if ($_POST)
 		{
 			$post = Validate::factory($_POST)
@@ -133,6 +149,13 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				);
 			}
 		}
+
+//		$this->template->content->body = Twig::factory('settings/profile')
+//			->bind('user', $this->user)
+//			->bind('errors', $errors);
+//
+//		$this->template->sidebar->view = View::factory('sidebar/settings/profile')
+//			->bind('user', $this->user);
 	}
 	
 	/**
