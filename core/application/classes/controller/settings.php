@@ -174,11 +174,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 	 * Changed user password
 	 */
 	public function action_changepassword()
-	{		
-		$this->template->content->body = View::factory('settings/changepassword')
-			->bind('user', $this->user)
-			->bind('errors', $errors);
-			
+	{
 		if ($_POST)
 		{
 			$rules = array
@@ -187,6 +183,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				'min_length'	=> array(5),
 				'max_length'	=> array(20),
 			);
+
 			$post = Validate::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('current_password', $rules)
@@ -255,6 +252,10 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				);
 			}
 		}
+
+		$this->template->content->body = Twig::factory('settings/changepassword')
+			->bind('user', $this->user)
+			->bind('errors', $errors);
 	}
 	
 	/**

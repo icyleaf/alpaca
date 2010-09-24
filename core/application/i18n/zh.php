@@ -97,7 +97,7 @@ return array
 	 */
 	'Register' => '申请账户',
 	'Your Email' => '你的 Email 地址',
-	'New Password' => '设置一个密码',
+	'New Password' => '设置新密码',
 	'Pick a nickname' => '给自己一个昵称',
 	'Login or Email' => '账户或邮箱',
 	'Remember me' => '记住我的登录状态',
@@ -189,7 +189,6 @@ return array
 	'Privacy' => '隐私保密',
 	'Click here' => '点击这里',
 	'%s to view your public profile.' => '%s查看你的个人页面',
-
 	'View your public profile' => '查看你的个人页面',
 	'Successful! Your profile has been updated!' => '个人资料更新完毕！',
 	'Successful! Your password has been update!' => '密码更新完毕！',
