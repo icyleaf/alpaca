@@ -1,0 +1,93 @@
+<h3>{{'Change Avatar'|translate}}</h3>
+<div class="avatar">
+	{{user.avatar|safe}}
+	<p>
+		<strong>
+			{% set gravatar_link %}
+			{% html.anchor 'http://gravatar.com', 'Gravatar.com' %}
+			{% endset %}
+			{{'Change your avatar at %s'|translate|format(gravatar_link)}}
+		</strong>
+		{{'We\'re using %s'|translate|format(user.email)}}
+	</p>
+	<div class="clear"></div>
+</div>
+
+<h3>{{'Account Profile'|translate}}</h3>
+<dl>
+	<dt><label>{{'Email'|translate}}</label></dt>
+	<dd>
+		<input class="field readonly" type="text" value="{{user.email}}" readonly />
+	</dd>
+</dl>
+<dl>
+	<dt><label class="tips">username</label></dt>
+	<dd>
+		{% if user.username %}
+		{% set username_attr = 'readonly' %}
+		{% else %}
+		{% set username_attr = '' %}
+		{% endif %}
+		<input class="field {{username_attr}}" type="text" name="username" value="{{user.username}}" {{username_attr}} />
+		<br /><span class="error">{{error_username}}</span>
+	</dd>
+</dl>
+<dl>
+	<dt><label>{{'Nickname'|translate}}</label></dt>
+	<dd>
+		<input class="field" type="text" name="nickname" value="{{user.nickname}}"/>
+		<br /><span class="error">{{errors.nickname}}</span>
+	</dd>
+</dl>
+<dl>
+	<dt><label>{{'Location'|translate}}</label></dt>
+	<dd>
+		<input class="field" type="text" name="location" value="{{user.location}}"/>
+		<br /><span class="error">{{errors.location}}</span>
+	</dd>
+</dl>
+<div class="submit txt_right">
+	<input class="button" type="submit" value="{{'Update Profile'|translate}}" />
+</div>
+
+<h3>{{'Contacts'|translate}}</h3>
+<dl>
+	<dt><label>{{'Website'|translate}}</label></dt>
+	<dd>
+		<input class="field" type="text" name="website" value="{{user.website}}"/>
+		<br /><span class="error">{{errors.website}}</span>
+	</dd>
+</dl>
+<dl>
+	<dt><label>{{'QQ'|translate}}</label></dt>
+	<dd>
+		<input class="field" type="text" name="qq" value="{{user.qq}}"/>
+		<br /><span class="error">{{errors.qq}}</span>
+	</dd>
+</dl>
+<dl>
+	<dt><label>{{'MSN'|translate}}</label></dt>
+	<dd>
+		<input class="field" type="text" name="msn" value="{{user.msn}}"/>
+		<br /><span class="error">{{errors.msn}}</span>
+	</dd>
+</dl>
+<dl>
+	<dt><label>{{'Gtalk'|translate}}</label></dt>
+	<dd>
+		<input class="field" type="text" name="gtalk" value="{{user.gtalk}}"/>
+		<br /><span class="error">{{errors.gtalk}}</span>
+	</dd>
+</dl>
+<dl>
+	<dt><label>{{'Skype'|translate}}</label></dt>
+	<dd>
+		<input class="field" type="text" name="skype" value="{{user.skype}}"/>
+		<br /><span class="error">{{errors.skype}}</span>
+	</dd>
+</dl>
+
+<div class="submit txt_right">
+	<input class="button" type="submit" value="{{'Update Profile'|translate}}" />
+</div>
+<input type="hidden" name="id" value="{{user.id}}" />

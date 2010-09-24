@@ -985,7 +985,7 @@ ul.novice li small {
 }
 
 /**** SETTINGS ****/
-#content h2content.settings-title {
+#content h2.settings-title {
 	margin-bottom: 0;
 	font-size: 1.4em;
 	padding-left: 3px;

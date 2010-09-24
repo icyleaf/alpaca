@@ -131,6 +131,11 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				}
 
 				$user->values($_POST)->save();
+
+				// update saved user information
+				$this->user = $user;
+
+				// Display status
 				$this->status = array
 				(
 					'type'		=> 'success',
@@ -140,6 +145,8 @@ class Controller_Settings extends Controller_Template_Alpaca {
 			else
 			{
 				$errors = $post->errors('validate');
+
+				echo Kohana::debug($errors);
 				$this->status = array
 				(
 					'type'		=> 'error',
@@ -150,12 +157,17 @@ class Controller_Settings extends Controller_Template_Alpaca {
 			}
 		}
 
-//		$this->template->content->body = Twig::factory('settings/profile')
-//			->bind('user', $this->user)
-//			->bind('errors', $errors);
-//
-//		$this->template->sidebar->view = View::factory('sidebar/settings/profile')
-//			->bind('user', $this->user);
+		$user_avatar = HTML::image(Alpaca_User::avatar($this->user), array(
+			'width' => 48,
+			'height' => 48,
+			'alt' => __('avatar')
+		));
+		$user = $this->user->as_array();
+		$user['avatar'] = $user_avatar;
+
+		$this->template->content->body = Twig::factory('settings/profile')
+			->bind('user', $user)
+			->bind('errors', $errors);
 	}
 	
 	/**

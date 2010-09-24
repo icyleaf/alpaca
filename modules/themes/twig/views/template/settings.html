@@ -1,11 +1,11 @@
-<h2 class="settings-title left">{{title}}</h2>
-
 {% if status %}
 <div id="tips" class="{{status.type}}">
 	{{status.content}}
 	<span class="right"><a href="javascript:void(0);" class="close_tips">{{'Close'|translate}}</a></span>
 </div>
 {% endif %}
+
+<h2 class="settings-title left">{{title}}</h2>
 
 <ul class="settings-menu right">
 {% for id,item in setting_nav %}
