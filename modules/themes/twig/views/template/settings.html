@@ -1,6 +1,10 @@
 {% if status %}
 <div id="tips" class="{{status.type}}">
-	{{status.content}}
+{% if status.type == 'success' %}
+	{{'Successful! Your profile has been updated!'|translate}}
+{% elseif status.type == 'error' and status.count > 0 %}
+	{{'%s errors prohibited this user from being saved.'|translate|format(status.count)}}
+{% endif %}
 	<span class="right"><a href="javascript:void(0);" class="close_tips">{{'Close'|translate}}</a></span>
 </div>
 {% endif %}

@@ -9,7 +9,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 	
 	private $user		= NULL;
 	private $links		= NULL;
-	private $status	= FALSE;
+	private $status		= FALSE;
 	
 	/**
 	 * Settings Init
@@ -37,12 +37,16 @@ class Controller_Settings extends Controller_Template_Alpaca {
 			),
 			'changepassword'  => array(
 				'link'      => 'settings/changepassword',
-				'title'     => __('About yourself'),
+				'title'     => __('Change Password'),
 			),
-			'notifications'  => array(
-				'link'      => 'settings/notifications',
-				'title'     => __('Notifications'),
-			),
+//			'notifications'  => array(
+//				'link'      => 'settings/notifications',
+//				'title'     => __('Notifications'),
+//			),
+//			'destroy'       => array(
+//				'link'      => 'settings/destroy',
+//				'title'     => __('Destroy Account'),
+//			),
 		);
 
 		foreach ($this->links as $i => $item)
@@ -117,7 +121,8 @@ class Controller_Settings extends Controller_Template_Alpaca {
 					'min_length'		=> array(0),
 					'max_length'		=> array(50),
 					));
-				
+			
+			$status = 'error';
 			if ($post->check())
 			{
 				$user_id = $_POST['id'];
@@ -135,33 +140,21 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				// update saved user information
 				$this->user = $user;
 
-				// Display status
-				$this->status = array
-				(
-					'type'		=> 'success',
-					'content'	=> __('Successful! Your profile has been updated!'),
-				);
+				$status = 'success';
 			}
 			else
 			{
 				$errors = $post->errors('validate');
-
-				echo Kohana::debug($errors);
-				$this->status = array
-				(
-					'type'		=> 'error',
-					'content'	=> __(':count errors prohibited this user from being saved.', array(
-						':count' => count($errors)
-						)),
-				);
 			}
+
+			$this->status = array
+			(
+				'type'		=> $status,
+				'count'		=> isset($errors) ? count($errors) : NULL,
+			);
 		}
 
-		$user_avatar = HTML::image(Alpaca_User::avatar($this->user), array(
-			'width' => 48,
-			'height' => 48,
-			'alt' => __('avatar')
-		));
+		$user_avatar = HTML::image(Alpaca_User::avatar($this->user));
 		$user = $this->user->as_array();
 		$user['avatar'] = $user_avatar;
 
@@ -189,7 +182,8 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				->rules('current_password', $rules)
 				->rules('password', $rules)
 				->rules('password_confirm', $rules);
-			
+
+			$status = 'error';
 			if ($post->check())
 			{
 				$current_data = array
@@ -204,35 +198,16 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				{
 					if ($user->change_password($_POST, TRUE))
 					{
-						$this->status = array
-						(
-							'type'		=> 'success',
-							'content'	=> __('Successful! Your password has been update!'),
-						);
+						$status = 'success';
 					}
 					else
 					{
 						$errors = $_POST->errors('validate');
-						$this->status = array
-						(
-							'type'		=> 'error',
-							'content'	=> __(':count errors prohibited this user from being saved.', array(
-								':count' => count($errors)
-								)),
-						);
 					}
-					
 				}
 				else
 				{
 					$errors = $current_data->errors('validate');
-					$this->status = array
-					(
-						'type'		=> 'error',
-						'content'	=> __(':count errors prohibited this user from being saved.', array(
-							':count' => count($errors)
-							)),
-					);
 					
 					if (isset($errors['username']))
 					{
@@ -243,14 +218,13 @@ class Controller_Settings extends Controller_Template_Alpaca {
 			else
 			{
 				$errors = $post->errors('validate');
-				$this->status = array
-				(
-					'type'		=> 'error',
-					'content'	=> __(':count errors prohibited this user from being saved.', array(
-						':count' => count($errors)
-						)),
-				);
 			}
+
+			$this->status = array
+			(
+				'type'	=> 'error',
+				'count'	=> isset($errors) ? count($errors) : NULL,
+			);
 		}
 
 		$this->template->content->body = Twig::factory('settings/changepassword')
