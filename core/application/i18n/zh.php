@@ -89,6 +89,7 @@ return array
 	'Enable Sogou Cloud IME' => '启用搜狗云输入法',
 	'%s people collected this!' => '%s 位用户收藏了此话题',
 	'you already collected this!' => '您已经收藏了此话题',
+	'Click star to collected this topic' => '点击收藏该话题',
 	'view who collected this!' => '谁收藏了此话题',
 	'Who collected ":title" topic' => '收藏 ":title" 的用户',
 

@@ -11,7 +11,7 @@ class Model_Topic extends ORM {
 		'group' 	=> array(),
 	);
 	protected $_has_many = array(
-		'posts' 	=>	array(
+		'posts' 		=>	array(
 			'model' 		=> 'post'
 		)
 	);
@@ -115,6 +115,15 @@ class Model_Topic extends ORM {
 	public function topic_detail_array($topic)
 	{
 		$author = $topic->author;
+
+		$auth = Auth::instance();
+
+		$is_collected = FALSE;
+		if ($auth_user = $auth->get_user())
+		{
+			$is_collected = ORM::factory('collection')->is_collected($topic->id, $auth_user->id);
+		}
+
 		return array(
 			'id'			=> $topic->id,
 			'title'		    => $topic->title,
@@ -123,6 +132,7 @@ class Model_Topic extends ORM {
 			'content'		=> Alpaca::format_html($topic->content),
 			'created'		=> date(Kohana::config('alpaca')->date_format, $topic->created),
 			'time_ago'		=> Alpaca::time_ago($topic->created),
+			'is_collected'	=> $is_collected,
 		);
 	}
 

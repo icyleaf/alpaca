@@ -60,7 +60,7 @@ class Model_Collection extends ORM {
 	public function is_collected($topic_id, $user_id)
 	{
 		$result = $this->where('user_id', '=', $user_id)
-			->and_where('topic_id', '=', $topic_id)
+			->where('topic_id', '=', $topic_id)
 			->find();
 
 		return $result->loaded();

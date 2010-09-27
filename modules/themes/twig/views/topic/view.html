@@ -11,9 +11,13 @@
 
 <div class="topic" id="topic-{{topic.id}}">
 	<h2>
-		<a href="{{collect_topic_url}}">
-			{% html.image 'media/images/star_empty.png' %}
-		</a>
+		{% if topic.is_collected %}
+			{% html.image 'media/images/star_solid.png', ['title':'you already collected this!'|translate] %}
+		{% else %}
+			<a href="{{collect_topic_url}}" title="{{'Click star to collected this topic'|translate}}">
+				{% html.image 'media/images/star_empty.png' %}
+			</a>
+		{% endif %}
 		{{topic.title}}
 	</h2>
 
