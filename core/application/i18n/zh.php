@@ -202,8 +202,8 @@ return array
 	 */
 	'Go' => '搜索',
 	'Search Topic' => '搜索话题',
-	'Search results for \':query\'' => '搜索 \':query\' 的结果',
-	'Your search returned no results.' => '未找到搜索结果',
+	'Search results for \'%s\'' => '搜索 \'%s\' 的结果',
+	'Your search returned no results.' => '非常抱歉，没有能够找到任何匹配关键字的结果。',
 
 	/**
 	 * Time ago

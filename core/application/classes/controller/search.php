@@ -31,28 +31,39 @@ class Controller_Search extends Controller_Template_Alpaca {
 				$query = Arr::get($_GET, 'q');
 				$type = Arr::get($_GET, 'type' , 'topic');
 				$total = ORM::factory($type)->search($query)->count();
-				$topics = ORM::factory($type)->search($query, $pagination->items_per_page, $pagination->offset);
 
 				$pagination->setup(array(
 					'view'				=> 'pagination/digg',
 					'total_items' 		=> $total,
 					'items_per_page'	=> $this->config->topic['per_page'],
 				));
-				
-				$list_topic = View::factory('topic/list')
-					->bind('topics', $topics)
-					->bind('pagination', $pagination);
+
+				if ($total > 0)
+				{
+					$topics = ORM::factory($type)->search($query, $pagination->items_per_page, $pagination->offset);
+					$topics_array = ORM::factory('topic')->topics_list_array($topics);
+
+					$list_topic = Twig::factory('topic/list')
+						->bind('topics', $topics_array)
+						->bind('pagination', $pagination);
+				}
 			}
-			
 		}
 
-		$this->template->content = View::factory('search/topic')
+		$this->template->content = Twig::factory('search/topic')
 			->bind('query', $query)
 			->bind('total', $total)
+			->bind('list_topic', $list_topic)
 			->bind('topics', $topics)
 			->bind('pagination', $pagination);
 
-		$this->template->sidebar = '';
+		// about
+		$about_content = $this->config->about;
+		$about = Twig::factory('sidebar/about')
+			->set('stats', $this->_generate_stats())
+			->bind('about', $about_content);
+
+		$this->template->sidebar = $about;
 	}
 
 }

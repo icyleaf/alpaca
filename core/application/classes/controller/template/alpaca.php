@@ -185,5 +185,23 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 		return $menu->render($config);
 	}
 
+	/**
+	 * Generate stats
+	 *
+	 * @return array
+	 */
+	protected function _generate_stats()
+	{
+		$topics_cout = ORM::factory('topic')->find_all()->count();
+		$users_cout = ORM::factory('user')->find_all()->count();
+		$groups_cout = ORM::factory('group')->where('level', '=', 1)->find_all()->count();
+
+		return array(
+			'topics'   => $topics_cout,
+			'users'    => $users_cout,
+			'groups'   => $groups_cout,
+		);
+	}
+
 }
 

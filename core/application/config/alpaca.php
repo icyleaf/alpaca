@@ -9,7 +9,7 @@ $config = array
 	(
 		'name'			=> 'Alpaca',
 		'version'		=> '0.4',
-		'codename'		=> 'whelp',
+		'codename'		=> 'Afterlife',
 		'author'		=> 'icyleaf',
 		'url'			=> 'http://kohana.cn',
 	),
