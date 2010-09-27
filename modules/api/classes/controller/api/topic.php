@@ -25,16 +25,16 @@ class Controller_API_Topic extends Controller_API_Core {
 			$topics = FALSE;
 			switch ($type)
 			{
-				case 'latest':
-					$title = '最新发布话题';
+				case 'new':
+					$title = __('Latest topics');
 					$topics = $topic_model->get_topics('touched', $this->_max);
 					break;
-				case 'hits':
-					$title = '最高关注话题';
+				case 'hot':
+					$title = __('Top hit topics');
 					$topics = $topic_model->get_topics('hits', $this->_max);
 					break;
-				case 'collections':
-					$title = '最高收藏话题';
+				case 'top':
+					$title = __('Top collection topics');
 					$topics = $topic_model->get_topics('collections', $this->_max);
 					break;
 			}
@@ -77,7 +77,7 @@ class Controller_API_Topic extends Controller_API_Core {
 
 				$output = array(
 					'title' => $title,
-					'link' => Route::url($type),
+					'link' => URL::site($this->request->uri),
 					'entry' => $entry,
 				);
 
