@@ -35,7 +35,7 @@
 <div class="options line txt_right">
 	<a href="javascript:window.scrollTo(0,0);">{{'Top Back'|translate}}</a>
 	 |
-	<a href="view.html#reply">{{'Reply Topic'|translate}}</a>
+	{% html.anchor '%s#reply'|format(item.link), 'Reply Topic'|translate %}
 </div><!-- /options -->
 
 <!-- topic's replies -->
