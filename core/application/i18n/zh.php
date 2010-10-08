@@ -310,6 +310,13 @@ return array
 	'Not found this topic!' => '找不到该话题！',
 	'Not found this reply!' => '找不到该评论！',
 	'Operation Error' => '操作错误',
+	'You are using an outdated browser' => '你使用的浏览器版本太低',
+	'For a better experience using this site, please upgrade to a modern web browser.' => '为了提高你的浏览体验和效果，请升级更为人性化的浏览器',
+	'Close this notice' => '关闭此提醒',
+	'Get Firefox 3.5' => '获取火狐 3.5 浏览器',
+	'Get Internet Explorer 8' => '获取 IE8 浏览器',
+	'Get Safari 4' => '获取 Safari 4 浏览器',
+	'Get Google Chrome' => '获取谷歌浏览器',
 
 	/**
 	 * Mail template
