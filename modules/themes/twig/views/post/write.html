@@ -4,7 +4,7 @@
 	<div class="tips" style="padding-left: 7px">{{'Wanna say something?'|translate}}</div>
 	<form method="post" action="{% url 'forum', ['controller':'post', 'action':'create', 'id':topic.id] %}">
 	<input type="hidden" name="topic_id" value="{{topic.id}}" />
-	<input type="hidden" name="user_id" value="{{topic.author.id}}" />
+	<input type="hidden" name="user_id" value="{{auth_user.id}}" />
 	<div class="comments-body">
 		<textarea class="content" name="content" rows="5"></textarea>
 		<div class="comments-tools">

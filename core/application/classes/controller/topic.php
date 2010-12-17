@@ -105,6 +105,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 
 			$write_post = Twig::factory('post/write')
 				->set('group_link', $group_link)
+				->bind('auth_user', $auth_user)
 				->bind('redir', $redirect)
 				->bind('topic', $topic);
 
