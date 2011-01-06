@@ -11,7 +11,7 @@
 <?php echo $content; ?>
 <br /><br />
 <?php
-echo __('Thanks for support to :website.', array(':website' => $website)); 
+echo __('Thanks for support to %s.', array('%s' => $website));
 ?>
 <br /><br />
 /**<br />

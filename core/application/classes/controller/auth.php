@@ -119,7 +119,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 							'If it also failed, contact the website administrator.', array(
 								':try_again' => '<a href="javascript:history.go(-1)">'.__('try again').'</a>')
 							).'<br /><br />'.
-							__('Thanks for support to :website.', array(':website' => $this->_website));
+							__('Thanks for support to %s.', array('%s' => $this->_website));
 					}
 				}
 				else
@@ -279,7 +279,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 					$content = __('Done! We sended a mail to your :email address to reset password.', array(
 							':email' => $email
 						)).'<br /><br />'.
-						__('Thanks for support to :website.', array(':website' => $this->_website));
+						__('Thanks for support to %s.', array('%s' => $this->_website));
 				}
 				else
 				{
@@ -289,7 +289,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 						'If it also failed, contact the website administrator.', array(
 							':try_again' => '<a href="javascript:history.go(-1)">'.__('try again').'</a>')
 						).'<br /><br />'.
-						__('Thanks for support to :website.', array(':website' => $this->_website));
+						__('Thanks for support to %s.', array('%s' => $this->_website));
 				}
 			}
 			else
@@ -329,7 +329,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 					$this->template->content = Alpaca::error_page($title, $content);
 						
 					$content = __('Your password has been updated!').' '.
-						__('Thanks for support to :website.', array(':website' => $this->_website)).
+						__('Thanks for support to %s.', array('%s' => $this->_website)).
 						'<br /><br />'.
 						HTML::anchor(URL::site('login'), __('Continue Login'), array('class' => 'button'));
 				}
@@ -371,18 +371,20 @@ class Controller_Auth extends Controller_Template_Alpaca {
 		$verity = ORM::factory('verity');
 		if (empty($code))
 		{
-			$this->template->content = View::factory('auth/verity')
+			$this->template->content = Twig::factory('auth/verity')
 				->bind('title', $title)
 				->bind('action', $action)
 				->bind('email', $email)
+				->bind('hash_code', $hash_code)
 				->bind('errors', $errors);
 				
 			$email = Arr::get($_GET, 'email');
 			$action = Arr::get($_GET, 'action');
-			
+
 			if ($_POST)
 			{
-				if (isset($_POST['hash_code']))
+				$hash_code = Arr::get($_POST, 'hash_code');
+				if (isset($hash_code))
 				{
 					if ($verity->validate_hash_code($_POST))
 					{
@@ -430,7 +432,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 									__(' or ').
 									HTML::anchor(URL::site('login'), __('Done! Continue Login'), array('class'=>'button')).
 									'<br /><br />'.
-									__('Thanks for support to :website.', array(':website' => $this->_website));
+									__('Thanks for support to %s.', array('%s' => $this->_website));
 							}
 							else
 							{
@@ -440,7 +442,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 									'If it also failed, contact the website administrator.', array(
 										':try_again' => '<a href="javascript:history.go(-1)">'.__('try again').'</a>')
 									).'<br /><br />'.
-									__('Thanks for support to :website.', array(':website' => $this->_website));
+									__('Thanks for support to %s.', array('%s' => $this->_website));
 							}
 						}
 						else
