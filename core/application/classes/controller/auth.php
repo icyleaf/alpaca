@@ -203,10 +203,10 @@ class Controller_Auth extends Controller_Template_Alpaca {
 				}
 				else
 				{
-					$validate = Validate::factory($data)
+					$validate = Validate::factory($_POST)
 						->filter(TRUE, 'trim')
-						->rules('email', array('not_empty' => NULL))
-						->error('email', 'not_actived');
+						->rules('username', array('not_empty' => NULL))
+						->error('username', 'not_actived');
 
 					$errors = $validate->errors('validate');
 				}

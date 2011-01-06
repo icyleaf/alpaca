@@ -258,6 +258,7 @@ return array
 	'Email must be less than :param1 characters long' => 'Email 最大长度是 :param1 位',
 	'Email does not match the required format' => 'Email 地址格式错误',
 	'Nonactivated Email, check the mail to active.' => '该账户还没有通过验证，请检查该邮箱的验证邮件。',
+	'Nonactivated Login, check the mail to active.' => '该账户还没有通过验证，请检查该邮箱的验证邮件。',
 	// Nickname
 	'Incorrect Nickname' => '昵称错误',
 	'Nickname must not be empty' => '自己怎么能没有昵称',

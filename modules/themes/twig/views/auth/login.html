@@ -8,13 +8,13 @@
 		<p>
 			<label>{{'Login or Email'|translate}}:</label><br />
 			<input id="email" name="username" type="text" tabindex="10" value="{{username}}" />
-			<br /><span class="error">{{errors.username}}</span>
+			<br /><span class="error">{{errors.username|translate}}</span>
 		</p>
 		<p>
 			<label>{{'Password'|translate}}:</label>
 			{% html.anchor 'lostpassword', '(%s)'|format('Lost Password'|translate) %}<br />
 			<input id="password" name="password" type="password" tabindex="20" />
-			<br /><span class="error">{{errors.password}}</span>
+			<br /><span class="error">{{errors.password|translate}}</span>
 		</p>
 		<p>
 			<input id="remember" type="checkbox" tabindex="90" value="true" name="remember"/>
