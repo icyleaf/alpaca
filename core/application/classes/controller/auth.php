@@ -109,7 +109,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 							__(' or ').
 							HTML::anchor(URL::site('login'), __('Done! Continue Login'), array('class'=>'button')).
 							'<br /><br />'.
-							__('Thanks for support to :website.', array(':website' => $this->_website));
+							__('Thanks for support to %s.', array('%s' => $this->_website));
 					}
 					else
 					{

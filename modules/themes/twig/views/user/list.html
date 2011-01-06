@@ -5,8 +5,8 @@
 <ul class="list_users">
 {% for collector in collectors %}
 	<li class="user_item">
-		<div>{{collector.avatar|safe}}</div>
-		{% html.anchor collector.link, collector.nickname, ['title':user.nickname] %}
+		<div>{{collector.avatar|raw}}</div>
+		{% html.anchor collector.link, collector.nickname, {'title':user.nickname} %}
 	</li>
 {% endfor %}
 </ul>

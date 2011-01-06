@@ -16,7 +16,7 @@
 <ul id="topic-list" class="list">
 {% for topic in topics %}
 	<li class="clearfix topic_{{topic.id}}">
-		{{topic.author.avatar|safe}}
+		{{topic.author.avatar|raw}}
 
 		{% if group == false %}
 		<div class="collection">
@@ -27,9 +27,9 @@
 		{% endif %}
 
 		<div class="topic_details">
-			{% html.anchor topic.link, topic.title, ['class':'subject'] %}
+			{% html.anchor topic.link, topic.title, {'class':'subject'} %}
 			<div class="meta">
-				{% html.anchor topic.author.link, topic.author.nickname, ['class':'author'] %}
+				{% html.anchor topic.author.link, topic.author.nickname, {'class':'author'} %}
 				<span class="divider">•</span>
 				{% if topic.comments > 1 %}
 				{{'%s replies'|translate|format(topic.comments)}}
@@ -61,4 +61,4 @@
 </p>
 {% endif %}
 
-{{pagination.render|safe}}
+{{pagination.render|raw}}

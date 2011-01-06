@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8" lang="utf-8">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-{{header}}
+{{header|raw}}
 </head>
 <body>
 <div id="wrap">
@@ -20,11 +20,11 @@
 			</div>
 		</div>
 
-		<div class="logo">{{logo|safe}}</div><!-- /logo -->
+		<div class="logo">{{logo|raw}}</div><!-- /logo -->
 		<div class="clear"></div>
 
 		<div id="cpanel">
-			{{menu|safe}}
+			{{menu|raw}}
 			<div class="clear"></div>
 		</div><!-- /cpanel -->
 	</div><!-- /header -->
@@ -49,12 +49,12 @@
 
 		{% if sidebar %}
 		<?php if (isset($sidebar)): ?>
-	 	<div id="sidebar">{{sidebar|safe}}</div><!-- /sidebar -->
+	 	<div id="sidebar">{{sidebar|raw}}</div><!-- /sidebar -->
 		<div id="content" class="right_column">
 		{% else %}
 		<div id="content">
 		{% endif %}
-			{{content|safe}}
+			{{content|raw}}
 		</div><!-- /content -->
 
 		<div class="clear"></div>
@@ -62,20 +62,20 @@
 
 	<div id="footer">
 		<div class="left">
-			{{copyrights|safe}}
+			{{copyrights|raw}}
 		</div>
 		<div id="right">
 			{% if config.execution_time %}
 			{{'Rendered in {execution_time}'|translate}}.
 			{% endif %}
-			{{'Powered by %s'|format(powered_by)|translate}}
+			{{'Powered by %s'|format(powered_by)|translate|raw}}
 		</div>
 		<div class="clear"></div>
 	</div>
 </div>
 
 {% if debug %}
-<div id="kohana-profiler">{{debuge|safe}}</div>
+<div id="kohana-profiler">{{debuge|raw}}</div>
 {% endif %}
 
 {% if config.ga_account_id %}

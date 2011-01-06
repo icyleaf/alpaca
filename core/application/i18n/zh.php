@@ -314,8 +314,8 @@ return array
 	/**
 	 * Mail template
 	 */
-	'Dear :user' => '亲爱的:user',
-	'Thanks for support to :website.' => '感谢您对:website的支持。',
-	'Enjoy Web hope that you enjoy the pleasure of :website.' => '希望您在:website享受到愉悦的体验。',
+	'Dear %s' => '亲爱的%s',
+	'Thanks for support to %s.' => '感谢您对%s的支持。',
+	'Enjoy Web hope that you enjoy the pleasure of %s.' => '希望您在%s享受到愉悦的体验。',
 );
 

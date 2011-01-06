@@ -322,11 +322,13 @@ class Alpaca {
 		}
 
 		// mail message
-		$content = View::factory('template/mail')
+		$content = Twig::factory('template/mail')
 			->set('username', $username)
 			->set('website', $website)
-			->set('config', $config)
-			->set('content', $content);
+			->set('link', URL::site())
+			->set('description', $config->desc)
+			->set('content', $content)
+			->set('footnote', Alpaca::random_footnote());
 			
 		$mailer->content($content->render());
 		
