@@ -6,7 +6,7 @@
 			{% set gravatar_link %}
 			{% html.anchor 'http://gravatar.com', 'Gravatar.com' %}
 			{% endset %}
-			{{'Change your avatar at %s'|translate|format(gravatar_link)}}
+			{{'Change your avatar at %s'|translate|format(gravatar_link)|raw}}
 		</strong>
 		{{'We\'re using %s'|translate|format(user.email)}}
 	</p>
