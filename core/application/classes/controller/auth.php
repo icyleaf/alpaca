@@ -236,15 +236,17 @@ class Controller_Auth extends Controller_Template_Alpaca {
 	 */
 	public function action_lostpassword()
 	{
-		$this->template->content = View::factory('auth/lostpassword')
+		$this->template->content = Twig::factory('auth/lostpassword')
 			->bind('title', $title)
-			->bind('user_email', $email)
+			->bind('email', $email)
 			->bind('errors', $errors);
 			
 		$title = __('Reset Password');
 		$this->head->title->set($title);
 		if ($_POST)
 		{
+			$email = Arr::get($_POST, 'email');
+
 			$user = ORM::factory('user');
 			$post = Validate::factory($_POST)
 				->filter(TRUE, 'trim')
@@ -253,7 +255,6 @@ class Controller_Auth extends Controller_Template_Alpaca {
 			
 			if ($post->check())
 			{
-				$email = Arr::get($_POST, 'email');
 				$verity = ORM::factory('verity', array('email' => $email));
 				if ($verity->loaded())
 				{
