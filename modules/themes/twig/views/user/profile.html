@@ -1,11 +1,11 @@
 <div id="profile">
 	<div class="profile-header">
 		<!--<div id="actions" class="right">-->
-			<!--{% html.anchor 'mail/send/%s'|format(user.id), 'Message'|translate, ['class':'button'] %}-->
-			<!--{% html.anchor 'user/follow/%s'|format(user.id), 'Follow'|translate, ['class':'button'] %}-->
+			<!--{% html.anchor 'mail/send/%s'|format(user.id), 'Message'|translate, {'class':'button'} %}-->
+			<!--{% html.anchor 'user/follow/%s'|format(user.id), 'Follow'|translate, {'class':'button'} %}-->
 		<!--</div>-->
 		<div class="left">
-			{{user.avatar|safe}}
+			{{user.avatar|raw}}
 			<span class="nickname">{{user.nickname}}</span>
 		</div> 
 		<div class="clear"></div>
@@ -16,7 +16,7 @@
 		{% for key,value in user.profiles %}
 		<dl>
 			<dt>{{key}}</dt>
-			<dd>{{value|safe}}</dd>
+			<dd>{{value|raw}}</dd>
 		</dl>
 		{% endfor %}
 		</div>

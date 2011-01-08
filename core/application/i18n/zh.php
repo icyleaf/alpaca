@@ -258,6 +258,7 @@ return array
 	'Email must be less than :param1 characters long' => 'Email 最大长度是 :param1 位',
 	'Email does not match the required format' => 'Email 地址格式错误',
 	'Nonactivated Email, check the mail to active.' => '该账户还没有通过验证，请检查该邮箱的验证邮件。',
+	'Nonactivated Login, check the mail to active.' => '该账户还没有通过验证，请检查该邮箱的验证邮件。',
 	// Nickname
 	'Incorrect Nickname' => '昵称错误',
 	'Nickname must not be empty' => '自己怎么能没有昵称',
@@ -321,8 +322,8 @@ return array
 	/**
 	 * Mail template
 	 */
-	'Dear :user' => '亲爱的:user',
-	'Thanks for support to :website.' => '感谢您对:website的支持。',
-	'Enjoy Web hope that you enjoy the pleasure of :website.' => '希望您在:website享受到愉悦的体验。',
+	'Dear %s' => '亲爱的%s',
+	'Thanks for support to %s.' => '感谢您对%s的支持。',
+	'Enjoy Web hope that you enjoy the pleasure of %s.' => '希望您在%s享受到愉悦的体验。',
 );
 

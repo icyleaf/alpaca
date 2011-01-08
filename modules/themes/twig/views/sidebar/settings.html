@@ -10,7 +10,7 @@
 			{% set notification_link %}
 			{% html.anchor 'settings/notification', 'Notifications'|translate %}
 			{% endset %}
-			{{'Want to be notified of issues as they come in? Check the %s section.'|translate|format(notification_link)}}
+			{{'Want to be notified of issues as they come in? Check the %s section.'|translate|format(notification_link)|raw}}
 		</p>
 
 		<label>{{'View your public profile'|translate}}</label>
@@ -18,7 +18,7 @@
 			{% set user_profile_link %}
 			{% html.anchor user.link, 'Click here'|translate %}
 			{% endset %}
-			{{'%s to view your public profile.'|translate|format(user_profile_link)}}
+			{{'%s to view your public profile.'|translate|format(user_profile_link)|raw}}
 		</p>
 	</div>
 </div>

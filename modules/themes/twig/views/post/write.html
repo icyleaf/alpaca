@@ -2,7 +2,7 @@
 	<h3>{{'Post new reply'|translate}}</h3>
 	{% if auth.logged_in %}
 	<div class="tips" style="padding-left: 7px">{{'Wanna say something?'|translate}}</div>
-	<form method="post" action="{% url 'forum', ['controller':'post', 'action':'create', 'id':topic.id] %}">
+	<form method="post" action="{% url 'forum', {'controller':'post', 'action':'create', 'id':topic.id} %}">
 	<input type="hidden" name="topic_id" value="{{topic.id}}" />
 	<input type="hidden" name="user_id" value="{{auth_user.id}}" />
 	<div class="comments-body">
@@ -21,7 +21,7 @@
 	</form>
 	{% else %}
 	<div class="tips" style="padding-left: 7px">{{'Post new reply after log in'|translate}}</div>
-	<form method="post" action="{% url 'auth/actions', ['action':'login'] %}">
+	<form method="post" action="{% url 'auth/actions', {'action':'login'} %}">
 	<div class="comments-body">
 	<table>
 		<tr>

@@ -1,0 +1,43 @@
+<?php if ( ! empty($action) AND $action == 'resend'):
+	$email = isset($email) ? $email : Arr::get($_POST, 'email');
+?>
+{% if action == 'resend' %}
+<div id="authform">	
+	<h2>{{'Send me again'|translate}}</h2>
+	<form method="post">
+	<div id="authform-body">
+		<p>
+			<label>{{'Email'}}:</label><br />
+			<input id="email" name="email" type="text" tabindex="100" value="{{email}}" />
+			<br /><span class="wrong">{{errors.email}}</span>
+		</p>
+		<p class="submit">
+			<input id="submit" class="button" type="submit" tabindex="200" value="{{'Send'|translate}}" />
+		</p>
+		<div class="clear"></div>
+	</div>
+	</form>
+</div>
+{% else %}
+<div id="authform">
+	<h2>{{title}}</h2>
+	<form method="post">
+	<div id="authform-body">
+		<p>
+			<label>{{'Validation Code'|translate}}:</label>
+			{% if email %}
+			({% html.anchor 'auth/verity?action=resend&email=%s'|format(email), '重新发送' %})
+			{% endif %}
+			<br />
+			<input id="email" name="hash_code" type="text" tabindex="10" value="{{hash_code}}" />
+			<br /><span class="wrong">{{errors.hash_code}}</span>
+		</p>
+		<p class="submit">
+			<input id="submit" class="button" type="submit" tabindex="50" value="{{'Verity'|translate}}" />
+		</p>
+		
+		<div class="clear"></div>
+	</div>
+	</form>
+</div>
+{% endif %}
