@@ -13,6 +13,12 @@ A swift, lightweight forum system (development)
 
 ## Installation
 
+### Intaller (TEST)
+
+	curl -O https://gist.github.com/raw/771385/download_alpaca.sh && chmod +x download_alpaca.sh && ./download_alpaca.sh && rm download_alpaca.sh
+
+### Manual
+
 Step 1: Download Alpaca!
 
 Using your console, to get it from git execute the following command in the root of your development environment:
