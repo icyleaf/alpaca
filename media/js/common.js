@@ -1,7 +1,8 @@
 $(document).ready(function(){
 	var query_tip = $('#header_search_query').val();
 	// search
-	$('#header_search_query').focus(function(){
+	$('#header_search_query')
+	.focus(function(){
 		if ($(this).val() == query_tip)
 		{
 			$(this).val('');
@@ -11,6 +12,18 @@ $(document).ready(function(){
 		if ($(this).val() == '')
 		{
 			$(this).val(query_tip);
+		}
+	});
+
+	// get focus after nothing to search
+	$('#header_search_submit').click(function(){
+		var query = $('#header_search_query');
+		if (query.val() == query_tip)
+		{
+			query.val('');
+			query.focus();
+
+			return false;
 		}
 	});
 	
