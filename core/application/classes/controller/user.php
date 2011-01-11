@@ -190,7 +190,7 @@ class Controller_User extends Controller_Template_Alpaca {
 			}
 		}
 
-		$this->template->content = View::factory('topic/list')
+		$this->template->content = Twig::factory('topic/list')
 			->set('head', $head)
 			->set('topics', $topics_array);
 		$this->template->sidebar = '';
@@ -256,7 +256,7 @@ class Controller_User extends Controller_Template_Alpaca {
 			}
 		}
 
-		$this->template->content = View::factory('topic/list')
+		$this->template->content = Twig::factory('topic/list')
 			->set('head', $head)
 			->set('topics', $topics_array);
 		$this->template->sidebar = '';
@@ -323,7 +323,7 @@ class Controller_User extends Controller_Template_Alpaca {
 			}
 		}
 
-		$this->template->content = View::factory('topic/list')
+		$this->template->content = Twig::factory('topic/list')
 			->set('head', $head)
 			->set('topics', $topics_array);
 
@@ -341,7 +341,7 @@ class Controller_User extends Controller_Template_Alpaca {
 		$this->head->title->set(__(':user\'s Groups', array(':user' => $user->nickname)));
 		$this->head->title->append($this->config->title);
 
-		$this->template->content = View::factory('group/list')
+		$this->template->content = Twig::factory('group/list')
 			->set('groups', $user->groups->order_by('created', 'DESC')
 			->find_all());
 
