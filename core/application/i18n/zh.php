@@ -249,7 +249,9 @@ return array
 	'Login is not register' => '账户尚未注册',
 	'Login has been registered' => '账户已经被注册',
 	'Record not found' => '没有找到该记录',
+	'Incorrect Username' => 'Username 只能是英文字母或者数字以及包含下划线',
 	// Email
+	'Incorrect Email' => 'Email 地址格式错误',
 	'Incorrect Email or Password' => 'Email 地址或密码错误',
 	'Email must not be empty' => 'Email 地址不能为空',
 	'Email is not register' => 'Email 地址尚未注册',

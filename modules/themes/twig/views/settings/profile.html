@@ -29,7 +29,7 @@
 		{% set username_attr = '' %}
 		{% endif %}
 		<input class="field {{username_attr}}" type="text" name="username" value="{{user.username}}" {{username_attr}} />
-		<br /><span class="error">{{error_username}}</span>
+		<br /><span class="error">{{errors.username}}</span>
 	</dd>
 </dl>
 <dl>

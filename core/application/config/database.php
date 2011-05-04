@@ -18,8 +18,8 @@ $development = array
 			 * string   database
 			 */
 			'hostname'   => 'localhost',
-			'username'   => 'test',
-			'password'   => 'test',
+			'username'   => 'root',
+			'password'   => '',
 			'persistent' => FALSE,
 			'database'   => 'alpaca',
 		),

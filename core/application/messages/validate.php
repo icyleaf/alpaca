@@ -8,6 +8,7 @@ return array
 		'available'			=> __('Login has been registered'),
 		'not_actived'		=> __('Nonactivated Login, check the mail to active.'),
 		'not_exists'		=> __('Record not found'),
+		'alpha_numeric'     => __('Incorrect Username'),
 	),
 	'email' => array(
 		'default' 			=> __('Email does not match the required format'),
@@ -60,5 +61,11 @@ return array
 	),
 	'author' => array(
 		'not_empty'			=> __(':field must not be empty'),
+	),
+	'gtalk'  => array(
+		'email'             => __('Incorrect Email'),
+	),
+	'msn'   => array(
+		'email'             => __('Incorrect Email'),
 	),
 );

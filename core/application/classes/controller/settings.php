@@ -94,6 +94,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				->rules('username', array(
 					'min_length'		=> array(0),
 					'max_length'		=> array(15),
+					'alpha_numeric'     => NULL,
 					))
 				->rules('location', array(
 					'min_length'		=> array(0),
@@ -110,12 +111,12 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				->rules('msn', array(
 					'min_length'		=> array(0),
 					'max_length'		=> array(50),
-					'validate::email'	=> NULL,
+					'email'	            => NULL,
 					))
 				->rules('gtalk', array(
 					'min_length'		=> array(0),
 					'max_length'		=> array(50),
-					'validate::email'	=> NULL,
+					'email'	            => NULL,
 					))
 				->rules('skype', array(
 					'min_length'		=> array(0),
