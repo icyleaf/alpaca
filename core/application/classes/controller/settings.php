@@ -84,6 +84,11 @@ class Controller_Settings extends Controller_Template_Alpaca {
 	{
 		if ($_POST)
 		{
+			foreach ($_POST as $key => $value)
+			{
+				$_POST[$key] = Security::xss_clean($value);
+			}
+
 			$post = Validate::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('nickname', array(
@@ -103,6 +108,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				->rules('website', array(
 					'min_length'		=> array(0),
 					'max_length'		=> array(100),
+					'url'               => NULL,
 					))
 				->rules('qq', array(
 					'min_length'		=> array(0),

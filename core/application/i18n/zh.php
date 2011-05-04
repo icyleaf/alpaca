@@ -289,6 +289,7 @@ return array
 	':field must be one of the available options' => ':field必须是激活项中的一个',
 	':field must be a digit' => ':field只能是数字',
 	':field must be within the range of :param1 to :param2' => ':field的范围在 :param1 和 :param2 之间',
+	':field must be a url' => ':field不是有效的链接',
 
 	/**
 	 * Tips
