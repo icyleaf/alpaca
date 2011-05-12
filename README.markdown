@@ -15,7 +15,7 @@ A swift, lightweight forum system (development)
 
 ### Intaller (TEST)
 
-	curl -O https://gist.github.com/raw/771385/download_alpaca.sh && chmod +x download_alpaca.sh && ./download_alpaca.sh && rm download_alpaca.sh
+	curl -s https://gist.github.com/raw/771385/download_alpaca.sh | sh
 
 > This script just helps you to download and initial structure, you also following steps beginning Setup 2 below.
 
