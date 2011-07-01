@@ -305,7 +305,7 @@ class Model_Topic extends ORM {
 		return $this->find_all();
 	}
 	
-	public function values($values)
+	public function values(array $values, array $expected = NULL)
 	{
 		foreach ($values as $key => $value)
 		{
@@ -316,10 +316,10 @@ class Model_Topic extends ORM {
 			$values[$key] = Security::xss_clean($value);
 		}
 		
-		return parent::values($values);
+		return parent::values($values, $expected);
 	}
 	
-	public function save()
+	public function save(Validation $validation = NULL)
 	{
 		if ($this->_changed AND ! array_key_exists('hits', $this->_changed))
 		{
@@ -333,7 +333,7 @@ class Model_Topic extends ORM {
 			}
 		}
 
-		parent::save();
+		parent::save($validation);
 	}
 }
 

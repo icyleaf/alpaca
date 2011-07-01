@@ -8,7 +8,7 @@ A swift, lightweight forum system (development)
 
 * [PHP](http://php.net) 5.2.8+
 * [Mysql](http://mysql.com) 5.0+
-* [Kohana](http://github.com/kohana/kohana) v3.0.x
+* [Kohana](http://github.com/kohana/kohana) v3.1.x
 * Kohana Modules: [Database](http://github.com/kohana/database), [ORM](http://github.com/kohana/orm), [Auth](http://github.com/icyleaf/alpaca/tree/master/modules/auth/), [Pagination](http://github.com/kohana/pagination), [Gravatar](http://github.com/icyleaf/gravatar/) and [Twig](http://github.com/icyleaf/twig/).
 
 ## Installation

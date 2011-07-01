@@ -22,7 +22,7 @@ class HTML extends Kohana_HTML {
 	 * @param   string  use a specific protocol
 	 * @return  string
 	 */
-	public static function anchor($uri, $title = NULL, array $attributes = NULL, $protocol = NULL)
+	public static function anchor($uri, $title = NULL, array $attributes = NULL, $protocol = NULL, $index = FALSE)
 	{
 		if ($title === NULL)
 		{
@@ -33,7 +33,7 @@ class HTML extends Kohana_HTML {
 		if ($uri === '')
 		{
 			// Only use the base URL
-			$uri = URL::base(FALSE, $protocol);
+			$uri = URL::base($protocol, $index);
 		}
 		else
 		{

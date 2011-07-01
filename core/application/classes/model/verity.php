@@ -154,14 +154,14 @@ class Model_Verity extends ORM {
 	 *
 	 * @return void
 	 */
-	public function save()
+	public function save(Validation $validation = NULL)
 	{
 		if (empty($this->created))
 		{
 			$this->created = time();
 		}
 		
-		parent::save();
+		parent::save($validation);
 	}
 	
 }

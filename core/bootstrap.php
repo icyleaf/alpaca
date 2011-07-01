@@ -1,14 +1,60 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-//-- Environment setup --------------------------------------------------------
+// -- Environment setup --------------------------------------------------------
+
+// Load the core Kohana class
+require SYSPATH.'classes/kohana/core'.EXT;
+
+if (is_file(APPPATH.'classes/kohana'.EXT))
+{
+	// Application extends the core
+	require APPPATH.'classes/kohana'.EXT;
+}
+else
+{
+	// Load empty core extension
+	require SYSPATH.'classes/kohana'.EXT;
+}
 
 /**
  * Set the default time zone.
  *
- * @see  http://docs.kohanaphp.com/features/localization#time
+ * @see  http://kohanaframework.org/guide/using.configuration
  * @see  http://php.net/timezones
  */
 date_default_timezone_set('Asia/Shanghai');
+
+/**
+ * Set the default locale.
+ *
+ * @see  http://kohanaframework.org/guide/using.configuration
+ * @see  http://php.net/setlocale
+ */
+setlocale(LC_ALL, 'zh_CN.utf-8');
+
+/**
+ * Enable the Kohana auto-loader.
+ *
+ * @see  http://kohanaframework.org/guide/using.autoloading
+ * @see  http://php.net/spl_autoload_register
+ */
+spl_autoload_register(array('Kohana', 'auto_load'));
+
+/**
+ * Enable the Kohana auto-loader for unserialization.
+ *
+ * @see  http://php.net/spl_autoload_call
+ * @see  http://php.net/manual/var.configuration.php#unserialize-callback-func
+ */
+ini_set('unserialize_callback_func', 'spl_autoload_call');
+
+// -- Configuration and initialization -----------------------------------------
+
+/**
+ * Set the default language
+ */
+I18n::lang('en-us');
+
 
 /**
  * Enable the Kohana auto-loader.
@@ -90,42 +136,42 @@ Kohana::modules(array(
  */
 require_once APPPATH.'init.php';
 
-/**
- * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
- * If no source is specified, the URI will be automatically detected.
- */
-$request = Request::instance();
-try
-{
-	// Attempt to execute the response
-	$request->execute();
-}
-catch(Exception $e)
-{
-	if ( ! IN_PRODUCTION)
-	{
-		throw $e;
-	}
-
-	// Log the error
-	Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
-
-	// Request 404 page
-	$request = Request::factory('errors')->execute();
-}
-
-if ($request->send_headers()->response)
-{
-	// Get the total memory and execution time
-	$total = array(
-		'{memory_usage}'   => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
-		'{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).__(' seconds')
-	);
-
-	// Insert the totals into the response
-	$request->response = str_replace(array_keys($total), $total, $request->response);
-}
-
-// Display the request response.
-echo $request->response;
-
+///**
+// * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
+// * If no source is specified, the URI will be automatically detected.
+// */
+//$request = Request::instance();
+//try
+//{
+//	// Attempt to execute the response
+//	$request->execute();
+//}
+//catch(Exception $e)
+//{
+//	if ( ! IN_PRODUCTION)
+//	{
+//		throw $e;
+//	}
+//
+//	// Log the error
+//	Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
+//
+//	// Request 404 page
+//	$request = Request::factory('errors')->execute();
+//}
+//
+//if ($request->send_headers()->response)
+//{
+//	// Get the total memory and execution time
+//	$total = array(
+//		'{memory_usage}'   => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
+//		'{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).__(' seconds')
+//	);
+//
+//	// Insert the totals into the response
+//	$request->response = str_replace(array_keys($total), $total, $request->response);
+//}
+//
+//// Display the request response.
+//echo $request->response;
+//

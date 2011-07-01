@@ -66,7 +66,7 @@ class Model_Collection extends ORM {
 		return $result->loaded();
 	}
 	
-	public function values($values)
+	public function values(array $values, array $expected = NULL)
 	{
 		foreach ($values as $key => $value)
 		{
@@ -78,17 +78,17 @@ class Model_Collection extends ORM {
 			$values['privacy'] = 'private';
 		}
 		
-		return parent::values($values);
+		return parent::values($values, $expected);
 	}
 	
-	public function save()
+	public function save(Validation $validation = NULL)
 	{
 		if ($this->_changed AND empty($this->created))
 		{
 			$this->created = time();
 		}
 
-		parent::save();
+		parent::save($validation);
 	}
 }
 

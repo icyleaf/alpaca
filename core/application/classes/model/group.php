@@ -63,17 +63,17 @@ class Model_Group extends ORM {
 		return is_numeric($value) ? $this->pk() : 'uri';
 	}
 	
-	public function values($values)
+	public function values(array $values, array $expected = NULL)
 	{
 		foreach ($values as $key => $value)
 		{
 			$values[$key] = Security::xss_clean($value);
 		}
 
-		return parent::values($values);
+		return parent::values($values, $expected);
 	}
 	
-	public function save()
+	public function save(Validation $validation = NULL)
 	{
 		if ( ! empty($this->created))
 		{
@@ -84,7 +84,7 @@ class Model_Group extends ORM {
 			$this->created = $this->updated = time();
 		}
 
-		parent::save();
+		parent::save($validation);
 	}
 	
 }

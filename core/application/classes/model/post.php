@@ -195,7 +195,7 @@ class Model_Post extends ORM {
 		return $this;
 	}
 	
-	public function values($values)
+	public function values(array $values, array $expected = NULL)
 	{
 		foreach ($values as $key => $value)
 		{
@@ -206,10 +206,10 @@ class Model_Post extends ORM {
 			$values[$key] = Security::xss_clean($value);
 		}
 		
-		return parent::values($values);
+		return parent::values($values, $expected);
 	}
 	
-	public function save()
+	public function save(Validation $validation = NULL)
 	{
 		if ( ! empty($this->created))
 		{
@@ -220,7 +220,7 @@ class Model_Post extends ORM {
 			$this->created = $this->updated = time();
 		}
 		
-		parent::save();
+		parent::save($validation);
 	}
 	
 }

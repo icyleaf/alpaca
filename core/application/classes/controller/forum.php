@@ -9,7 +9,7 @@ class Controller_Forum extends Controller_Template_Alpaca {
 	
 	public function before()
 	{
-		if ($this->request->action === 'media')
+		if ($this->request->action() === 'media')
 		{
 			// Do not template media files
 			$this->auto_render = FALSE;
