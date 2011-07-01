@@ -69,7 +69,7 @@ class Model_Group extends ORM {
 		{
 			$values[$key] = Security::xss_clean($value);
 		}
-		
+
 		return parent::values($values);
 	}
 	
@@ -83,7 +83,7 @@ class Model_Group extends ORM {
 		{
 			$this->created = $this->updated = time();
 		}
-		
+
 		parent::save();
 	}
 	
