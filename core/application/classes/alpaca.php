@@ -451,7 +451,7 @@ class Alpaca {
 				));
 
 				$redirect_url .= URL::query(array(
-					'redir' => $request->uri
+					'redir' => $request->uri()
 				));
 			}
 

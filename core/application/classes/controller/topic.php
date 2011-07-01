@@ -26,7 +26,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 		$topic = ORM::factory('topic', $topic_id);
 		if ($topic->loaded())
 		{
-			if (preg_match('/^topic\/(\d+)/', $this->request->uri))
+			if (preg_match('/^topic\/(\d+)/', $this->request->uri()))
 			{
 				// redirect to page with group uri
 				$this->request->redirect(Alpaca_Topic::url($topic), 301);
@@ -95,7 +95,7 @@ class Controller_Topic extends Controller_Template_Alpaca {
 			$group_link = Route::url('group', array('id' => $topic->group));
 			$collection_link = Route::url('topic/collectors', array('id' => $topic->id));
 			$collect_topic_url = URl::site('collection/topic/'.$topic->id);
-			$redirect = $this->request->uri;
+			$redirect = $this->request->uri();
 
 			$topic_posts = Twig::factory('post/list')
 				->bind('post_count', $all_post_count)

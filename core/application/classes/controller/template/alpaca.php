@@ -117,7 +117,7 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 			}
 
 			// Reload the page
-			$this->request->redirect($this->request->uri);
+			$this->request->redirect($this->request->uri());
 		}
 
 		// Set the translation language
@@ -172,7 +172,7 @@ class Controller_Template_Alpaca extends Controller_Template_Twig {
 		$language = Menu::factory();
 		foreach (Kohana::message('alpaca', 'translations') as $key => $value)
 		{
-			$language->add(URL::site($this->request->uri.'?lang='.$key), $value);
+			$language->add(URL::site($this->request->uri().'?lang='.$key), $value);
 		}
 		$menu->add('', '<span class="dir">'.'Language'.'</span>', $language);
 

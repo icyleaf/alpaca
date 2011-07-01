@@ -51,7 +51,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 
 		foreach ($this->links as $i => $item)
 		{
-			if ($item['link'] == $this->request->uri)
+			if ($item['link'] == $this->request->uri())
 			{
 				$this->links[$i]['attr'] = array(
 					'class' => 'current'

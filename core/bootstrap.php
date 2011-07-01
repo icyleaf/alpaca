@@ -136,10 +136,10 @@ Kohana::modules(array(
  */
 require_once APPPATH.'init.php';
 
-///**
-// * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
-// * If no source is specified, the URI will be automatically detected.
-// */
+/**
+ * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
+ * If no source is specified, the URI will be automatically detected.
+ */
 //$request = Request::instance();
 //try
 //{
@@ -174,4 +174,4 @@ require_once APPPATH.'init.php';
 //
 //// Display the request response.
 //echo $request->response;
-//
+

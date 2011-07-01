@@ -93,7 +93,7 @@ class Controller_Forum extends Controller_Template_Alpaca {
 		if (IN_PRODUCTION)
 		{
 			// Generate and check the ETag for this file
-			$this->request->check_cache(sha1($this->request->uri));
+			$this->request->check_cache(sha1($this->request->uri()));
 		}
 
 		// Get the file path from the request

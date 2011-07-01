@@ -77,7 +77,7 @@ class Controller_API_Topic extends Controller_API_Core {
 
 				$output = array(
 					'title' => $title,
-					'link' => URL::site($this->request->uri),
+					'link' => URL::site($this->request->uri()),
 					'entry' => $entry,
 				);
 

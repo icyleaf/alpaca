@@ -115,7 +115,48 @@ require COREPATH.'bootstrap'.EXT;
  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
  * If no source is specified, the URI will be automatically detected.
  */
-echo Request::factory()
-	->execute()
-	->send_headers()
-	->body();
+
+$response = NULL;
+try
+{
+	// Attempt to execute the response
+	$response = Request::factory()
+		->send_headers()
+		->execute();
+}
+catch(Exception $e)
+{
+//	if ( ! IN_PRODUCTION)
+//	{
+//		throw $e;
+//	}
+
+	// Log the error
+	Kohana::$log->add(Kohana_Log::ERROR, Kohana_Exception::text($e));
+
+	// Request 404 page
+	$response = Request::factory('errors')
+		->execute();
+}
+
+if ($response->body())
+{
+	// Get the total memory and execution time
+	$total = array(
+		'{memory_usage}'   => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
+		'{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).__(' seconds')
+	);
+
+	// Insert the totals into the response
+	$response->body(str_replace(array_keys($total), $total, $response->body()));
+}
+
+// Display the request response.
+echo $response->body();
+
+//$request = Request::factory();
+//
+//echo
+//	->execute()
+//	->send_headers()
+//	->body();
