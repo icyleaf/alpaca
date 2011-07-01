@@ -192,7 +192,8 @@ class Controller_User extends Controller_Template_Alpaca {
 
 		$this->template->content = Twig::factory('topic/list')
 			->set('head', $head)
-			->set('topics', $topics_array);
+			->bind('topics', $topics_array);
+		// TODO: Show message if topics is empty
 		$this->template->sidebar = '';
 	}
 
@@ -258,7 +259,8 @@ class Controller_User extends Controller_Template_Alpaca {
 
 		$this->template->content = Twig::factory('topic/list')
 			->set('head', $head)
-			->set('topics', $topics_array);
+			->bind('topics', $topics_array);
+		// TODO: Show message if topics is empty
 		$this->template->sidebar = '';
 	}
 
@@ -325,7 +327,8 @@ class Controller_User extends Controller_Template_Alpaca {
 
 		$this->template->content = Twig::factory('topic/list')
 			->set('head', $head)
-			->set('topics', $topics_array);
+			->bind('topics', $topics_array);
+		// TODO: Show message if topics is empty
 
 		$this->template->sidebar = '';
 	}

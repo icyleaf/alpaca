@@ -135,3 +135,9 @@ Kohana::modules(array(
  * defaults for the URI.
  */
 require_once APPPATH.'init.php';
+
+
+/**
+ * Store Global Cookie signed salt
+ */
+Cookie::$salt = 'alpaca@icyleaf';
