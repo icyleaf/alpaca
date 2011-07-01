@@ -21,7 +21,7 @@ class Controller_Search extends Controller_Template_Alpaca {
 	{
 		if ($_GET)
 		{
-			$get = Validate::factory($_GET)
+			$get = Validation::factory($_GET)
 				->filter(TRUE, 'trim')
 				->rules('q', $this->_rules['q']);
 				

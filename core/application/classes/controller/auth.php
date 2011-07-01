@@ -13,7 +13,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 		'not_empty'			=> NULL,
 		'min_length'		=> array(4),
 		'max_length'		=> array(127),
-		'validate::email'	=> NULL,
+		'email'	=> NULL,
 		)
 	);
 	
@@ -203,7 +203,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 				}
 				else
 				{
-					$validate = Validate::factory($_POST)
+					$validate = Validation::factory($_POST)
 						->filter(TRUE, 'trim')
 						->rules('username', array('not_empty' => NULL))
 						->error('username', 'not_actived');
@@ -248,7 +248,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 			$email = Arr::get($_POST, 'email');
 
 			$user = ORM::factory('user');
-			$post = Validate::factory($_POST)
+			$post = Validation::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('email',  $this->_rules['email'])
 				->callback('email', array(new Model_User, 'email_not_available'));
@@ -398,7 +398,7 @@ class Controller_Auth extends Controller_Template_Alpaca {
 				}
 				elseif (isset($_POST['email']))
 				{
-					$post = Validate::factory($_POST)
+					$post = Validation::factory($_POST)
 						->filter(TRUE, 'trim')
 						->rules('email',  $this->_rules['email']);
 					

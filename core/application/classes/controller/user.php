@@ -81,7 +81,7 @@ class Controller_User extends Controller_Template_Alpaca {
 					$key = 'Member Since';
 					$value = date('Y-m-d', $value);
 				}
-				elseif ($key == 'website' AND Validate::url($value))
+				elseif ($key == 'website' AND Valid::url($value))
 				{
 					$value = Text::auto_link_urls($value);
 				}

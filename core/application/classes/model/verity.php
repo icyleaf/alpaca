@@ -130,7 +130,7 @@ class Model_Verity extends ORM {
 	 */
 	public function validate_hash_code(array & $array)
 	{
-		$array = Validate::factory($array)
+		$array = Validation::factory($array)
 			->filter(TRUE, 'trim')
 			->rules('hash_code', $this->_hash_code_rules['hash_code']);
 

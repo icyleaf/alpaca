@@ -17,13 +17,13 @@ class Model_Collection extends ORM {
 		(
 			'not_empty'			=> NULL,
 			'min_length'		=> array(7),
-			'validate::numeric'	=> NULL,
+			'numeric'	=> NULL,
 		),
 		'topic_id'				=> array
 		(
 			'not_empty'			=> NULL,
 			'min_length'		=> array(7),
-			'validate::numeric'	=> NULL,
+			'numeric'	=> NULL,
 		),
 	);
 

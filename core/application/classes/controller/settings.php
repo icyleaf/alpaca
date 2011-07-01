@@ -89,7 +89,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				$_POST[$key] = Security::xss_clean($value);
 			}
 
-			$post = Validate::factory($_POST)
+			$post = Validation::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('nickname', array(
 					'not_empty'			=> NULL,
@@ -184,7 +184,7 @@ class Controller_Settings extends Controller_Template_Alpaca {
 				'max_length'	=> array(20),
 			);
 
-			$post = Validate::factory($_POST)
+			$post = Validation::factory($_POST)
 				->filter(TRUE, 'trim')
 				->rules('current_password', $rules)
 				->rules('password', $rules)

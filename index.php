@@ -126,10 +126,10 @@ try
 }
 catch(Exception $e)
 {
-//	if ( ! IN_PRODUCTION)
-//	{
-//		throw $e;
-//	}
+	if ( ! IN_PRODUCTION)
+	{
+		throw $e;
+	}
 
 	// Log the error
 	Kohana::$log->add(Kohana_Log::ERROR, Kohana_Exception::text($e));
@@ -153,10 +153,3 @@ if ($response->body())
 
 // Display the request response.
 echo $response->body();
-
-//$request = Request::factory();
-//
-//echo
-//	->execute()
-//	->send_headers()
-//	->body();
