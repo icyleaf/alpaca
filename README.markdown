@@ -1,4 +1,4 @@
-# alpaca
+# alpaca (ONLY for Kohana v3.0.x)
 
 A swift, lightweight forum system (development)
 
@@ -13,36 +13,39 @@ A swift, lightweight forum system (development)
 
 ## Installation
 
-### Intaller (TEST)
+### App Intaller (*Recommend*)
 
 	curl -s https://gist.github.com/raw/771385/download_alpaca.sh | sh
 
-> This script just helps you to download and initial structure, you also following steps beginning Setup 2 below.
+> This script just helps you to download and initial structure, you also following steps beginning `Setup 2` below.
 
-### Manual
+### Manual Setup
 
 Step 1: Download Alpaca!
 
 Using your console, to get it from git execute the following command in the root of your development environment:
 
-	$ git clone git://github.com/icyleaf/alpaca.git
+ * Using Git 1.6.5 or newer version:
 
-And watch the git magic...
+	`$ git clone --recursive git://github.com/icyleaf/alpaca.git`
 
-Step 2: Initial Structure
+ * Using older git verions:
 
-Next, add whatever submodules alpaca need, they must be initialized and update:
+	`$ git clone git://github.com/icyleaf/alpaca.git`
 
+Next, add whatever submodules alpaca need, they must be initialized and update (go to `alpaca` path):
+	
+	$ cd alpaca
 	$ git submodule update --init
 
-Then, go to path `core/modules/twig`, it also must be initialized and update:
+One more thing, alpaca require `twig-php` template engine. Then, go to path `core/modules/twig`, it also must be initialized and update:
 
 	$ cd core/modules/twig
 	$ git submodule update --init
 	
 That's all there is to it.
 
-Step 3: Cownfiguration of Database
+Step 2: Cownfiguration of Database
 
 Edit `application/config/database.php` with the correct information.
 
@@ -50,11 +53,11 @@ Edit `application/config/database.php` with the correct information.
 
 > `$production` variable is production environment online.
 
-Step 4: Import SQL
+Step 3: Import SQL
 
 Run the SQL found in `dump/install.sql`.
 
-Step 5: Configuration of Alpaca
+Step 4: Configuration of Alpaca
 
 Open `core/bootstrap.php` and make the following changes:
 
@@ -66,7 +69,7 @@ Make sure the `cache` and `logs` directories are world writable with `chmod {cac
 
 **Never need to set `base_url`, it could be detected from your browser.**
 
-Step 6: Configuration of Forum
+Step 5: Configuration of Forum
 
 Open `core/application/config/alpaca.php` and make whatever your need to change, but ONLY make the `project` property to renain for upgrade.
 
