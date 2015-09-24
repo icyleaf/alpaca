@@ -1,5 +1,7 @@
 # alpaca (ONLY for Kohana v3.0.x)
 
+> Project is **NOT** maintain, Thanks for support!
+
 A swift, lightweight forum system (development)
 
 > It is unstable and still developing, so we are not recommend to deploy it in your project.
